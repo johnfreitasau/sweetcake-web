@@ -10,12 +10,17 @@ import { useToast } from '../../hooks/toast';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
-import logoImg from '../../assets/logo.svg';
+import logoImg from '../../assets/cupcake-img.svg';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import { Container, Content, Background, AnimationContainer } from './styles';
+import {
+  Container,
+  ImageContainer,
+  Content,
+  AnimationContainer,
+} from './styles';
 
 interface SignUpFormData {
   name: string;
@@ -76,14 +81,16 @@ const SignUp: React.FC = () => {
   return (
     <>
       <Container>
-        <Background />
+        <ImageContainer>
+          <img src={logoImg} alt="JustCupcakes" />
+        </ImageContainer>
 
         <Content>
           <AnimationContainer>
-            <img src={logoImg} alt="GoBarber Logo" />
+            <h1>JustCupcakes</h1>
 
             <Form ref={formRef} onSubmit={handleSubmit}>
-              <h1>Registration</h1>
+              <h2>Registration</h2>
 
               <Input name="name" icon={FiUser} placeholder="Name" />
               <Input name="email" icon={FiMail} placeholder="E-mail" />

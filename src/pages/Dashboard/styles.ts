@@ -5,7 +5,7 @@ export const Container = styled.div``;
 
 export const Header = styled.header`
   padding: 32px 0;
-  background: #28262e;
+  background: #6c6c6c;
 `;
 
 export const HeaderContent = styled.div`
@@ -16,6 +16,12 @@ export const HeaderContent = styled.div`
 
   > img {
     height: 80px;
+  }
+
+  h1 {
+    font-family: 'Sacramento', sans-serif;
+    color: #e1e1e1;
+    font-size: 36px;
   }
 
   button {
