@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-import { FiPower, FiClock } from 'react-icons/fi';
+import { FiPower, FiClock, FiPlus } from 'react-icons/fi';
 import { isToday, format, parseISO, isAfter } from 'date-fns';
 import enAU from 'date-fns/locale/en-AU';
 import logoImg from '../../assets/logo.svg';
@@ -10,7 +10,7 @@ import {
   Container,
   Header,
   HeaderContent,
-  Profile,
+  DropdownMenu,
   Content,
   Schedule,
   Calendar,
@@ -134,15 +134,19 @@ const Dashboard: React.FC = () => {
         <HeaderContent>
           <h1>JustCupcakes</h1>
 
-          <Profile>
-            <img src={user.avatar_url} alt="GoBarber Avatar" />
-            <div>
-              <span>Welcome,</span>
-              <Link to="/profile">
-                <strong>{user.name}</strong>
-              </Link>
+          <div>Dashboard | Products | Sales | Delivery | Import & Export</div>
+
+          <Link to="/profile">{user.name}</Link>
+          <DropdownMenu>
+            <button type="button" className="dropbtn">
+              <FiPlus />
+            </button>
+            <div className="dropdown-content">
+              <a href="/home">Link 1</a>
+              <a href="/home">Link 2</a>
+              <a href="/home">Link 3</a>
             </div>
-          </Profile>
+          </DropdownMenu>
           <button type="button" onClick={signOut}>
             <FiPower />
           </button>
@@ -151,7 +155,7 @@ const Dashboard: React.FC = () => {
 
       <Content>
         <Schedule>
-          <h1>Scheduled appointments</h1>
+          <h1>Delivery</h1>
           <p>
             {isToday(selectedDate) && <span>Today</span>}
             <span>{selectedDateAsText}</span>
