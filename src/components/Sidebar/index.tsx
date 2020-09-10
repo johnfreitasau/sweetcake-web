@@ -59,6 +59,10 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
         </button>
       </div>
       <nav>
+        <NavLink to="/dashboard">
+          {isOpened && 'Dashboard'}
+          {/* <img src={toolSvg} alt="tool" /> */}
+        </NavLink>
         <NavLink to="/sales">
           {isOpened && 'Sales'}
           <FiTruck size={24} />
@@ -71,6 +75,7 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
           {isOpened && 'Inventory'}
           {/* <img src={toolSvg} alt="tool" /> */}
         </NavLink>
+
         <Switch
           onChange={toggleTheme}
           checked={title === 'dark'}
@@ -79,12 +84,12 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
           height={10}
           width={40}
           handleDiameter={20}
-          offColor={shade(0.15, colors.background)}
+          offColor={shade(0.35, colors.background)}
           onColor={colors.background}
         />
       </nav>
       <SignOutButton onClick={signOut}>
-        {isOpened && <strong>Sair</strong>}
+        {isOpened && <strong>SignOut</strong>}
         <FiLogOut size={24} />
       </SignOutButton>
     </Container>

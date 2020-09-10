@@ -130,29 +130,6 @@ const Dashboard: React.FC = () => {
 
   return (
     <Container>
-      <Header>
-        <HeaderContent>
-          <h1>JustCupcakes</h1>
-
-          <div>Dashboard | Products | Sales | Delivery | Import & Export</div>
-
-          <Link to="/profile">{user.name}</Link>
-          <DropdownMenu>
-            <button type="button" className="dropbtn">
-              <FiPlus />
-            </button>
-            <div className="dropdown-content">
-              <a href="/home">Link 1</a>
-              <a href="/home">Link 2</a>
-              <a href="/home">Link 3</a>
-            </div>
-          </DropdownMenu>
-          <button type="button" onClick={signOut}>
-            <FiPower />
-          </button>
-        </HeaderContent>
-      </Header>
-
       <Content>
         <Schedule>
           <h1>Delivery</h1>
