@@ -10,6 +10,7 @@ import api from '../../../services/api';
 import { useToast } from '../../../hooks/toast';
 
 import * as S from './styles';
+import Button from '../../../components/Button';
 
 interface Client {
   id: string;
@@ -108,6 +109,7 @@ const ListCustomers: React.FC = () => {
   return (
     <S.Container>
       <S.Content>
+        <Button>Create</Button>
         <S.Table>
           <thead>
             <tr>
