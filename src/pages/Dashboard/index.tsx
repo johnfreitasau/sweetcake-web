@@ -8,7 +8,7 @@ import enAU from 'date-fns/locale/en-AU';
 import logoImg from '../../assets/logo.svg';
 import {
   Container,
-  Header,
+  // Header,
   HeaderContent,
   DropdownMenu,
   Content,

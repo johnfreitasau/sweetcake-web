@@ -3,11 +3,6 @@ import { shade } from 'polished';
 
 export const Container = styled.div``;
 
-export const Header = styled.header`
-  padding: 10px 10px;
-  background: #6c6c6c;
-`;
-
 export const HeaderContent = styled.div`
   max-width: 1120px;
   margin: 0 auto;

@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
 import Sidebar from '../../../components/Sidebar';
 import Header from '../../../components/Header';
-import { Container, MainContent } from './styles';
+import { Wrapper } from './styles';
 
 import dark from '../../../styles/themes/dark';
 import light from '../../../styles/themes/light';
@@ -33,19 +33,10 @@ const DefaultLayout: React.FC = ({ children }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container>
-        <Header
-          onSubmit={handleSearchSubmit}
-          disabled={false}
-          createPage="/clients/register"
-          title="Clientes"
-          placeholder="Digite o nome do cliente"
-        />
-        <MainContent>
-          <Sidebar toggleTheme={toggleTheme} />
-          {children}
-        </MainContent>
-      </Container>
+      <Wrapper>
+        <Sidebar toggleTheme={toggleTheme} />
+        {children}
+      </Wrapper>
     </ThemeProvider>
   );
 };

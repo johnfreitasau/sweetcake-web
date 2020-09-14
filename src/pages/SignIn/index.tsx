@@ -11,7 +11,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 
 import logoImg from '../../assets/cupcake-img.svg';
 
-import Input from '../../components/Input';
+import Input from '../../components/Form/Input';
 import Button from '../../components/Button';
 
 import {

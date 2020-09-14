@@ -10,7 +10,7 @@ import { useToast } from '../../hooks/toast';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
-import Input from '../../components/Input';
+import Input from '../../components/Form/Input';
 import Button from '../../components/Button';
 
 import { Container, Content, AvatarInput } from './styles';

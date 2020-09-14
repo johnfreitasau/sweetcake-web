@@ -34,7 +34,7 @@ export const MessageContainer = styled.div`
 export const Table = styled.table`
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 24px;
+  border-spacing: 0 10px;
   tr {
     th {
       font-size: 18px;
@@ -51,7 +51,7 @@ export const Table = styled.table`
   }
 `;
 
-export const ClientRow = styled.tr`
+export const CustomerRow = styled.tr`
   td {
     height: 56px;
   }

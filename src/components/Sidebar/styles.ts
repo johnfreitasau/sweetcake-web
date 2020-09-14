@@ -8,7 +8,7 @@ interface ContainerProps {
 export const Container = styled.div<ContainerProps>`
   max-width: ${(props) => (props.isOpened ? '250px' : '60px')};
   width: 100%;
-  height: 95vh;
+  height: 100vh;
   background: ${({ theme }) => theme.colors.shape};
   transition: max-width 500ms ease;
   display: flex;

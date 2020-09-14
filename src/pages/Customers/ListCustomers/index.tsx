@@ -6,13 +6,13 @@ import Header from '../../../components/Header';
 
 import api from '../../../services/api';
 
-// import ChangePageButton from '../../../components/ChangePageButton';
+import ChangePageButton from '../../../components/ChangePageButton';
 import { useToast } from '../../../hooks/toast';
 
 import * as S from './styles';
 import Button from '../../../components/Button';
 
-interface Client {
+interface Customer {
   id: string;
   name: string;
   cpf: string;
@@ -24,7 +24,10 @@ interface SearchFormData {
 }
 
 const ListCustomers: React.FC = () => {
-  const [clients, setClients] = useState<Client[]>([
+  const [customers, setCustomers] = useState<Customer[]>([
+    { id: '123', name: 'John', cpf: '1234', phone_number: '041378744' },
+    { id: '123', name: 'John', cpf: '1234', phone_number: '041378744' },
+    { id: '123', name: 'John', cpf: '1234', phone_number: '041378744' },
     { id: '123', name: 'John', cpf: '1234', phone_number: '041378744' },
     { id: '123', name: 'John', cpf: '1234', phone_number: '041378744' },
     { id: '123', name: 'John', cpf: '1234', phone_number: '041378744' },
@@ -55,10 +58,10 @@ const ListCustomers: React.FC = () => {
   }, [setQueryPage]);
 
   useEffect(() => {
-    async function loadClients(): Promise<void> {
+    async function loadCustomers(): Promise<void> {
       try {
         setLoading(true);
-        const response = await api.get<Client[]>('/clients', {
+        const response = await api.get<Customer[]>('/customers', {
           params: {
             page: queryPage || 1,
             name: queryName || undefined,
@@ -68,7 +71,7 @@ const ListCustomers: React.FC = () => {
         const totalCount = response.headers['x-total-count'];
 
         setPagesAvailable(Math.ceil(totalCount / 7));
-        setClients(response.data);
+        setCustomers(response.data);
       } catch (err) {
         addToast({
           type: 'error',
@@ -79,7 +82,7 @@ const ListCustomers: React.FC = () => {
       }
     }
 
-    loadClients();
+    loadCustomers();
   }, [addToast, queryName, queryPage]);
 
   if (loading) {
@@ -94,12 +97,12 @@ const ListCustomers: React.FC = () => {
     );
   }
 
-  if (clients.length === 0) {
+  if (customers.length === 0) {
     return (
       <S.Container>
         <S.Content>
           <S.MessageContainer>
-            <span>Nenhum cliente foi encontrado.</span>
+            <span>No customers found.</span>
           </S.MessageContainer>
         </S.Content>
       </S.Container>
@@ -109,7 +112,14 @@ const ListCustomers: React.FC = () => {
   return (
     <S.Container>
       <S.Content>
-        <Button>Create</Button>
+        <Header
+          initialName={queryName}
+          onSubmit={handleSearchSubmit}
+          disabled
+          createPage="/customers/register"
+          title="Customers"
+          placeholder="Search for the customer"
+        />
         <S.Table>
           <thead>
             <tr>
@@ -119,34 +129,30 @@ const ListCustomers: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {clients.map((client) => (
-              <S.ClientRow
-                onClick={() => history.push(`/clients/edit/${client.id}`)}
-                key={client.id}
+            {customers.map((customer) => (
+              <S.CustomerRow
+                onClick={() => history.push(`/customers/edit/${customer.id}`)}
+                key={customer.id}
               >
-                <td>{client.name}</td>
-                <td>{client.cpf}</td>
-                <td>{client.phone_number}</td>
-              </S.ClientRow>
+                <td>{customer.name}</td>
+                <td>{customer.cpf}</td>
+                <td>{customer.phone_number}</td>
+              </S.CustomerRow>
             ))}
           </tbody>
         </S.Table>
 
         <S.Pagination>
-          {!(queryPage === 1 || !queryPage) && (
-            <h1>Hello</h1>
-            //   <ChangePageButton
-            //     changePageTo="decrement"
-            //     onClick={decrementPage}
-            //   />
-            // )}
-            // {!(pagesAvailable <= 1 || queryPage === pagesAvailable) && (
-            //   <ChangePageButton
-            //     changePageTo="increment"
-            //     onClick={incrementPage}
-            //     style={{ marginLeft: 'auto' }}
-            //   />
-          )}
+          {/* {!(queryPage === 1 || !queryPage) && ( */}
+          <ChangePageButton changePageTo="decrement" onClick={decrementPage} />
+          {/* )} */}
+          {/* {!(pagesAvailable <= 1 || queryPage === pagesAvailable) && ( */}
+          <ChangePageButton
+            changePageTo="increment"
+            onClick={incrementPage}
+            style={{ marginLeft: 'auto' }}
+          />
+          {/* )} */}
         </S.Pagination>
       </S.Content>
     </S.Container>

@@ -6,7 +6,17 @@ import React, {
   memo,
 } from 'react';
 import Switch from 'react-switch';
-import { FiX, FiTruck, FiUsers, FiMenu, FiLogOut } from 'react-icons/fi';
+import {
+  FiGrid,
+  FiShoppingCart,
+  FiDollarSign,
+  FiX,
+  FiUsers,
+  FiLayers,
+  FiMenu,
+  FiLogOut,
+  FiFileText,
+} from 'react-icons/fi';
 import { NavLink } from 'react-router-dom';
 import { shade } from 'polished';
 // import toolSvg from '../../assets/tool.svg';
@@ -62,18 +72,23 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
         <NavLink to="/dashboard">
           {isOpened && 'Dashboard'}
           {/* <img src={toolSvg} alt="tool" /> */}
-        </NavLink>
-        <NavLink to="/sales">
-          {isOpened && 'Sales'}
-          <FiTruck size={24} />
+          <FiGrid size={24} />
         </NavLink>
         <NavLink to="/customers">
           {isOpened && 'Customers'}
           <FiUsers size={24} />
         </NavLink>
+        <NavLink to="/sales">
+          {isOpened && 'Sales'}
+          <FiDollarSign size={24} />
+        </NavLink>
         <NavLink to="/inventory">
           {isOpened && 'Inventory'}
-          {/* <img src={toolSvg} alt="tool" /> */}
+          <FiLayers size={24} />
+        </NavLink>
+        <NavLink to="/reports">
+          {isOpened && 'Reports'}
+          <FiFileText size={24} />
         </NavLink>
 
         <Switch
