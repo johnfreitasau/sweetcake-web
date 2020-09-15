@@ -2,8 +2,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 // import { Ring } from 'react-awesome-spinners';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
 import { useHistory } from 'react-router-dom';
+import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import Header from '../../../components/Header';
-
 import api from '../../../services/api';
 
 import ChangePageButton from '../../../components/ChangePageButton';
@@ -75,7 +75,7 @@ const ListCustomers: React.FC = () => {
       } catch (err) {
         addToast({
           type: 'error',
-          title: 'Erro na busca',
+          title: 'Fetch error',
         });
       } finally {
         setLoading(false);
@@ -115,7 +115,6 @@ const ListCustomers: React.FC = () => {
         <Header
           initialName={queryName}
           onSubmit={handleSearchSubmit}
-          disabled
           createPage="/customers/register"
           title="Customers"
           placeholder="Search for the customer"
@@ -126,17 +125,26 @@ const ListCustomers: React.FC = () => {
               <th>Name</th>
               <th>Phone</th>
               <th>address</th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>
             {customers.map((customer) => (
-              <S.CustomerRow
-                onClick={() => history.push(`/customers/edit/${customer.id}`)}
-                key={customer.id}
-              >
+              <S.CustomerRow key={customer.id}>
                 <td>{customer.name}</td>
                 <td>{customer.cpf}</td>
                 <td>{customer.phone_number}</td>
+                <td>
+                  <div>
+                    <FiEdit
+                      size={20}
+                      onClick={() =>
+                        history.push(`/customers/edit/${customer.id}`)
+                      }
+                    />
+                    <FiTrash2 size={20} />
+                  </div>
+                </td>
               </S.CustomerRow>
             ))}
           </tbody>

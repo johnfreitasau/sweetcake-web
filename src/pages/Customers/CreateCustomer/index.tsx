@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   FiUser,
   FiMail,
@@ -8,6 +9,7 @@ import {
   FiLock,
   FiCamera,
   FiArrowLeft,
+  FiChevronLeft,
 } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -28,6 +30,8 @@ interface ProfileFormData {
 
 const CreateCustomer: React.FC = () => {
   const { addToast } = useToast();
+
+  const history = useHistory();
 
   const handleSubmit = useCallback(
     async (data: ProfileFormData) => {
@@ -123,6 +127,7 @@ const CreateCustomer: React.FC = () => {
 
         <Button type="submit">Add Customer</Button>
       </Form>
+      <FiChevronLeft size={30} onClick={() => history.push(`/customers`)} />
     </Content>
   );
 };

@@ -11,6 +11,7 @@ import {
   FiShoppingCart,
   FiDollarSign,
   FiX,
+  FiChevronsLeft,
   FiUsers,
   FiLayers,
   FiMenu,
@@ -65,7 +66,7 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
     <Container isOpened={!!isOpened}>
       <div>
         <button type="button" onClick={handleToggleSidebar}>
-          {isOpened ? <FiX size={32} /> : <FiMenu size={32} />}
+          {isOpened ? <FiChevronsLeft size={32} /> : <FiMenu size={32} />}
         </button>
       </div>
       <nav>

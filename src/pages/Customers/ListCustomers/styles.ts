@@ -48,6 +48,10 @@ export const Table = styled.table`
       text-align: right;
       padding-right: 16px;
     }
+    th:nth-child(4) {
+      text-align: right;
+      padding-right: 16px;
+    }
   }
 `;
 
@@ -65,13 +69,31 @@ export const CustomerRow = styled.tr`
   td:nth-child(3) {
     text-align: right;
     padding-right: 16px;
-    border-radius: 0 10px 10px 0;
   }
+  td:nth-child(4) {
+    text-align: right;
+    padding-right: 16px;
+    border-radius: 0 10px 10px 0;
+
+    div :nth-child(1):hover {
+      color: ${({ theme }) => theme.colors.gray};
+      cursor: pointer;
+    }
+
+    div :nth-child(2) {
+      margin-left: 10px;
+    }
+
+    div :nth-child(2):hover {
+      color: ${({ theme }) => theme.colors.gray};
+      cursor: pointer;
+    }
+  }
+
   background: ${({ theme }) => theme.colors.shape};
   font-size: 16px;
   transition: background 0.3s;
   &:hover {
-    cursor: pointer;
     background: ${({ theme }) => shade(0.4, theme.colors.shape)};
   }
 `;

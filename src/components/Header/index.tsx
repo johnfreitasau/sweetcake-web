@@ -13,7 +13,7 @@ interface SearchFormData {
 
 interface HeaderProps {
   onSubmit(data: SearchFormData, options?: FormHelpers): void;
-  disabled?: boolean;
+  // disabled?: boolean;
   initialName?: string | null;
   createPage: string;
   title: string;
@@ -23,7 +23,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({
   initialName,
   onSubmit,
-  disabled = false,
+  // disabled = false,
   createPage,
   title,
   placeholder,
@@ -45,13 +45,13 @@ const Header: React.FC<HeaderProps> = ({
         <InputSearch
           placeholder={placeholder}
           name="name"
-          disabled={disabled}
+          // disabled={disabled}
           clearValue={clearValue}
         />
         <SearchButton
           type="submit"
           style={{ marginLeft: 16 }}
-          disabled={disabled}
+          // disabled={disabled}
         />
       </S.Form>
 
