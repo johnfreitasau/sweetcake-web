@@ -52,6 +52,10 @@ export const Table = styled.table`
       text-align: right;
       padding-right: 16px;
     }
+    th:nth-child(5) {
+      text-align: right;
+      padding-right: 16px;
+    }
   }
 `;
 
@@ -71,6 +75,10 @@ export const CustomerRow = styled.tr`
     padding-right: 16px;
   }
   td:nth-child(4) {
+    text-align: right;
+    padding-right: 16px;
+  }
+  td:nth-child(5) {
     text-align: right;
     padding-right: 16px;
     border-radius: 0 10px 10px 0;

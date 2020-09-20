@@ -15,8 +15,9 @@ import Button from '../../../components/Button';
 interface Customer {
   id: string;
   name: string;
-  cpf: string;
-  phone_number: string;
+  email: string;
+  phoneNumber: string;
+  notes: string;
 }
 
 interface SearchFormData {
@@ -24,15 +25,7 @@ interface SearchFormData {
 }
 
 const ListCustomers: React.FC = () => {
-  const [customers, setCustomers] = useState<Customer[]>([
-    { id: '123', name: 'John', cpf: '1234', phone_number: '041378744' },
-    { id: '123', name: 'John', cpf: '1234', phone_number: '041378744' },
-    { id: '123', name: 'John', cpf: '1234', phone_number: '041378744' },
-    { id: '123', name: 'John', cpf: '1234', phone_number: '041378744' },
-    { id: '123', name: 'John', cpf: '1234', phone_number: '041378744' },
-    { id: '123', name: 'John', cpf: '1234', phone_number: '041378744' },
-    { id: '123', name: 'John', cpf: '1234', phone_number: '041378744' },
-  ]);
+  const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagesAvailable, setPagesAvailable] = useState(0);
   const [queryPage, setQueryPage] = useQueryParam('page', NumberParam);
@@ -44,6 +37,7 @@ const ListCustomers: React.FC = () => {
   const handleSearchSubmit = useCallback(
     ({ name }: SearchFormData) => {
       setQueryPage(1);
+      console.log('Search name:', name);
       setQueryName(name || undefined);
     },
     [setQueryName, setQueryPage],
@@ -51,15 +45,18 @@ const ListCustomers: React.FC = () => {
 
   const incrementPage = useCallback(() => {
     setQueryPage((state) => (state || 1) + 1);
+    console.log('Carregou o incrementPage');
   }, [setQueryPage]);
 
   const decrementPage = useCallback(() => {
     setQueryPage((state) => (state || 2) - 1);
+    console.log('Carregou o decrementPage');
   }, [setQueryPage]);
 
   useEffect(() => {
     async function loadCustomers(): Promise<void> {
       try {
+        console.log('Carregou o useEffect');
         setLoading(true);
         const response = await api.get<Customer[]>('/customers', {
           params: {
@@ -69,6 +66,10 @@ const ListCustomers: React.FC = () => {
         });
 
         const totalCount = response.headers['x-total-count'];
+
+        console.log(response.data);
+        console.log(totalCount);
+        console.log('pagesAvailable:', Math.ceil(totalCount / 7));
 
         setPagesAvailable(Math.ceil(totalCount / 7));
         setCustomers(response.data);
@@ -101,6 +102,13 @@ const ListCustomers: React.FC = () => {
     return (
       <S.Container>
         <S.Content>
+          <Header
+            initialName={queryName}
+            onSubmit={handleSearchSubmit}
+            createPage="/customers/register"
+            title="Customers"
+            placeholder="Search for the customer"
+          />
           <S.MessageContainer>
             <span>No customers found.</span>
           </S.MessageContainer>
@@ -123,8 +131,9 @@ const ListCustomers: React.FC = () => {
           <thead>
             <tr>
               <th>Name</th>
+              <th>Email</th>
               <th>Phone</th>
-              <th>address</th>
+              <th>Notes</th>
               <th> </th>
             </tr>
           </thead>
@@ -132,15 +141,15 @@ const ListCustomers: React.FC = () => {
             {customers.map((customer) => (
               <S.CustomerRow key={customer.id}>
                 <td>{customer.name}</td>
-                <td>{customer.cpf}</td>
-                <td>{customer.phone_number}</td>
+                <td>{customer.email}</td>
+                <td>{customer.phoneNumber}</td>
+                <td>{customer.notes}</td>
                 <td>
                   <div>
                     <FiEdit
                       size={20}
                       onClick={() =>
-                        history.push(`/customers/edit/${customer.id}`)
-                      }
+                        history.push(`/customers/edit/${customer.id}`)}
                     />
                     <FiTrash2 size={20} />
                   </div>
@@ -151,16 +160,19 @@ const ListCustomers: React.FC = () => {
         </S.Table>
 
         <S.Pagination>
-          {/* {!(queryPage === 1 || !queryPage) && ( */}
-          <ChangePageButton changePageTo="decrement" onClick={decrementPage} />
-          {/* )} */}
-          {/* {!(pagesAvailable <= 1 || queryPage === pagesAvailable) && ( */}
-          <ChangePageButton
-            changePageTo="increment"
-            onClick={incrementPage}
-            style={{ marginLeft: 'auto' }}
-          />
-          {/* )} */}
+          {!(queryPage === 1 || !queryPage) && (
+            <ChangePageButton
+              changePageTo="decrement"
+              onClick={decrementPage}
+            />
+          )}
+          {!(pagesAvailable <= 1 || queryPage === pagesAvailable) && (
+            <ChangePageButton
+              changePageTo="increment"
+              onClick={incrementPage}
+              style={{ marginLeft: 'auto' }}
+            />
+          )}
         </S.Pagination>
       </S.Content>
     </S.Container>
