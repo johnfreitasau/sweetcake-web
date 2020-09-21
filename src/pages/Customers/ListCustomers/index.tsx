@@ -36,27 +36,27 @@ const ListCustomers: React.FC = () => {
 
   const handleSearchSubmit = useCallback(
     ({ name }: SearchFormData) => {
+      // console.log('Search name:', name);
+
       setQueryPage(1);
-      console.log('Search name:', name);
-      setQueryName(name || undefined);
+      setQueryName(name);
+      // console.log('queryname:', queryName);
+      // console.log('querypage:', queryPage);
     },
     [setQueryName, setQueryPage],
   );
 
   const incrementPage = useCallback(() => {
     setQueryPage((state) => (state || 1) + 1);
-    console.log('Carregou o incrementPage');
   }, [setQueryPage]);
 
   const decrementPage = useCallback(() => {
     setQueryPage((state) => (state || 2) - 1);
-    console.log('Carregou o decrementPage');
   }, [setQueryPage]);
 
   useEffect(() => {
     async function loadCustomers(): Promise<void> {
       try {
-        console.log('Carregou o useEffect');
         setLoading(true);
         const response = await api.get<Customer[]>('/customers', {
           params: {
@@ -66,10 +66,6 @@ const ListCustomers: React.FC = () => {
         });
 
         const totalCount = response.headers['x-total-count'];
-
-        console.log(response.data);
-        console.log(totalCount);
-        console.log('pagesAvailable:', Math.ceil(totalCount / 7));
 
         setPagesAvailable(Math.ceil(totalCount / 7));
         setCustomers(response.data);
@@ -149,7 +145,8 @@ const ListCustomers: React.FC = () => {
                     <FiEdit
                       size={20}
                       onClick={() =>
-                        history.push(`/customers/edit/${customer.id}`)}
+                        history.push(`/customers/edit/${customer.id}`)
+                      }
                     />
                     <FiTrash2 size={20} />
                   </div>
