@@ -46,6 +46,26 @@ const ListCustomers: React.FC = () => {
     [setQueryName, setQueryPage],
   );
 
+  const handleEditButton = useCallback(
+    (customer) => {
+      // history.push(`/customers/edit/${id}`);
+      history.push({
+        pathname: `/customers/edit/${customer.id}`,
+        state: customer,
+      });
+    },
+    [history],
+  );
+
+  const handleDeleteButton = useCallback(
+    (id) => {
+      api.delete(`/customers/${id}`);
+
+      setCustomers(customers.filter((customer) => customer.id !== id));
+    },
+    [customers],
+  );
+
   const incrementPage = useCallback(() => {
     setQueryPage((state) => (state || 1) + 1);
   }, [setQueryPage]);
@@ -144,11 +164,14 @@ const ListCustomers: React.FC = () => {
                   <div>
                     <FiEdit
                       size={20}
-                      onClick={() =>
-                        history.push(`/customers/edit/${customer.id}`)
-                      }
+                      onClick={() => handleEditButton(customer)}
                     />
-                    <FiTrash2 size={20} />
+                    <FiTrash2
+                      size={20}
+                      onClick={() => {
+                        handleDeleteButton(customer.id);
+                      }}
+                    />
                   </div>
                 </td>
               </S.CustomerRow>

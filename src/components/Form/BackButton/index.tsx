@@ -16,7 +16,7 @@ const BackButton: React.FC<ButtonProps> = ({ ...rest }) => {
   return (
     <ButtonContainer type="button" onClick={handleNavigateBack} {...rest}>
       <FiChevronLeft size={24} />
-      VOLTAR
+      BACK
     </ButtonContainer>
   );
 };

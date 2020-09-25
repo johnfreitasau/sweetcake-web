@@ -114,8 +114,6 @@ const CreateCustomer: React.FC = () => {
   return (
     <Container>
       <Content>
-        <h1>New customer</h1>
-
         <header>
           <h1>Add new Customer</h1>
 
