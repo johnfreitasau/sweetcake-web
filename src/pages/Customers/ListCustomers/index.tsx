@@ -48,7 +48,7 @@ const ListCustomers: React.FC = () => {
 
   const handleEditButton = useCallback(
     (customer) => {
-      // history.push(`/customers/edit/${id}`);
+      // history.push(`/customers/${customer.id}`);
       history.push({
         pathname: `/customers/edit/${customer.id}`,
         state: customer,
@@ -166,6 +166,7 @@ const ListCustomers: React.FC = () => {
                       size={20}
                       onClick={() => handleEditButton(customer)}
                     />
+
                     <FiTrash2
                       size={20}
                       onClick={() => {
