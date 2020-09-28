@@ -11,7 +11,7 @@ const SaveButton: React.FC<ButtonProps> = ({ onClick, isLoading }) => {
   return (
     <ButtonContainer type="button" onClick={onClick} disabled={isLoading}>
       <FiCheck size={24} />
-      {isLoading ? 'CARREGANDO ...' : 'SALVAR'}
+      {isLoading ? 'Loading...' : 'SAVE'}
     </ButtonContainer>
   );
 };

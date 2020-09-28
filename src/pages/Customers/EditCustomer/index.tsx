@@ -5,7 +5,7 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import getValidationErrors from '../../../utils/getValidationErrors';
-import { BackButton, RegisterButton } from '../../../components/Form';
+import { BackButton, SaveButton } from '../../../components/Form';
 
 import { useToast } from '../../../hooks/toast';
 import api from '../../../services/api';
@@ -28,15 +28,6 @@ const EditCustomer: React.FC = () => {
 
   const { addToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  // const [customer, setCustomer] = useState<ICustomerFormData>({
-  //   name: 'John',
-  //   email: 'john@gmail.com',
-  //   phoneNumber: '444',
-  //   address: 'abc',
-  //   city: 'syndye',
-  //   postalCode: '222',
-  //   notes: 'abc',
-  // });
 
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
@@ -47,22 +38,16 @@ const EditCustomer: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: ICustomerFormData) => {
-      // formRef.current?.setErrors({});
+      formRef.current?.setErrors({});
 
       try {
         const schema = Yup.object().shape({
           name: Yup.string().required(),
-
           email: Yup.string().required().email('Digit a valid e-mail.'),
-
-          address: Yup.string().required('Address is required.'),
-
-          phoneNumber: Yup.string().required('Phone number is required.'),
-
-          city: Yup.string().required('City is required.'),
-
-          postalCode: Yup.string().required('Postal Code is required.'),
-
+          address: Yup.string(),
+          phoneNumber: Yup.string(),
+          city: Yup.string(),
+          postalCode: Yup.string(),
           notes: Yup.string(),
         });
 
@@ -100,14 +85,13 @@ const EditCustomer: React.FC = () => {
           `/customers/${customerFormData.state.id}`,
           formData,
         );
-        // updateCustomer(response.data);
 
         history.goBack();
 
         addToast({
           type: 'success',
           title: 'Success!',
-          description: 'New customer has been added.',
+          description: 'Customer has been saved.',
         });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -134,10 +118,7 @@ const EditCustomer: React.FC = () => {
 
           <section>
             <BackButton />
-            <RegisterButton
-              isLoading={isLoading}
-              onClick={handleSubmitButton}
-            />
+            <SaveButton isLoading={isLoading} onClick={handleSubmitButton} />
           </section>
         </header>
 

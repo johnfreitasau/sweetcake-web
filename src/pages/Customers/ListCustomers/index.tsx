@@ -36,19 +36,14 @@ const ListCustomers: React.FC = () => {
 
   const handleSearchSubmit = useCallback(
     ({ name }: SearchFormData) => {
-      // console.log('Search name:', name);
-
       setQueryPage(1);
       setQueryName(name);
-      // console.log('queryname:', queryName);
-      // console.log('querypage:', queryPage);
     },
     [setQueryName, setQueryPage],
   );
 
   const handleEditButton = useCallback(
     (customer) => {
-      // history.push(`/customers/${customer.id}`);
       history.push({
         pathname: `/customers/edit/${customer.id}`,
         state: customer,
@@ -61,9 +56,34 @@ const ListCustomers: React.FC = () => {
     (id) => {
       api.delete(`/customers/${id}`);
 
-      setCustomers(customers.filter((customer) => customer.id !== id));
+      // reload list
+      async function loadCustomers(): Promise<void> {
+        try {
+          setLoading(true);
+          const response = await api.get<Customer[]>('/customers', {
+            params: {
+              page: queryPage || 1,
+              name: queryName || undefined,
+            },
+          });
+
+          const totalCount = response.headers['x-total-count'];
+
+          setPagesAvailable(Math.ceil(totalCount / 7));
+          setCustomers(response.data);
+        } catch (err) {
+          addToast({
+            type: 'error',
+            title: 'Fetch error',
+          });
+        } finally {
+          setLoading(false);
+        }
+      }
+      loadCustomers();
+      // setCustomers(customers.filter((customer) => customer.id !== id));
     },
-    [customers],
+    [addToast, queryName, queryPage],
   );
 
   const incrementPage = useCallback(() => {

@@ -40,17 +40,11 @@ const CreateCustomer: React.FC = () => {
       try {
         const schema = Yup.object().shape({
           name: Yup.string().required(),
-
           email: Yup.string().required().email('Digit a valid e-mail.'),
-
-          address: Yup.string().required('Address is required.'),
-
-          phoneNumber: Yup.string().required('Phone number is required.'),
-
-          city: Yup.string().required('City is required.'),
-
-          postalCode: Yup.string().required('Postal Code is required.'),
-
+          address: Yup.string(),
+          phoneNumber: Yup.string(),
+          city: Yup.string(),
+          postalCode: Yup.string(),
           notes: Yup.string(),
         });
 

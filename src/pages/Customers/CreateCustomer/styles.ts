@@ -12,13 +12,14 @@ export const Content = styled.div`
   background: ${({ theme }) => theme.colors.shape};
   margin: 0 auto;
   margin-top: 64px;
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 32px;
   header {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 32px;
     h1 {
       font-size: 24px;
       font-weight: 500;
@@ -30,7 +31,6 @@ export const Content = styled.div`
 `;
 
 export const Form = styled(UnForm)`
-  margin-top: 32px;
   div {
     display: flex;
     justify-content: space-between;
