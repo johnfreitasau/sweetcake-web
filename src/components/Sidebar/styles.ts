@@ -72,8 +72,26 @@ export const Container = styled.div<ContainerProps>`
   }
 `;
 
-export const SignOutButton = styled.button`
+export const SettingsButton = styled.button`
   margin-top: auto;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.colors.white};
+  strong {
+    font-size: 20px;
+    margin-right: 16px;
+  }
+  transition: color 0.3s;
+  &:hover {
+    color: ${({ theme }) => lighten(0.06, theme.colors.gray)};
+  }
+`;
+
+export const SignOutButton = styled.button`
   margin-bottom: 24px;
   display: flex;
   align-items: center;

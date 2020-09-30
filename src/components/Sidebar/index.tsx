@@ -8,14 +8,14 @@ import React, {
 import Switch from 'react-switch';
 import {
   FiGrid,
-  FiShoppingCart,
   FiDollarSign,
-  FiX,
+  FiBox,
   FiChevronsLeft,
   FiUsers,
   FiLayers,
   FiMenu,
   FiLogOut,
+  FiSettings,
   FiFileText,
 } from 'react-icons/fi';
 import { NavLink } from 'react-router-dom';
@@ -25,7 +25,7 @@ import { shade } from 'polished';
 import { ThemeContext } from 'styled-components';
 import { useAuth } from '../../hooks/auth';
 
-import { Container, SignOutButton } from './styles';
+import { Container, SettingsButton, SignOutButton } from './styles';
 import light from '../../styles/themes/light';
 import dark from '../../styles/themes/dark';
 
@@ -76,12 +76,16 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
           <FiGrid size={24} />
         </NavLink>
         <NavLink to="/customers">
-          {isOpened && 'Customers'}
+          {isOpened && 'Contacts'}
           <FiUsers size={24} />
         </NavLink>
         <NavLink to="/sales">
           {isOpened && 'Sales'}
           <FiDollarSign size={24} />
+        </NavLink>
+        <NavLink to="/products">
+          {isOpened && 'Products'}
+          <FiBox size={24} />
         </NavLink>
         <NavLink to="/inventory">
           {isOpened && 'Inventory'}
@@ -104,6 +108,11 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
           onColor={colors.background}
         />
       </nav>
+
+      <SettingsButton onClick={signOut}>
+        {isOpened && <strong>Settings</strong>}
+        <FiSettings size={24} />
+      </SettingsButton>
       <SignOutButton onClick={signOut}>
         {isOpened && <strong>SignOut</strong>}
         <FiLogOut size={24} />
