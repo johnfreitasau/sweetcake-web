@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiPlus, FiUserPlus } from 'react-icons/fi';
+import { FiPlus } from 'react-icons/fi';
 
 import { ContainerLink } from './styles';
 
@@ -10,7 +10,7 @@ interface LinkToCreatePageProps {
 const LinkToCreatePage: React.FC<LinkToCreatePageProps> = ({ to }) => {
   return (
     <ContainerLink to={to}>
-      <FiUserPlus size={24} />
+      <FiPlus size={24} />
     </ContainerLink>
   );
 };

@@ -20,7 +20,4 @@ export const ContainerLink = styled(Link)`
   &:hover {
     background: ${({ theme }) => lighten(0.1, theme.colors.grayHard)};
   }
-  svg {
-    margin-right: 8px;
-  }
 `;

@@ -12,20 +12,84 @@ import { useToast } from '../../../hooks/toast';
 import * as S from './styles';
 import Button from '../../../components/Button';
 
-interface Customer {
+interface Product {
   id: string;
-  name: string;
-  email: string;
-  phoneNumber: string;
-  notes: string;
+  productName: string;
+  category: string;
+  unitPrice: string;
+  quantityDiscount: string;
+  discount: string;
+  recipe: string;
+  discontinued: string;
 }
 
 interface SearchFormData {
   name: string;
 }
 
-const ListCustomers: React.FC = () => {
-  const [customers, setCustomers] = useState<Customer[]>([]);
+const ListProducts: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([
+    {
+      id: '1',
+      productName: 'Cookies',
+      category: 'Sweets',
+      unitPrice: '6.75',
+      quantityDiscount: '10',
+      discount: '10%',
+      recipe: 'aslkdjsalkajsdlkdj aldkjasd',
+      discontinued: 'true',
+    },
+    {
+      id: '2',
+      productName: 'Brownie',
+      category: 'Sweets',
+      unitPrice: '6.75',
+      quantityDiscount: '10',
+      discount: '10%',
+      recipe: 'aslkdjsalkajsdlkdj aldkjasd',
+      discontinued: 'true',
+    },
+    {
+      id: '3',
+      productName: 'Cupcake',
+      category: 'Sweets',
+      unitPrice: '6.75',
+      quantityDiscount: '10',
+      discount: '10%',
+      recipe: 'aslkdjsalkajsdlkdj aldkjasd',
+      discontinued: 'true',
+    },
+    {
+      id: '4',
+      productName: 'Mini-Cupcake',
+      category: 'Sweets',
+      unitPrice: '6.75',
+      quantityDiscount: '10',
+      discount: '10%',
+      recipe: 'aslkdjsalkajsdlkdj aldkjasd',
+      discontinued: 'true',
+    },
+    {
+      id: '5',
+      productName: 'Italian Soda',
+      category: 'Drinks',
+      unitPrice: '6.75',
+      quantityDiscount: '10',
+      discount: '10%',
+      recipe: 'aslkdjsalkajsdlkdj aldkjasd',
+      discontinued: 'true',
+    },
+    {
+      id: '6',
+      productName: 'Coffee',
+      category: 'Drinks',
+      unitPrice: '6.75',
+      quantityDiscount: '10',
+      discount: '10%',
+      recipe: 'aslkdjsalkajsdlkdj aldkjasd',
+      discontinued: 'true',
+    },
+  ]);
   const [loading, setLoading] = useState(true);
   const [pagesAvailable, setPagesAvailable] = useState(0);
   const [queryPage, setQueryPage] = useQueryParam('page', NumberParam);
@@ -43,10 +107,10 @@ const ListCustomers: React.FC = () => {
   );
 
   const handleEditButton = useCallback(
-    (customer) => {
+    (product) => {
       history.push({
-        pathname: `/customers/edit/${customer.id}`,
-        state: customer,
+        pathname: `/products/edit/${product.id}`,
+        state: product,
       });
     },
     [history],
@@ -54,13 +118,13 @@ const ListCustomers: React.FC = () => {
 
   const handleDeleteButton = useCallback(
     (id) => {
-      api.delete(`/customers/${id}`);
+      api.delete(`/products/${id}`);
 
       // reload list
-      async function loadCustomers(): Promise<void> {
+      async function loadProducts(): Promise<void> {
         try {
           setLoading(true);
-          const response = await api.get<Customer[]>('/customers', {
+          const response = await api.get<Product[]>('/products', {
             params: {
               page: queryPage || 1,
               name: queryName || undefined,
@@ -70,7 +134,7 @@ const ListCustomers: React.FC = () => {
           const totalCount = response.headers['x-total-count'];
 
           setPagesAvailable(Math.ceil(totalCount / 7));
-          setCustomers(response.data);
+          setProducts(response.data);
         } catch (err) {
           addToast({
             type: 'error',
@@ -80,7 +144,7 @@ const ListCustomers: React.FC = () => {
           setLoading(false);
         }
       }
-      loadCustomers();
+      loadProducts();
       // setCustomers(customers.filter((customer) => customer.id !== id));
     },
     [addToast, queryName, queryPage],
@@ -98,7 +162,7 @@ const ListCustomers: React.FC = () => {
     async function loadCustomers(): Promise<void> {
       try {
         setLoading(true);
-        const response = await api.get<Customer[]>('/customers', {
+        const response = await api.get<Product[]>('/products', {
           params: {
             page: queryPage || 1,
             name: queryName || undefined,
@@ -108,7 +172,7 @@ const ListCustomers: React.FC = () => {
         const totalCount = response.headers['x-total-count'];
 
         setPagesAvailable(Math.ceil(totalCount / 7));
-        setCustomers(response.data);
+        setProducts(response.data);
       } catch (err) {
         addToast({
           type: 'error',
@@ -134,19 +198,19 @@ const ListCustomers: React.FC = () => {
     );
   }
 
-  if (customers.length === 0) {
+  if (products.length === 0) {
     return (
       <S.Container>
         <S.Content>
           <Header
             initialName={queryName}
             onSubmit={handleSearchSubmit}
-            createPage="/customers/register"
-            title="Customers"
-            placeholder="Search for the customer"
+            createPage="/products/register"
+            title="Products"
+            placeholder="Search for the product"
           />
           <S.MessageContainer>
-            <span>No customers found.</span>
+            <span>No products found.</span>
           </S.MessageContainer>
         </S.Content>
       </S.Container>
@@ -159,38 +223,39 @@ const ListCustomers: React.FC = () => {
         <Header
           initialName={queryName}
           onSubmit={handleSearchSubmit}
-          createPage="/customers/register"
-          title="Customers"
-          placeholder="Search for the customer"
+          createPage="/products/register"
+          title="Products"
+          placeholder="Search for the product"
         />
         <S.Table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Notes</th>
-              <th> </th>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Unit Price</th>
+              <th>Quantity Discount</th>
+              <th>Discount</th>
             </tr>
           </thead>
           <tbody>
-            {customers.map((customer) => (
-              <S.CustomerRow key={customer.id}>
-                <td>{customer.name}</td>
-                <td>{customer.email}</td>
-                <td>{customer.phoneNumber}</td>
-                <td>{customer.notes}</td>
+            {products.map((product) => (
+              <S.CustomerRow key={product.id}>
+                <td>{product.productName}</td>
+                <td>{product.category}</td>
+                <td>{product.unitPrice}</td>
+                <td>{product.quantityDiscount}</td>
+                <td>{product.discount}</td>
                 <td>
                   <div>
                     <FiEdit
                       size={20}
-                      onClick={() => handleEditButton(customer)}
+                      onClick={() => handleEditButton(product)}
                     />
 
                     <FiTrash2
                       size={20}
                       onClick={() => {
-                        handleDeleteButton(customer.id);
+                        handleDeleteButton(product.id);
                       }}
                     />
                   </div>
@@ -220,4 +285,4 @@ const ListCustomers: React.FC = () => {
   );
 };
 
-export default ListCustomers;
+export default ListProducts;

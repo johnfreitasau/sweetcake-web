@@ -12,19 +12,19 @@ import api from '../../../services/api';
 import Input from '../../../components/Form/Input';
 import { Container, Content } from './styles';
 
-interface ICustomerFormData {
+interface IProductFormData {
   id: string;
-  name: string;
-  email: string;
-  phoneNumber: string;
-  address: string;
-  city: string;
-  postalCode: string;
-  notes?: string;
+  productName: string;
+  category: string;
+  unitPrice: string;
+  quantityDiscount: string;
+  discount: string;
+  recipe: string;
+  discontinued: string;
 }
 
-const EditCustomer: React.FC = () => {
-  const customerFormData = useLocation<ICustomerFormData>();
+const EditProduct: React.FC = () => {
+  const productFormData = useLocation<IProductFormData>();
 
   const { addToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -37,52 +37,45 @@ const EditCustomer: React.FC = () => {
   }, []);
 
   const handleSubmit = useCallback(
-    async (data: ICustomerFormData) => {
+    async (data: IProductFormData) => {
       formRef.current?.setErrors({});
 
       try {
         const schema = Yup.object().shape({
-          name: Yup.string().required(),
-          email: Yup.string().required().email('Digit a valid e-mail.'),
-          address: Yup.string(),
-          phoneNumber: Yup.string(),
-          city: Yup.string(),
-          postalCode: Yup.string(),
-          notes: Yup.string(),
+          productName: Yup.string().required(),
+          category: Yup.string().required(),
+          unitPrice: Yup.string().required(),
+          quantityDiscount: Yup.string(),
+          discount: Yup.string(),
+          recipe: Yup.string(),
+          discontinued: Yup.string(),
         });
 
         await schema.validate(data, { abortEarly: false });
 
         const {
-          name,
-          email,
-          phoneNumber,
-          address,
-          city,
-          postalCode,
-          notes,
+          id,
+          productName,
+          category,
+          unitPrice,
+          quantityDiscount,
+          discount,
+          recipe,
+          discontinued,
         } = data;
 
-        const formData = notes
-          ? {
-              name,
-              email,
-              phoneNumber,
-              address,
-              city,
-              postalCode,
-              notes,
-            }
-          : {
-              name,
-              email,
-              phoneNumber,
-              address,
-              city,
-              postalCode,
-            };
+        const formData = {
+          id,
+          productName,
+          category,
+          unitPrice,
+          quantityDiscount,
+          discount,
+          recipe,
+          discontinued,
+        };
         const response = await api.put(
-          `/customers/${customerFormData.state.id}`,
+          `/products/${productFormData.state.id}`,
           formData,
         );
 
@@ -91,7 +84,7 @@ const EditCustomer: React.FC = () => {
         addToast({
           type: 'success',
           title: 'Success!',
-          description: 'Customer has been saved.',
+          description: 'Product has been saved.',
         });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -103,7 +96,7 @@ const EditCustomer: React.FC = () => {
           type: 'error',
           title: 'Error',
           description:
-            'Error ocurred while adding the new customer. Please try again.',
+            'Error ocurred while adding the new product. Please try again.',
         });
       }
     },
@@ -114,7 +107,7 @@ const EditCustomer: React.FC = () => {
     <Container>
       <Content>
         <header>
-          <h1>Edit Customer</h1>
+          <h1>Edit Product</h1>
 
           <section>
             <BackButton />
@@ -125,7 +118,7 @@ const EditCustomer: React.FC = () => {
         <Form
           ref={formRef}
           onSubmit={handleSubmit}
-          initialData={customerFormData.state}
+          initialData={productFormData.state}
         >
           <Input name="name" icon={FiUser} placeholder="Name" />
           <Input name="email" icon={FiMail} placeholder="E-mail" />
@@ -145,4 +138,4 @@ const EditCustomer: React.FC = () => {
   );
 };
 
-export default EditCustomer;
+export default EditProduct;
