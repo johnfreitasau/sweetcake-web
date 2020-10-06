@@ -19,7 +19,7 @@ interface Product {
   unitPrice: string;
   quantityDiscount: string;
   discount: string;
-  recipe: string;
+  notes: string;
   discontinued: string;
 }
 
@@ -36,7 +36,7 @@ const ListProducts: React.FC = () => {
       unitPrice: '6.75',
       quantityDiscount: '10',
       discount: '10%',
-      recipe: 'aslkdjsalkajsdlkdj aldkjasd',
+      notes: 'aslkdjsalkajsdlkdj aldkjasd',
       discontinued: 'true',
     },
     {
@@ -46,7 +46,7 @@ const ListProducts: React.FC = () => {
       unitPrice: '6.75',
       quantityDiscount: '10',
       discount: '10%',
-      recipe: 'aslkdjsalkajsdlkdj aldkjasd',
+      notes: 'aslkdjsalkajsdlkdj aldkjasd',
       discontinued: 'true',
     },
     {
@@ -56,7 +56,7 @@ const ListProducts: React.FC = () => {
       unitPrice: '6.75',
       quantityDiscount: '10',
       discount: '10%',
-      recipe: 'aslkdjsalkajsdlkdj aldkjasd',
+      notes: 'aslkdjsalkajsdlkdj aldkjasd',
       discontinued: 'true',
     },
     {
@@ -66,7 +66,7 @@ const ListProducts: React.FC = () => {
       unitPrice: '6.75',
       quantityDiscount: '10',
       discount: '10%',
-      recipe: 'aslkdjsalkajsdlkdj aldkjasd',
+      notes: 'aslkdjsalkajsdlkdj aldkjasd',
       discontinued: 'true',
     },
     {
@@ -76,7 +76,7 @@ const ListProducts: React.FC = () => {
       unitPrice: '6.75',
       quantityDiscount: '10',
       discount: '10%',
-      recipe: 'aslkdjsalkajsdlkdj aldkjasd',
+      notes: 'aslkdjsalkajsdlkdj aldkjasd',
       discontinued: 'true',
     },
     {
@@ -86,7 +86,7 @@ const ListProducts: React.FC = () => {
       unitPrice: '6.75',
       quantityDiscount: '10',
       discount: '10%',
-      recipe: 'aslkdjsalkajsdlkdj aldkjasd',
+      notes: 'aslkdjsalkajsdlkdj aldkjasd',
       discontinued: 'true',
     },
   ]);

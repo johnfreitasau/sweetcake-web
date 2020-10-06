@@ -60,7 +60,6 @@ export const Table = styled.table`
       text-align: center;
       padding-right: 16px;
     }
-    }
   }
 `;
 

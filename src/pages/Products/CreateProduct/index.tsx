@@ -12,14 +12,14 @@ import api from '../../../services/api';
 import Input from '../../../components/Form/Input';
 import { Container, Content } from './styles';
 
-interface ProfileFormData {
-  name: string;
-  email: string;
-  phoneNumber: string;
-  address: string;
-  city: string;
-  postalCode: string;
-  notes?: string;
+interface IProductFormData {
+  id: string;
+  productName: string;
+  category: string;
+  unitPrice: string;
+  quantityDiscount: string;
+  discount: string;
+  notes: string;
 }
 
 const CreateCustomer: React.FC = () => {
@@ -34,50 +34,40 @@ const CreateCustomer: React.FC = () => {
   }, []);
 
   const handleSubmit = useCallback(
-    async (data: ProfileFormData) => {
+    async (data: IProductFormData) => {
       // formRef.current?.setErrors({});
 
       try {
         const schema = Yup.object().shape({
-          name: Yup.string().required(),
-          email: Yup.string().required().email('Digit a valid e-mail.'),
-          address: Yup.string(),
-          phoneNumber: Yup.string(),
-          city: Yup.string(),
-          postalCode: Yup.string(),
+          productName: Yup.string().required(),
+          category: Yup.string().required(),
+          unitPrice: Yup.string().required(),
+          quantityDiscount: Yup.string(),
+          discount: Yup.string(),
           notes: Yup.string(),
         });
 
         await schema.validate(data, { abortEarly: false });
 
         const {
-          name,
-          email,
-          phoneNumber,
-          address,
-          city,
-          postalCode,
+          id,
+          productName,
+          category,
+          unitPrice,
+          quantityDiscount,
+          discount,
           notes,
         } = data;
 
-        const formData = notes
-          ? {
-              name,
-              email,
-              phoneNumber,
-              address,
-              city,
-              postalCode,
-              notes,
-            }
-          : {
-              name,
-              email,
-              phoneNumber,
-              address,
-              city,
-              postalCode,
-            };
+        const formData = {
+          id,
+          productName,
+          category,
+          unitPrice,
+          quantityDiscount,
+          discount,
+          notes,
+        };
         const response = await api.post('/customers', formData);
         // updateCustomer(response.data);
 
@@ -109,7 +99,7 @@ const CreateCustomer: React.FC = () => {
     <Container>
       <Content>
         <header>
-          <h1>Add new Customer</h1>
+          <h1>Add a new Product</h1>
 
           <section>
             <BackButton />
@@ -121,18 +111,16 @@ const CreateCustomer: React.FC = () => {
         </header>
 
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <Input name="name" icon={FiUser} placeholder="Name" />
-          <Input name="email" icon={FiMail} placeholder="E-mail" />
+          <Input name="productName" icon={FiUser} placeholder="Product Name" />
+          <Input name="category" icon={FiMail} placeholder="Category" />
+          <Input name="unitPrice" icon={FiPhone} placeholder="Unit Price" />
           <Input
-            containerStyle={{ marginTop: 24 }}
-            name="phoneNumber"
-            icon={FiPhone}
-            placeholder="Phone Number"
+            name="quantityDiscount"
+            icon={FiMapPin}
+            placeholder="Quantity Discount"
           />
-          <Input name="address" icon={FiMapPin} placeholder="Address" />
-          <Input name="city" icon={FiMapPin} placeholder="City" />
-          <Input name="postalCode" icon={FiMapPin} placeholder="Portal Code" />
-          <Input name="notes" icon={FiEdit} placeholder="Notes" />
+          <Input name="discount" icon={FiMapPin} placeholder="Discount" />
+          <Input name="notes" icon={FiMapPin} placeholder="Notes" />
         </Form>
       </Content>
     </Container>

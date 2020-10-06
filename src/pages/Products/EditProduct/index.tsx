@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef, ChangeEvent } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { FiUser, FiMail, FiPhone, FiMapPin, FiEdit } from 'react-icons/fi';
 import { Form } from '@unform/web';
@@ -19,7 +19,7 @@ interface IProductFormData {
   unitPrice: string;
   quantityDiscount: string;
   discount: string;
-  recipe: string;
+  notes: string;
   discontinued: string;
 }
 
@@ -28,6 +28,7 @@ const EditProduct: React.FC = () => {
 
   const { addToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
@@ -47,7 +48,7 @@ const EditProduct: React.FC = () => {
           unitPrice: Yup.string().required(),
           quantityDiscount: Yup.string(),
           discount: Yup.string(),
-          recipe: Yup.string(),
+          notes: Yup.string(),
           discontinued: Yup.string(),
         });
 
@@ -60,7 +61,7 @@ const EditProduct: React.FC = () => {
           unitPrice,
           quantityDiscount,
           discount,
-          recipe,
+          notes,
           discontinued,
         } = data;
 
@@ -71,7 +72,7 @@ const EditProduct: React.FC = () => {
           unitPrice,
           quantityDiscount,
           discount,
-          recipe,
+          notes,
           discontinued,
         };
         const response = await api.put(
@@ -103,6 +104,13 @@ const EditProduct: React.FC = () => {
     [addToast, history],
   );
 
+  const handleCheckboxChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      console.log('Box ticked.');
+    },
+    [],
+  );
+
   return (
     <Container>
       <Content>
@@ -120,18 +128,20 @@ const EditProduct: React.FC = () => {
           onSubmit={handleSubmit}
           initialData={productFormData.state}
         >
-          <Input name="name" icon={FiUser} placeholder="Name" />
-          <Input name="email" icon={FiMail} placeholder="E-mail" />
+          <Input name="productName" icon={FiUser} placeholder="Product Name" />
+          <Input name="category" icon={FiMail} placeholder="Category" />
+          <Input name="unitPrice" icon={FiPhone} placeholder="Unit Price" />
           <Input
-            containerStyle={{ marginTop: 24 }}
-            name="phoneNumber"
-            icon={FiPhone}
-            placeholder="Phone Number"
+            name="quantityDiscount"
+            icon={FiMapPin}
+            placeholder="Quantity Discount"
           />
-          <Input name="address" icon={FiMapPin} placeholder="Address" />
-          <Input name="city" icon={FiMapPin} placeholder="City" />
-          <Input name="postalCode" icon={FiMapPin} placeholder="Portal Code" />
-          <Input name="notes" icon={FiEdit} placeholder="Notes" />
+          <Input name="discount" icon={FiMapPin} placeholder="Discount" />
+          <Input name="notes" icon={FiMapPin} placeholder="Notes" />
+          {/* <label> */}
+          {/* <Checkbox checked={isChecked} onChange={handleCheckboxChange} />
+          <span>Label Text</span> */}
+          {/* </label> */}
         </Form>
       </Content>
     </Container>

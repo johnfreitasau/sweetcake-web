@@ -11,7 +11,7 @@ const RegisterButton: React.FC<ButtonProps> = ({ onClick, isLoading }) => {
   return (
     <ButtonContainer type="button" onClick={onClick} disabled={isLoading}>
       <FiPlus size={24} />
-      {isLoading ? 'Loading ...' : 'ADD CUSTOMER'}
+      {isLoading ? 'Loading...' : 'CREATE'}
     </ButtonContainer>
   );
 };
