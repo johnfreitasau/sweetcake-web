@@ -18,6 +18,10 @@ import ListProducts from '../pages/Products/ListProducts';
 import CreateProduct from '../pages/Products/CreateProduct';
 import EditProduct from '../pages/Products/EditProduct';
 
+import ListOrders from '../pages/Orders/ListOrders';
+import CreateOrder from '../pages/Orders/CreateOrder';
+import EditOrder from '../pages/Orders/EditOrder';
+
 const Routes: React.FC = () => {
   return (
     <Switch>
@@ -36,6 +40,10 @@ const Routes: React.FC = () => {
       <Route path="/products" exact component={ListProducts} isPrivate />
       <Route path="/products/register" component={CreateProduct} isPrivate />
       <Route path="/products/edit/:id" component={EditProduct} isPrivate />
+
+      <Route path="/orders" exact component={ListOrders} isPrivate />
+      <Route path="/orders/register" component={CreateOrder} isPrivate />
+      <Route path="/orders/edit/:id" component={EditOrder} isPrivate />
     </Switch>
   );
 };

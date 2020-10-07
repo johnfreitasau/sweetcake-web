@@ -8,7 +8,7 @@ import React, {
 import Switch from 'react-switch';
 import {
   FiGrid,
-  FiDollarSign,
+  FiTruck,
   FiBox,
   FiChevronsLeft,
   FiUsers,
@@ -79,22 +79,22 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
           {isOpened && 'Contacts'}
           <FiUsers size={24} />
         </NavLink>
-        <NavLink to="/sales">
-          {isOpened && 'Sales'}
-          <FiDollarSign size={24} />
-        </NavLink>
         <NavLink to="/products">
           {isOpened && 'Products'}
           <FiBox size={24} />
         </NavLink>
-        <NavLink to="/inventory">
+        <NavLink to="/orders">
+          {isOpened && 'Orders'}
+          <FiTruck size={24} />
+        </NavLink>
+        {/* <NavLink to="/inventory">
           {isOpened && 'Inventory'}
           <FiLayers size={24} />
         </NavLink>
         <NavLink to="/reports">
           {isOpened && 'Reports'}
           <FiFileText size={24} />
-        </NavLink>
+        </NavLink> */}
 
         <Switch
           onChange={toggleTheme}
