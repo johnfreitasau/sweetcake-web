@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
 
+type TStyledOrderStatus = {
+  orderStatus: string;
+};
+
 export const Container = styled.div`
   width: 100%;
   display: flex;
@@ -64,10 +68,18 @@ export const Table = styled.table`
       text-align: center;
       padding-right: 16px;
     }
+    th:nth-child(8) {
+      text-align: center;
+      padding-right: 16px;
+    }
+    th:nth-child(9) {
+      text-align: center;
+      padding-right: 16px;
+    }
   }
 `;
 
-export const CustomerRow = styled.tr`
+export const CustomerRow = styled.tr<TStyledOrderStatus>`
   td {
     height: 56px;
   }
@@ -93,13 +105,34 @@ export const CustomerRow = styled.tr`
   td:nth-child(6) {
     text-align: center;
     padding-right: 16px;
-    color: green;
   }
   td:nth-child(7) {
     text-align: center;
     padding-right: 16px;
+    color: ${({ orderStatus }: any) => {
+      if (
+        orderStatus === 'Ready to pick-up' ||
+        orderStatus === 'Ready to deliver'
+      ) {
+        return '#39B60C';
+      }
+      if (orderStatus === 'In progress') {
+        return '#E1F011';
+      }
+      if (orderStatus === 'To be started') {
+        return '#EB3D3D';
+      }
+      if (orderStatus === 'Completed') {
+        return '#000';
+      }
+      return '#00000';
+    }};
   }
   td:nth-child(8) {
+    text-align: center;
+    padding-right: 16px;
+  }
+  td:nth-child(9) {
     text-align: right;
     padding-right: 16px;
     border-radius: 0 10px 10px 0;

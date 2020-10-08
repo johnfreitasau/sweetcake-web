@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 // import { Ring } from 'react-awesome-spinners';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
 import { useHistory } from 'react-router-dom';
-import { FiEdit, FiTrash2 } from 'react-icons/fi';
+import { FiCheckCircle, FiEdit, FiTrash2 } from 'react-icons/fi';
 import Header from '../../../components/Header';
 import api from '../../../services/api';
 
@@ -23,6 +23,7 @@ interface Order {
   orderTotal: string;
   orderStatus: string;
   orderDate: string;
+  paid: boolean;
 }
 
 interface SearchFormData {
@@ -42,6 +43,7 @@ const ListOrders: React.FC = () => {
       orderTotal: 'AU$ 34.56',
       orderStatus: 'Ready to pick-up',
       orderDate: '24/10/2020 - 12:00PM',
+      paid: true,
     },
     {
       id: '123',
@@ -52,8 +54,9 @@ const ListOrders: React.FC = () => {
       city: 'Sydney',
       postalCode: '2154',
       orderTotal: 'AU$ 34.56',
-      orderStatus: 'Ready to pick-up',
+      orderStatus: 'Ready to deliver',
       orderDate: '24/10/2020 - 12:00PM',
+      paid: true,
     },
     {
       id: '123',
@@ -66,6 +69,7 @@ const ListOrders: React.FC = () => {
       orderTotal: 'AU$ 34.56',
       orderStatus: 'In progress',
       orderDate: '24/10/2020 - 12:00PM',
+      paid: true,
     },
     {
       id: '123',
@@ -78,18 +82,7 @@ const ListOrders: React.FC = () => {
       orderTotal: 'AU$ 34.56',
       orderStatus: 'In progress',
       orderDate: '24/10/2020 - 12:00PM',
-    },
-    {
-      id: '123',
-      CustomerName: 'John',
-      email: 'john.freitasau@gmail.com',
-      phoneNumber: '333-444',
-      address: '31 Sherwin Ave, Castle Hill',
-      city: 'Sydney',
-      postalCode: '2154',
-      orderTotal: 'AU$ 34.56',
-      orderStatus: 'Ready to pick-up',
-      orderDate: '24/10/2020 - 12:00PM',
+      paid: true,
     },
     {
       id: '123',
@@ -102,6 +95,7 @@ const ListOrders: React.FC = () => {
       orderTotal: 'AU$ 34.56',
       orderStatus: 'To be started',
       orderDate: '24/10/2020 - 12:00PM',
+      paid: false,
     },
     {
       id: '123',
@@ -112,8 +106,22 @@ const ListOrders: React.FC = () => {
       city: 'Sydney',
       postalCode: '2154',
       orderTotal: 'AU$ 34.56',
-      orderStatus: 'Ready to pick-up',
+      orderStatus: 'Completed',
       orderDate: '24/10/2020 - 12:00PM',
+      paid: false,
+    },
+    {
+      id: '123',
+      CustomerName: 'John',
+      email: 'john.freitasau@gmail.com',
+      phoneNumber: '333-444',
+      address: '31 Sherwin Ave, Castle Hill',
+      city: 'Sydney',
+      postalCode: '2154',
+      orderTotal: 'AU$ 34.56',
+      orderStatus: 'Completed',
+      orderDate: '24/10/2020 - 12:00PM',
+      paid: false,
     },
   ]);
   const [loading, setLoading] = useState(true);
@@ -256,6 +264,7 @@ const ListOrders: React.FC = () => {
         <S.Table>
           <thead>
             <tr>
+              <th>&nbsp;</th>
               <th>Order ID</th>
               <th>Customer Name</th>
               <th>Email</th>
@@ -267,7 +276,14 @@ const ListOrders: React.FC = () => {
           </thead>
           <tbody>
             {orders.map((order) => (
-              <S.CustomerRow key={order.id}>
+              <S.CustomerRow key={order.id} orderStatus={order.orderStatus}>
+                <td>
+                  {order.paid && (
+                    <div>
+                      <FiCheckCircle size={20} color="#39B60C" title="Paid" />
+                    </div>
+                  )}
+                </td>
                 <td>{order.id}</td>
                 <td>{order.CustomerName}</td>
                 <td>{order.email}</td>
@@ -277,10 +293,15 @@ const ListOrders: React.FC = () => {
                 <td>{order.orderDate}</td>
                 <td>
                   <div>
-                    <FiEdit size={20} onClick={() => handleEditButton(order)} />
+                    <FiEdit
+                      size={20}
+                      onClick={() => handleEditButton(order)}
+                      title="Edit"
+                    />
 
                     <FiTrash2
                       size={20}
+                      title="Delete"
                       onClick={() => {
                         handleDeleteButton(order.id);
                       }}
