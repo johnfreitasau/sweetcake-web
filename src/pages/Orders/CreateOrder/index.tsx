@@ -57,7 +57,7 @@ const CreateOrder: React.FC = () => {
         contractFormRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
-          client_id: Yup.string().required('Cliente é obrigatório'),
+          client_id: Yup.string().required('Customer is required'),
           delivery_price: Yup.string().default('0'),
         });
 
@@ -65,7 +65,7 @@ const CreateOrder: React.FC = () => {
 
         if (itemsAdded.length === 0) {
           addToast({
-            title: 'Adicione materiais a este contrato',
+            title: 'You need to add items to this order.',
             type: 'error',
           });
           return;
@@ -86,7 +86,7 @@ const CreateOrder: React.FC = () => {
         contractFormRef.current?.reset();
         setItemsAdded([]);
         addToast({
-          title: 'Contrato criado com sucesso!',
+          title: 'Order created successfully!',
           type: 'success',
         });
       } catch (err) {
@@ -120,14 +120,13 @@ const CreateOrder: React.FC = () => {
 
         <ContractForm onSubmit={handleSubmit} formRef={contractFormRef} />
 
+        <ItemsForm addMaterial={setItemsAdded} />
         {itemsAdded.length !== 0 && (
           <ItemsAddedCard
             products={itemsAdded}
             onClickRemoveButton={handleRemoveMaterial}
           />
         )}
-
-        <ItemsForm addMaterial={setItemsAdded} />
       </Content>
     </Container>
   );

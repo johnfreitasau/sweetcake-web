@@ -14,16 +14,13 @@ import Button from '../../../components/Button';
 
 interface Order {
   id: string;
-  CustomerName: string;
-  email: string;
-  phoneNumber: string;
-  address: string;
-  city: string;
-  postalCode: string;
-  orderTotal: string;
-  orderStatus: string;
+  customerName: string;
   orderDate: string;
-  paid: boolean;
+  deliveryDate: string;
+  status: string;
+  paymentMethod: string;
+  paid: string;
+  total: string;
 }
 
 interface SearchFormData {
@@ -34,94 +31,53 @@ const ListOrders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([
     {
       id: '123',
-      CustomerName: 'John',
-      email: 'john.freitasau@gmail.com',
-      phoneNumber: '333-444',
-      address: '31 Sherwin Ave, Castle Hill',
-      city: 'Sydney',
-      postalCode: '2154',
-      orderTotal: 'AU$ 34.56',
-      orderStatus: 'Ready to pick-up',
+      customerName: 'John',
       orderDate: '24/10/2020 - 12:00PM',
-      paid: true,
+      deliveryDate: '24/10/2020 - 12:00PM',
+      status: 'Delivered',
+      paymentMethod: 'Bank deposit',
+      paid: 'OK',
+      total: 'AU$ 34.56',
     },
     {
       id: '123',
-      CustomerName: 'John',
-      email: 'john.freitasau@gmail.com',
-      phoneNumber: '333-444',
-      address: '31 Sherwin Ave, Castle Hill',
-      city: 'Sydney',
-      postalCode: '2154',
-      orderTotal: 'AU$ 34.56',
-      orderStatus: 'Ready to deliver',
+      customerName: 'John',
       orderDate: '24/10/2020 - 12:00PM',
-      paid: true,
+      deliveryDate: '24/10/2020 - 12:00PM',
+      status: 'Delivered',
+      paymentMethod: 'Bank deposit',
+      paid: 'OK',
+      total: 'AU$ 34.56',
     },
     {
       id: '123',
-      CustomerName: 'John',
-      email: 'john.freitasau@gmail.com',
-      phoneNumber: '333-444',
-      address: '31 Sherwin Ave, Castle Hill',
-      city: 'Sydney',
-      postalCode: '2154',
-      orderTotal: 'AU$ 34.56',
-      orderStatus: 'In progress',
+      customerName: 'John',
       orderDate: '24/10/2020 - 12:00PM',
-      paid: true,
+      deliveryDate: '24/10/2020 - 12:00PM',
+      status: 'Delivered',
+      paymentMethod: 'Bank deposit',
+      paid: 'OK',
+      total: 'AU$ 34.56',
     },
     {
       id: '123',
-      CustomerName: 'John',
-      email: 'john.freitasau@gmail.com',
-      phoneNumber: '333-444',
-      address: '31 Sherwin Ave, Castle Hill',
-      city: 'Sydney',
-      postalCode: '2154',
-      orderTotal: 'AU$ 34.56',
-      orderStatus: 'In progress',
+      customerName: 'John',
       orderDate: '24/10/2020 - 12:00PM',
-      paid: true,
+      deliveryDate: '24/10/2020 - 12:00PM',
+      status: 'Delivered',
+      paymentMethod: 'Bank deposit',
+      paid: 'OK',
+      total: 'AU$ 34.56',
     },
     {
       id: '123',
-      CustomerName: 'John',
-      email: 'john.freitasau@gmail.com',
-      phoneNumber: '333-444',
-      address: '31 Sherwin Ave, Castle Hill',
-      city: 'Sydney',
-      postalCode: '2154',
-      orderTotal: 'AU$ 34.56',
-      orderStatus: 'To be started',
+      customerName: 'John',
       orderDate: '24/10/2020 - 12:00PM',
-      paid: false,
-    },
-    {
-      id: '123',
-      CustomerName: 'John',
-      email: 'john.freitasau@gmail.com',
-      phoneNumber: '333-444',
-      address: '31 Sherwin Ave, Castle Hill',
-      city: 'Sydney',
-      postalCode: '2154',
-      orderTotal: 'AU$ 34.56',
-      orderStatus: 'Completed',
-      orderDate: '24/10/2020 - 12:00PM',
-      paid: false,
-    },
-    {
-      id: '123',
-      CustomerName: 'John',
-      email: 'john.freitasau@gmail.com',
-      phoneNumber: '333-444',
-      address: '31 Sherwin Ave, Castle Hill',
-      city: 'Sydney',
-      postalCode: '2154',
-      orderTotal: 'AU$ 34.56',
-      orderStatus: 'Completed',
-      orderDate: '24/10/2020 - 12:00PM',
-      paid: false,
+      deliveryDate: '24/10/2020 - 12:00PM',
+      status: 'Delivered',
+      paymentMethod: 'Bank deposit',
+      paid: 'OK',
+      total: 'AU$ 34.56',
     },
   ]);
   const [loading, setLoading] = useState(true);
@@ -264,33 +220,28 @@ const ListOrders: React.FC = () => {
         <S.Table>
           <thead>
             <tr>
-              <th>&nbsp;</th>
               <th>Order ID</th>
               <th>Customer Name</th>
-              <th>Email</th>
-              <th>Phone Number</th>
-              <th>Total</th>
-              <th>Order Status</th>
               <th>Order Date</th>
+              <th>Delivery Date</th>
+              <th>Payment Method</th>
+              <th>Paid</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {orders.map((order) => (
-              <S.CustomerRow key={order.id} orderStatus={order.orderStatus}>
-                <td>
-                  {order.paid && (
-                    <div>
-                      <FiCheckCircle size={20} color="#39B60C" title="Paid" />
-                    </div>
-                  )}
-                </td>
+              <S.CustomerRow key={order.id} orderStatus={order.status}>
                 <td>{order.id}</td>
-                <td>{order.CustomerName}</td>
-                <td>{order.email}</td>
-                <td>{order.phoneNumber}</td>
-                <td>{order.orderTotal}</td>
-                <td>{order.orderStatus}</td>
+                <td>{order.customerName}</td>
                 <td>{order.orderDate}</td>
+                <td>{order.deliveryDate}</td>
+                <td>{order.paymentMethod}</td>
+                <td>{order.paid}</td>
+                <td>{order.total}</td>
+                <td>{order.status}</td>
                 <td>
                   <div>
                     <FiEdit

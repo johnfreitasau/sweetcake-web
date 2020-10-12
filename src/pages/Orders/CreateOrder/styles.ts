@@ -7,19 +7,21 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  max-width: 900px;
+  max-width: 1100px;
   width: 100%;
   background: ${({ theme }) => theme.colors.shape};
   margin: 0 auto;
   margin-top: 64px;
   border-radius: 10px;
   padding: 32px;
+  border: 1px black;
   header {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 32px;
+
     h1 {
       font-size: 24px;
       font-weight: 500;

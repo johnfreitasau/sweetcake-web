@@ -76,7 +76,7 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
           <FiGrid size={24} />
         </NavLink>
         <NavLink to="/customers">
-          {isOpened && 'Contacts'}
+          {isOpened && 'Customers'}
           <FiUsers size={24} />
         </NavLink>
         <NavLink to="/products">

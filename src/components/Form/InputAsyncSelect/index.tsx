@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { OptionTypeBase, StylesConfig, Theme } from 'react-select';
 import Select, { Props as AsyncProps } from 'react-select/async';
 import { useField } from '@unform/core';
@@ -19,6 +19,9 @@ const InputAsyncSelect: React.FC<Props> = ({
 }) => {
   const selectRef = useRef(null);
   const { fieldName, defaultValue, registerField, error } = useField(name);
+
+  // JF
+  const [selectValue, setSelectValue] = useState({});
 
   const colourStyles: StylesConfig = {
     control: (styles) => ({
@@ -90,11 +93,22 @@ const InputAsyncSelect: React.FC<Props> = ({
     });
   }, [fieldName, registerField, rest.isMulti]);
 
+  const handleSelectedValue = useCallback((e) => {
+    console.log('e', e);
+    console.log('xxx');
+    console.log('label_name', label_name);
+    console.log('selectRef', selectRef);
+    // console.log(selectValue);
+  }, []);
+
   return (
     <LabelContainer htmlFor={label_name || name}>
       {label}
       <Select
+        onChange={handleSelectedValue}
         cacheOptions
+        isClearable
+        isSearchable
         defaultValue={defaultValue}
         ref={selectRef}
         classNamePrefix="react-select"
@@ -103,7 +117,7 @@ const InputAsyncSelect: React.FC<Props> = ({
         styles={colourStyles}
         name={label_name || name}
         id={label_name || name}
-        loadingMessage={() => 'Carregando ...'}
+        loadingMessage={() => 'Loading ...'}
         {...rest}
       />
     </LabelContainer>

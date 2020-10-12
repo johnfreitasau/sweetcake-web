@@ -10,8 +10,14 @@ export const Form = styled(UnForm)`
   align-items: flex-end;
 `;
 
-export const DeliveryPriceInput = styled(InputCurrency)`
-  max-width: 190px;
+export const DeliveryFeeInput = styled(InputCurrency)`
+  max-width: 200px;
+  width: 100%;
+  margin-left: 16px;
+`;
+
+export const DeliveryDateInput = styled(InputCurrency)`
+  max-width: 200px;
   width: 100%;
   margin-left: 16px;
 `;

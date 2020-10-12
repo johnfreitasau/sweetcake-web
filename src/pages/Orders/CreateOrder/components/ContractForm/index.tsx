@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FormHandles } from '@unform/core';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
+import Select from 'react-select';
 
 import api from '../../../../../services/api';
 
 import { InputAsyncSelect } from '../../../../../components/Form';
 
-import { Form, DeliveryPriceInput } from './styles';
+import { Form, DeliveryFeeInput, DeliveryDateInput } from './styles';
 
 interface Customer {
   // id: string;
@@ -27,7 +28,8 @@ interface Option {
 
 interface ContractFormData {
   client_id: string;
-  delivery_price?: string;
+  deliveryFee?: string;
+  deliveryDate: string;
 }
 
 interface ContractFormProps {
@@ -44,6 +46,12 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
   const [optionsIsLoading, setOptionsIsLoading] = useState(true);
   const [clientsPage, setClientsPage] = useState(1);
   const [clientsPagesAvailable, setClientsPagesAvailable] = useState(0);
+  const [enableCustomerInfo, setEnableCustomerInfo] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState([
+    { value: 'creditCard', label: 'Credit Card' },
+    { value: 'bankTransfer', label: 'Bank Transfer' },
+    { value: 'cash', label: 'Cash' },
+  ]);
 
   useEffect(() => {
     async function loadCustomerOptions(): Promise<void> {
@@ -70,7 +78,7 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
     }
 
     loadCustomerOptions();
-  }, []);
+  }, [queryName, queryPage]);
 
   const handleClientsMenuScrollToBottom = useCallback(async () => {
     if (clientsPage === clientsPagesAvailable) return;
@@ -93,7 +101,7 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
     setOptionsIsLoading(false);
   }, [clientsPage, clientsPagesAvailable]);
 
-  const handleLoadClientOptions = useCallback(
+  const handleLoadCustomerOptions = useCallback(
     async (inputValue: string, callback) => {
       const data = customerOptions.filter((customer) =>
         customer.label.includes(inputValue),
@@ -102,7 +110,7 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
       if (data.length === 0) {
         // fazer debaunce
         setOptionsIsLoading(true);
-        const response = await api.get<Customer[]>('/clients', {
+        const response = await api.get<Customer[]>('/customers', {
           params: {
             name: inputValue,
           },
@@ -111,9 +119,9 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
         setOptionsIsLoading(false);
 
         callback(
-          response.data.map((client) => ({
-            label: client.name,
-            value: client.id,
+          response.data.map((customer) => ({
+            label: customer.name,
+            value: customer.id,
           })),
         );
         return;
@@ -124,6 +132,22 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
     [customerOptions],
   );
 
+  // const handleSelectCustomer = useCallback(async (e) => {
+  //   console.log('current:', formRef.current);
+  //   // console.log('value:', formRef.select.state.value);
+  //   //    console.log(e.target.value);
+
+  //   //   this.setState({ selectedOption });
+  //   //   console.log(`Option selected:`, selectedOption);
+  //   // };
+  // }, []);
+
+  const handleSelectedValue = useCallback((e) => {
+    console.log('e', e);
+    console.log('selectRef', formRef);
+    // console.log(selectValue);
+  }, []);
+
   return (
     <div>
       <Form ref={formRef} onSubmit={onSubmit}>
@@ -132,13 +156,23 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
           label="Customer"
           name="client_id"
           defaultOptions={customerOptions}
-          loadOptions={handleLoadClientOptions}
+          loadOptions={handleLoadCustomerOptions}
           onMenuScrollToBottom={handleClientsMenuScrollToBottom}
           noOptionsMessage={() => 'Customer not found'}
           isLoading={optionsIsLoading}
+          onChange={handleSelectedValue}
         />
-        <DeliveryPriceInput name="delivery_price" label="Delivery Fee" />
+        <DeliveryFeeInput name="deliveryFee" label="Delivery Fee" />
+        <DeliveryDateInput name="deliveryDate" label="Delivery Date" />
+        <div>
+          <Select options={paymentMethod} />
+          <input type="checkbox" value="paid" /> Paid
+        </div>
       </Form>
+      {/* {
+  enableCustomerInfo && (
+    
+  )} */}
     </div>
   );
 };

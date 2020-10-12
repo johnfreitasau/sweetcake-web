@@ -109,6 +109,10 @@ export const CustomerRow = styled.tr<TStyledOrderStatus>`
   td:nth-child(7) {
     text-align: center;
     padding-right: 16px;
+  }
+  td:nth-child(8) {
+    text-align: center;
+    padding-right: 16px;
     color: ${({ orderStatus }: any) => {
       if (
         orderStatus === 'Ready to pick-up' ||
@@ -122,15 +126,11 @@ export const CustomerRow = styled.tr<TStyledOrderStatus>`
       if (orderStatus === 'To be started') {
         return '#EB3D3D';
       }
-      if (orderStatus === 'Completed') {
-        return '#000';
+      if (orderStatus === 'Delivered') {
+        return '#336600';
       }
-      return '#00000';
+      return '#000';
     }};
-  }
-  td:nth-child(8) {
-    text-align: center;
-    padding-right: 16px;
   }
   td:nth-child(9) {
     text-align: right;
