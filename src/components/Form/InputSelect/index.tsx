@@ -15,18 +15,17 @@ const InputAsyncSelect: React.FC<Props> = ({
   name,
   label,
   label_name,
+  options,
   ...rest
 }) => {
   const selectRef = useRef(null);
   const { fieldName, defaultValue, registerField, error } = useField(name);
 
-  // JF
-  // const [selectValue, setSelectValue] = useState({});
-
   const colourStyles: StylesConfig = {
     control: (styles) => ({
       ...styles,
       marginTop: 8,
+      marginLeft: 15,
       borderRadius: 10,
       borderColor: error ? '#EE4D64' : '#232129',
       fontSize: 18,
@@ -93,18 +92,10 @@ const InputAsyncSelect: React.FC<Props> = ({
     });
   }, [fieldName, registerField, rest.isMulti]);
 
-  const handleSelectedValue = useCallback((e) => {
-    console.log('e', e);
-    console.log('label_name', label_name);
-    console.log('selectRef', selectRef);
-    // console.log(selectValue);
-  }, []);
-
   return (
     <LabelContainer htmlFor={label_name || name}>
       {label}
       <Select
-        // onChange={handleSelectedValue}
         cacheOptions
         isClearable
         isSearchable
@@ -117,6 +108,7 @@ const InputAsyncSelect: React.FC<Props> = ({
         name={label_name || name}
         id={label_name || name}
         loadingMessage={() => 'Loading ...'}
+        options={options} // jf
         {...rest}
       />
     </LabelContainer>

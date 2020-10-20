@@ -120,7 +120,7 @@ const CreateOrder: React.FC = () => {
 
         <ContractForm onSubmit={handleSubmit} formRef={contractFormRef} />
 
-        <ItemsForm addMaterial={setItemsAdded} />
+        <ItemsForm addProduct={setItemsAdded} />
         {itemsAdded.length !== 0 && (
           <ItemsAddedCard
             products={itemsAdded}

@@ -3,7 +3,7 @@ import { Form as UnForm } from '@unform/web';
 
 import { InputLabel } from '../../../../../components/Form';
 
-export const MaterialsForm = styled(UnForm)`
+export const ProductsForm = styled(UnForm)`
   margin-top: 16px;
 
   display: flex;

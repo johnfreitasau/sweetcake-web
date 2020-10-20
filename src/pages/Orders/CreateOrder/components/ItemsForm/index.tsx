@@ -15,7 +15,7 @@ import { InputAsyncSelect } from '../../../../../components/Form';
 import getValidationErrors from '../../../../../utils/getValidationErrors';
 import { formatPrice } from '../../../../../utils/format';
 
-import { MaterialsForm, QuantityInput, AddButton } from './styles';
+import { ProductsForm, QuantityInput, AddButton } from './styles';
 
 // interface MProduct {
 //   id: string;
@@ -45,14 +45,14 @@ interface FormData {
 }
 
 interface ItemsFormProps {
-  addMaterial: React.Dispatch<React.SetStateAction<Product[]>>;
+  addProduct: React.Dispatch<React.SetStateAction<Product[]>>;
 }
 
-const ItemsForm: React.FC<ItemsFormProps> = ({ addMaterial }) => {
+const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
   const formRef = useRef<FormHandles>(null);
 
-  const [materialsPagesAvailable, setMaterialsPagesAvailable] = useState(0);
-  const [materials, setMaterials] = useState<Product[]>([
+  const [productsPagesAvailable, setProductsPagesAvailable] = useState(0);
+  const [products, setProducts] = useState<Product[]>([
     {
       id: '1',
       productName: 'Cookies',
@@ -86,39 +86,39 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addMaterial }) => {
       discontinued: false,
     },
   ]);
-  const [materialsPage, setMaterialsPage] = useState(1);
+  const [productsPage, setProductsPage] = useState(1);
   const [optionsIsLoading, setOptionsIsLoading] = useState(true);
 
   useEffect(() => {
-    async function loadMaterials(): Promise<void> {
-      const response = await api.get<Product[]>('/materials');
+    async function loadProducts(): Promise<void> {
+      const response = await api.get<Product[]>('/products');
 
-      const materialsTotalCount = response.headers['x-total-count'];
+      const productsTotalCount = response.headers['x-total-count'];
 
-      setMaterialsPagesAvailable(Math.ceil(materialsTotalCount / 7));
-      setMaterials(response.data);
+      setProductsPagesAvailable(Math.ceil(productsTotalCount / 7));
+      setProducts(response.data);
       setOptionsIsLoading(false);
     }
 
-    loadMaterials();
+    loadProducts();
   }, []);
 
-  const materialOptions = useMemo<Option[]>(() => {
-    return materials.map((material) => ({
-      value: material.id,
-      label: `${material.productName} - ${formatPrice(material.unitPrice)}`,
+  const productOptions = useMemo<Option[]>(() => {
+    return products.map((product) => ({
+      value: product.id,
+      label: `${product.productName} - ${formatPrice(product.unitPrice)}`,
     }));
-  }, [materials]);
+  }, [products]);
 
-  const handleLoadMaterialsOptions = useCallback(
+  const handleLoadProductsOptions = useCallback(
     async (inputValue: string, callback) => {
-      const data = materialOptions.filter((material) =>
-        material.label.includes(inputValue),
+      const data = productOptions.filter((product) =>
+        product.label.includes(inputValue),
       );
 
       if (data.length === 0) {
         setOptionsIsLoading(true);
-        const response = await api.get<Product[]>('/materials', {
+        const response = await api.get<Product[]>('/products', {
           params: {
             name: inputValue,
           },
@@ -127,9 +127,9 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addMaterial }) => {
         setOptionsIsLoading(false);
 
         callback(
-          response.data.map((material) => ({
-            label: material.productName,
-            value: material.id,
+          response.data.map((product) => ({
+            label: product.productName,
+            value: product.id,
           })),
         );
         return;
@@ -137,24 +137,24 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addMaterial }) => {
 
       callback(data);
     },
-    [materialOptions],
+    [productOptions],
   );
 
-  const handleMaterialsMenuScrollToBottom = useCallback(async () => {
-    if (materialsPage === materialsPagesAvailable) return;
+  const handleProductsMenuScrollToBottom = useCallback(async () => {
+    if (productsPage === productsPagesAvailable) return;
 
     setOptionsIsLoading(true);
 
-    const response = await api.get<Product[]>('/materials', {
+    const response = await api.get<Product[]>('/products', {
       params: {
-        page: materialsPage + 1,
+        page: productsPage + 1,
       },
     });
 
-    setMaterials((state) => [...state, ...response.data]);
-    setMaterialsPage(materialsPage + 1);
+    setProducts((state) => [...state, ...response.data]);
+    setProductsPage(productsPage + 1);
     setOptionsIsLoading(false);
-  }, [materialsPage, materialsPagesAvailable]);
+  }, [productsPage, productsPagesAvailable]);
 
   const handleSubmit = useCallback(
     async (data: FormData) => {
@@ -162,27 +162,27 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addMaterial }) => {
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
-          id: Yup.string().required('Material é obrigatório'),
-          quantity: Yup.string().required('Quantidade é obrigatória'),
+          id: Yup.string().required('Product is required.'),
+          quantity: Yup.string().required('Quantity is required.'),
         });
 
         await schema.validate(data, { abortEarly: false });
 
         const { id, quantity } = data;
 
-        const materialFind = materials.find(
-          (material) => material.id === id,
+        const productFind = products.find(
+          (product) => product.id === id,
         ) as Product;
 
-        const addedMaterial = {
-          ...materialFind,
+        const addedProduct = {
+          ...productFind,
           quantity_daily_price_formatted: formatPrice(
-            Number(data.quantity) * materialFind.unitPrice,
+            Number(data.quantity) * productFind.unitPrice,
           ),
           quantity,
         } as Product;
 
-        addMaterial((state) => [...state, addedMaterial]);
+        addProduct((state) => [...state, addedProduct]);
         formRef.current?.reset();
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -192,19 +192,19 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addMaterial }) => {
         }
       }
     },
-    [addMaterial, materials],
+    [addProduct, products],
   );
 
   return (
-    <MaterialsForm ref={formRef} onSubmit={handleSubmit}>
+    <ProductsForm ref={formRef} onSubmit={handleSubmit}>
       <InputAsyncSelect
         name="id"
         label="Product"
         placeholder="Choose the product"
         noOptionsMessage={() => 'No product found.'}
-        defaultOptions={materialOptions}
-        loadOptions={handleLoadMaterialsOptions}
-        onMenuScrollToBottom={handleMaterialsMenuScrollToBottom}
+        defaultOptions={productOptions}
+        loadOptions={handleLoadProductsOptions}
+        onMenuScrollToBottom={handleProductsMenuScrollToBottom}
         isLoading={optionsIsLoading}
       />
       <QuantityInput
@@ -218,7 +218,7 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addMaterial }) => {
       <AddButton type="submit">
         <FiPlus size={24} />
       </AddButton>
-    </MaterialsForm>
+    </ProductsForm>
   );
 };
 
