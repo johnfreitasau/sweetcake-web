@@ -1,17 +1,24 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
-import { OptionTypeBase, StylesConfig, Theme } from 'react-select';
-import Select, { Props as AsyncProps } from 'react-select/async';
+import Select, {
+  GroupedOptionsType,
+  OptionsType,
+  OptionTypeBase,
+  StylesConfig,
+  Theme,
+} from 'react-select';
+// import Select, { Props as AsyncProps } from 'react-select/async';
 import { useField } from '@unform/core';
 
 import { LabelContainer } from './styles';
 
-interface Props extends AsyncProps<OptionTypeBase> {
+interface Props {
   name: string;
   label: string;
   label_name?: string;
+  options?: GroupedOptionsType<OptionTypeBase> | OptionsType<OptionTypeBase>;
 }
 
-const InputAsyncSelect: React.FC<Props> = ({
+const InputSelect: React.FC<Props> = ({
   name,
   label,
   label_name,
@@ -68,15 +75,6 @@ const InputAsyncSelect: React.FC<Props> = ({
       name: fieldName,
       ref: selectRef.current,
       getValue: (ref: any) => {
-        if (rest.isMulti) {
-          if (!ref.select.state.value) {
-            return [];
-          }
-
-          return ref.select.state.value.map(
-            (option: OptionTypeBase) => option.value,
-          );
-        }
         if (!ref.select.state.value) {
           return '';
         }
@@ -90,7 +88,7 @@ const InputAsyncSelect: React.FC<Props> = ({
         ref.select.select.clearValue();
       },
     });
-  }, [fieldName, registerField, rest.isMulti]);
+  }, [fieldName, registerField]);
 
   return (
     <LabelContainer htmlFor={label_name || name}>
@@ -99,7 +97,7 @@ const InputAsyncSelect: React.FC<Props> = ({
         cacheOptions
         isClearable
         isSearchable
-        defaultValue={defaultValue}
+        // defaultValue={defaultValue}
         ref={selectRef}
         classNamePrefix="react-select"
         theme={themeProps}
@@ -107,12 +105,12 @@ const InputAsyncSelect: React.FC<Props> = ({
         styles={colourStyles}
         name={label_name || name}
         id={label_name || name}
+        options={options}
         loadingMessage={() => 'Loading ...'}
-        options={options} // jf
         {...rest}
       />
     </LabelContainer>
   );
 };
 
-export default InputAsyncSelect;
+export default InputSelect;

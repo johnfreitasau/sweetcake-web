@@ -15,8 +15,8 @@ import {
   DeliveryFeeInput,
   InputFormRow,
   DeliveryDateInput,
-  PaymentMethodInputSelect,
 } from './styles';
+import CheckboxInput from '../../../../../components/Form/CheckboxInput';
 
 interface Customer {
   // id: string;
@@ -46,6 +46,12 @@ interface ContractFormProps {
   formRef: React.RefObject<FormHandles>;
 }
 
+interface CheckboxOption {
+  id: string;
+  value: string;
+  label: string;
+}
+
 const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
   // JF
   const [queryPage, setQueryPage] = useQueryParam('page', NumberParam);
@@ -61,11 +67,6 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
   const [customersPage, setCustomersPage] = useState(1);
   const [customersPagesAvailable, setCustomersPagesAvailable] = useState(0);
   const [enableCustomerInfo, setEnableCustomerInfo] = useState(false);
-  // const [paymentMethod, setPaymentMethod] = useState([
-  //   { value: 'creditCard', label: 'Credit Card' },
-  //   { value: 'bankTransfer', label: 'Bank Transfer' },
-  //   { value: 'cash', label: 'Cash' },
-  // ]);
 
   useEffect(() => {
     async function loadCustomerOptions(): Promise<void> {
@@ -215,16 +216,20 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
         <InputFormRow>
           <DeliveryDateInput name="Delivery Date" placeholder="Delivery Date" />
           <InputSelect
-            placeholder="Choose the payment method"
+            // placeholder="Choose the payment method"
             label="Payment Method"
             name="product_id"
-            // defaultOptions={paymentMethodOptions}
-            loadOptions={handleLoadPaymentMethodOptions}
-            noOptionsMessage={() => 'payment not found'}
-            isLoading={optionsIsLoading}
             options={paymentMethodOptions}
+            // defaultOptions={paymentMethodOptions}
+            // loadOptions={handleLoadPaymentMethodOptions}
+            // noOptionsMessage={() => 'payment not found'}
+            // isLoading={optionsIsLoading}
           />
-          <input type="checkbox" value="paid" /> Paid
+          {/* <input type="checkbox" value="paid" /> Paid */}
+          <CheckboxInput
+            name="checkbox"
+            options={[{ id: 'paid', value: 'paid', label: 'Order Paid' }]}
+          />
         </InputFormRow>
       </Form>
       {/* {

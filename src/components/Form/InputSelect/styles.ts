@@ -1,5 +1,5 @@
 import styled from 'styled-components';
 
 export const LabelContainer = styled.label`
-  width: 100%;
+  width: 370px;
 `;
