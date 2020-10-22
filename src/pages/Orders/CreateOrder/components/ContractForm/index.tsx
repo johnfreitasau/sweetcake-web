@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FormHandles } from '@unform/core';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
-import Select from 'react-select';
-
-import DatePickerInput from '../../../../../components/Form/DatePickerInput';
+// import Select from 'react-select';
+import DatePicker from 'react-datepicker';
 import 'react-day-picker/lib/style.css';
 
-import api from '../../../../../services/api';
-
+import DatePickerInput from '../../../../../components/Form/DatePickerInput';
 import { InputAsyncSelect, InputSelect } from '../../../../../components/Form';
+import CheckboxInput from '../../../../../components/Form/CheckboxInput';
+import api from '../../../../../services/api';
 
 import {
   Form,
@@ -16,11 +16,8 @@ import {
   InputFormRow,
   DeliveryDateInput,
 } from './styles';
-import CheckboxInput from '../../../../../components/Form/CheckboxInput';
 
 interface Customer {
-  // id: string;
-  // name: string;
   id: string;
   name: string;
   email: string;
@@ -67,6 +64,13 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
   const [customersPage, setCustomersPage] = useState(1);
   const [customersPagesAvailable, setCustomersPagesAvailable] = useState(0);
   const [enableCustomerInfo, setEnableCustomerInfo] = useState(false);
+
+  // DatePicker
+  const [startDate, setStartDate] = useState(new Date());
+  // const renderDayContents = (day, date) => {
+  //   const tooltipText = `Tooltip for date: ${date}`;
+  //   return <span title={tooltipText}>{getDate(date)}</span>;
+  // };
 
   useEffect(() => {
     async function loadCustomerOptions(): Promise<void> {
@@ -188,6 +192,10 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
     [customerOptions],
   );
 
+  const handleDateChange = useCallback((date) => {
+    setStartDate(date);
+  }, []);
+
   const handleSelectedValue = useCallback((e) => {
     console.log('e', e);
     console.log('selectRef', formRef);
@@ -215,20 +223,27 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
         </InputFormRow>
         <InputFormRow>
           <DeliveryDateInput name="Delivery Date" placeholder="Delivery Date" />
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => handleDateChange(date)}
+            showTimeSelect
+            dateFormat="Pp"
+            locale="es"
+            className="react-datepicker-styles"
+            // renderDayContents={renderDayContents}
+          />
+          {/* <DatePickerInput label="Date Order" name="dateOrder" /> */}
           <InputSelect
-            // placeholder="Choose the payment method"
             label="Payment Method"
             name="product_id"
             options={paymentMethodOptions}
-            // defaultOptions={paymentMethodOptions}
-            // loadOptions={handleLoadPaymentMethodOptions}
-            // noOptionsMessage={() => 'payment not found'}
-            // isLoading={optionsIsLoading}
           />
-          {/* <input type="checkbox" value="paid" /> Paid */}
           <CheckboxInput
             name="checkbox"
-            options={[{ id: 'paid', value: 'paid', label: 'Order Paid' }]}
+            options={[
+              { id: 'paid', value: 'paid', label: 'Order Paid' },
+              { id: 'pickup', value: 'pickup', label: 'Customer Pickup' },
+            ]}
           />
         </InputFormRow>
       </Form>

@@ -14,6 +14,11 @@ export const InputFormRow = styled.div`
   display: flex;
   align-items: flex-end;
   margin-top: 10px;
+
+  .react-datepicker-styles {
+    border-color: blue;
+    background: transparent;
+  }
 `;
 
 export const DeliveryFeeInput = styled(InputCurrency)`

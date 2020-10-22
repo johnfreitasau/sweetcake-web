@@ -42,17 +42,21 @@ const CheckboxInput: React.FC<Props> = ({ name, options, ...rest }) => {
     <CheckboxContainer>
       {options.map((option, index) => (
         <label htmlFor={option.id} key={option.id}>
-          <input
-            defaultChecked={defaultValue.find((dv: string) => dv === option.id)}
-            ref={(ref) => {
-              inputRefs.current[index] = ref as HTMLInputElement;
-            }}
-            value={option.value}
-            type="checkbox"
-            id={option.id}
-            {...rest}
-          />
-          {option.label}
+          <div>
+            <input
+              defaultChecked={defaultValue.find(
+                (dv: string) => dv === option.id,
+              )}
+              ref={(ref) => {
+                inputRefs.current[index] = ref as HTMLInputElement;
+              }}
+              value={option.value}
+              type="checkbox"
+              id={option.id}
+              {...rest}
+            />
+            {option.label}
+          </div>
         </label>
       ))}
     </CheckboxContainer>
