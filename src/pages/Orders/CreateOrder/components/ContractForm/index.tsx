@@ -1,21 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FormHandles } from '@unform/core';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
-// import Select from 'react-select';
-import DatePicker from 'react-datepicker';
-import 'react-day-picker/lib/style.css';
 
 import DatePickerInput from '../../../../../components/Form/DatePickerInput';
-import { InputAsyncSelect, InputSelect } from '../../../../../components/Form';
+import { SelectAsyncInput, SelectInput } from '../../../../../components/Form';
 import CheckboxInput from '../../../../../components/Form/CheckboxInput';
 import api from '../../../../../services/api';
 
-import {
-  Form,
-  DeliveryFeeInput,
-  InputFormRow,
-  DeliveryDateInput,
-} from './styles';
+import { Form, DeliveryFeeInput, InputFormRow } from './styles';
 
 interface Customer {
   id: string;
@@ -33,7 +25,7 @@ interface Option {
 }
 
 interface ContractFormData {
-  client_id: string;
+  customerId: string;
   deliveryFee?: string;
   deliveryDate: string;
 }
@@ -71,6 +63,8 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
   //   const tooltipText = `Tooltip for date: ${date}`;
   //   return <span title={tooltipText}>{getDate(date)}</span>;
   // };
+
+  // datepicker TEST 2
 
   useEffect(() => {
     async function loadCustomerOptions(): Promise<void> {
@@ -206,10 +200,10 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
     <div>
       <Form ref={formRef} onSubmit={onSubmit}>
         <InputFormRow>
-          <InputAsyncSelect
+          <SelectAsyncInput
             placeholder="Choose the customer"
             label="Customer"
-            name="client_id"
+            name="customerId"
             defaultOptions={customerOptions}
             loadOptions={handleLoadCustomerOptions}
             onMenuScrollToBottom={handleCustomersMenuScrollToBottom}
@@ -217,23 +211,10 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
             isLoading={optionsIsLoading}
           />
           <DeliveryFeeInput name="deliveryFee" label="Delivery Fee" />
-
-          {/* <DatePickerInput name="deliveryDate" label="Delivery Date" /> */}
-          {/* <DeliveryDateInput name="deliveryDate" label="Delivery Date" /> */}
         </InputFormRow>
         <InputFormRow>
-          <DeliveryDateInput name="Delivery Date" placeholder="Delivery Date" />
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => handleDateChange(date)}
-            showTimeSelect
-            dateFormat="Pp"
-            locale="es"
-            className="react-datepicker-styles"
-            // renderDayContents={renderDayContents}
-          />
-          {/* <DatePickerInput label="Date Order" name="dateOrder" /> */}
-          <InputSelect
+          <DatePickerInput label="Delivery Date" name="dateOrder" />
+          <SelectInput
             label="Payment Method"
             name="product_id"
             options={paymentMethodOptions}

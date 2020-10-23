@@ -31,7 +31,7 @@ interface Product {
 }
 
 interface ContractFormData {
-  client_id: string;
+  customerId: string;
   delivery_price?: string;
 }
 
@@ -57,7 +57,7 @@ const CreateOrder: React.FC = () => {
         contractFormRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
-          client_id: Yup.string().required('Customer is required'),
+          customerId: Yup.string().required('Customer is required'),
           delivery_price: Yup.string().default('0'),
         });
 
@@ -71,11 +71,11 @@ const CreateOrder: React.FC = () => {
           return;
         }
 
-        const { client_id, delivery_price = 0 } = data;
+        const { customerId, delivery_price = 0 } = data;
 
         setSubmitIsLoading(true);
-        await api.post('/contracts', {
-          client_id,
+        await api.post('/orders', {
+          customerId,
           delivery_price: Number(delivery_price),
           materials: itemsAdded.map((product) => ({
             id: product.id,

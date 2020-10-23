@@ -1,24 +1,18 @@
-import React, {
-  InputHTMLAttributes,
-  useRef,
-  useEffect,
-  useState,
-  useCallback,
-} from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useField } from '@unform/core';
-import DatePicker from 'react-datepicker';
-import 'react-day-picker/lib/style.css';
+import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { LabelContainer } from './styles';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface DatePickerProps extends Omit<ReactDatePickerProps, 'onChange'> {
   name: string;
   label: string;
   label_name?: string;
   showErro?: 'bottom' | 'border';
 }
 
-const InputLabel: React.FC<InputProps> = ({
+const InputLabel: React.FC<DatePickerProps> = ({
   name,
   label,
   label_name = '',
@@ -26,21 +20,24 @@ const InputLabel: React.FC<InputProps> = ({
   showErro = 'bottom',
   ...rest
 }) => {
-  const [startDate, setStartDate] = useState(new Date());
-
   const { fieldName, defaultValue, error, registerField } = useField(name);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const datePickerRef = useRef(null);
+
+  const [date, setDate] = useState(defaultValue || new Date());
 
   useEffect(() => {
     registerField({
       name: fieldName,
-      ref: inputRef.current,
-      path: 'value',
+      ref: datePickerRef.current,
+      path: 'props.selected',
+      clearValue: (ref: any) => {
+        ref.clear();
+      },
     });
   }, [fieldName, registerField]);
 
-  const handleDateChange = useCallback((date) => {
-    setStartDate(date);
+  const handleDateChange = useCallback((changedDate) => {
+    setDate(changedDate);
   }, []);
 
   return (
@@ -51,20 +48,14 @@ const InputLabel: React.FC<InputProps> = ({
       className={className}
     >
       {label}
-      {/* <input
-        name={label_name || name}
-        id={label_name || name}
-        ref={inputRef}
-        defaultValue={defaultValue}
-        {...rest}
-      /> */}
       <DatePicker
-        selected={startDate}
-        onChange={(date) => handleDateChange(date)}
+        ref={datePickerRef}
+        selected={date}
+        onChange={(changedDate) => handleDateChange(changedDate)}
         showTimeSelect
-        dateFormat="Pp"
-        locale="es"
-        className="react-datepicker-styles"
+        timeIntervals={60}
+        dateFormat="dd/MM/yyyy - hh:00 aa"
+        {...rest}
       />
       {error && showErro === 'bottom' && <span>{error}</span>}
     </LabelContainer>

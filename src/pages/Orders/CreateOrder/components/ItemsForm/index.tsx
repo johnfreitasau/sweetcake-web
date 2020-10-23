@@ -11,7 +11,7 @@ import { FormHandles } from '@unform/core';
 
 import api from '../../../../../services/api';
 
-import { InputAsyncSelect } from '../../../../../components/Form';
+import { SelectAsyncInput } from '../../../../../components/Form';
 import getValidationErrors from '../../../../../utils/getValidationErrors';
 import { formatPrice } from '../../../../../utils/format';
 
@@ -197,7 +197,7 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
 
   return (
     <ProductsForm ref={formRef} onSubmit={handleSubmit}>
-      <InputAsyncSelect
+      <SelectAsyncInput
         name="id"
         label="Product"
         placeholder="Choose the product"

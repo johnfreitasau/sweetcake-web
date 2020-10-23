@@ -1,32 +1,38 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
-import { OptionTypeBase, StylesConfig, Theme } from 'react-select';
-import Select, { Props as AsyncProps } from 'react-select/async';
+import Select, {
+  GroupedOptionsType,
+  OptionsType,
+  OptionTypeBase,
+  StylesConfig,
+  Theme,
+} from 'react-select';
+// import Select, { Props as AsyncProps } from 'react-select/async';
 import { useField } from '@unform/core';
 
 import { LabelContainer } from './styles';
 
-interface Props extends AsyncProps<OptionTypeBase> {
+interface Props {
   name: string;
   label: string;
   label_name?: string;
+  options?: GroupedOptionsType<OptionTypeBase> | OptionsType<OptionTypeBase>;
 }
 
-const InputAsyncSelect: React.FC<Props> = ({
+const SelectInput: React.FC<Props> = ({
   name,
   label,
   label_name,
+  options,
   ...rest
 }) => {
   const selectRef = useRef(null);
   const { fieldName, defaultValue, registerField, error } = useField(name);
 
-  // JF
-  // const [selectValue, setSelectValue] = useState({});
-
   const colourStyles: StylesConfig = {
     control: (styles) => ({
       ...styles,
       marginTop: 8,
+      marginLeft: 15,
       borderRadius: 10,
       borderColor: error ? '#EE4D64' : '#232129',
       fontSize: 18,
@@ -69,15 +75,6 @@ const InputAsyncSelect: React.FC<Props> = ({
       name: fieldName,
       ref: selectRef.current,
       getValue: (ref: any) => {
-        if (rest.isMulti) {
-          if (!ref.select.state.value) {
-            return [];
-          }
-
-          return ref.select.state.value.map(
-            (option: OptionTypeBase) => option.value,
-          );
-        }
         if (!ref.select.state.value) {
           return '';
         }
@@ -91,24 +88,16 @@ const InputAsyncSelect: React.FC<Props> = ({
         ref.select.select.clearValue();
       },
     });
-  }, [fieldName, registerField, rest.isMulti]);
-
-  const handleSelectedValue = useCallback((e) => {
-    console.log('e', e);
-    console.log('label_name', label_name);
-    console.log('selectRef', selectRef);
-    // console.log(selectValue);
-  }, []);
+  }, [fieldName, registerField]);
 
   return (
     <LabelContainer htmlFor={label_name || name}>
       {label}
       <Select
-        // onChange={handleSelectedValue}
         cacheOptions
         isClearable
         isSearchable
-        defaultValue={defaultValue}
+        // defaultValue={defaultValue}
         ref={selectRef}
         classNamePrefix="react-select"
         theme={themeProps}
@@ -116,6 +105,7 @@ const InputAsyncSelect: React.FC<Props> = ({
         styles={colourStyles}
         name={label_name || name}
         id={label_name || name}
+        options={options}
         loadingMessage={() => 'Loading ...'}
         {...rest}
       />
@@ -123,4 +113,4 @@ const InputAsyncSelect: React.FC<Props> = ({
   );
 };
 
-export default InputAsyncSelect;
+export default SelectInput;

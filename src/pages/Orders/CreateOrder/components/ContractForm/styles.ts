@@ -5,20 +5,12 @@ import { InputCurrency } from '../../../../../components/Form';
 
 export const Form = styled(UnForm)`
   margin-top: 32px;
-
-  //display: flex;
-  //align-items: flex-end;
 `;
 
 export const InputFormRow = styled.div`
   display: flex;
   align-items: flex-end;
   margin-top: 10px;
-
-  .react-datepicker-styles {
-    border-color: blue;
-    background: transparent;
-  }
 `;
 
 export const DeliveryFeeInput = styled(InputCurrency)`

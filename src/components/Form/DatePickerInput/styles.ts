@@ -7,7 +7,7 @@ interface LabelContainerProp {
 
 export const LabelContainer = styled.label<LabelContainerProp>`
   display: flex;
-  width: 100%;
+  width: 250px;
   flex-direction: column;
   font-size: 16px;
   color: ${({ theme }) => theme.colors.white};
