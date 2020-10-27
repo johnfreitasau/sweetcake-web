@@ -96,7 +96,7 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
           <FiFileText size={24} />
         </NavLink> */}
 
-        <Switch
+        {/* <Switch
           onChange={toggleTheme}
           checked={title === 'dark'}
           checkedIcon={false}
@@ -106,7 +106,7 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
           handleDiameter={20}
           offColor={shade(0.35, colors.background)}
           onColor={colors.background}
-        />
+        /> */}
       </nav>
 
       <SettingsButton onClick={signOut}>

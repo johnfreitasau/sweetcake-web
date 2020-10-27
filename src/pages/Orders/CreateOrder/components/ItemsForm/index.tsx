@@ -53,38 +53,38 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
 
   const [productsPagesAvailable, setProductsPagesAvailable] = useState(0);
   const [products, setProducts] = useState<Product[]>([
-    {
-      id: '1',
-      productName: 'Cookies',
-      unitPrice: 20,
-      quantity: '6.75',
-      UnitPriceQuantityFormatted: '10',
-      discontinued: false,
-    },
-    {
-      id: '2',
-      productName: 'Cookies',
-      unitPrice: 20,
-      quantity: '6.75',
-      UnitPriceQuantityFormatted: '10',
-      discontinued: false,
-    },
-    {
-      id: '3',
-      productName: 'Cookies',
-      unitPrice: 20,
-      quantity: '6.75',
-      UnitPriceQuantityFormatted: '10',
-      discontinued: false,
-    },
-    {
-      id: '4',
-      productName: 'Cookies',
-      unitPrice: 20,
-      quantity: '6.75',
-      UnitPriceQuantityFormatted: '10',
-      discontinued: false,
-    },
+    // {
+    //   id: '1',
+    //   productName: 'Cookies',
+    //   unitPrice: 20,
+    //   quantity: '6.75',
+    //   UnitPriceQuantityFormatted: '10',
+    //   discontinued: false,
+    // },
+    // {
+    //   id: '2',
+    //   productName: 'Cookies',
+    //   unitPrice: 20,
+    //   quantity: '6.75',
+    //   UnitPriceQuantityFormatted: '10',
+    //   discontinued: false,
+    // },
+    // {
+    //   id: '3',
+    //   productName: 'Cookies',
+    //   unitPrice: 20,
+    //   quantity: '6.75',
+    //   UnitPriceQuantityFormatted: '10',
+    //   discontinued: false,
+    // },
+    // {
+    //   id: '4',
+    //   productName: 'Cookies',
+    //   unitPrice: 20,
+    //   quantity: '6.75',
+    //   UnitPriceQuantityFormatted: '10',
+    //   discontinued: false,
+    // },
   ]);
   const [productsPage, setProductsPage] = useState(1);
   const [optionsIsLoading, setOptionsIsLoading] = useState(true);
@@ -99,7 +99,6 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
       setProducts(response.data);
       setOptionsIsLoading(false);
     }
-
     loadProducts();
   }, []);
 

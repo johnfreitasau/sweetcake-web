@@ -14,13 +14,12 @@ import Button from '../../../components/Button';
 
 interface Product {
   id: string;
-  productName: string;
+  name: string;
   category: string;
-  unitPrice: string;
-  quantityDiscount: string;
-  discount: string;
+  unitPrice: number;
+  qtyDiscount: number;
+  discount: number;
   notes: string;
-  discontinued: string;
 }
 
 interface SearchFormData {
@@ -28,68 +27,7 @@ interface SearchFormData {
 }
 
 const ListProducts: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([
-    {
-      id: '1',
-      productName: 'Cookies',
-      category: 'Sweets',
-      unitPrice: '6.75',
-      quantityDiscount: '10',
-      discount: '10%',
-      notes: 'aslkdjsalkajsdlkdj aldkjasd',
-      discontinued: 'true',
-    },
-    {
-      id: '2',
-      productName: 'Brownie',
-      category: 'Sweets',
-      unitPrice: '6.75',
-      quantityDiscount: '10',
-      discount: '10%',
-      notes: 'aslkdjsalkajsdlkdj aldkjasd',
-      discontinued: 'true',
-    },
-    {
-      id: '3',
-      productName: 'Cupcake',
-      category: 'Sweets',
-      unitPrice: '6.75',
-      quantityDiscount: '10',
-      discount: '10%',
-      notes: 'aslkdjsalkajsdlkdj aldkjasd',
-      discontinued: 'true',
-    },
-    {
-      id: '4',
-      productName: 'Mini-Cupcake',
-      category: 'Sweets',
-      unitPrice: '6.75',
-      quantityDiscount: '10',
-      discount: '10%',
-      notes: 'aslkdjsalkajsdlkdj aldkjasd',
-      discontinued: 'true',
-    },
-    {
-      id: '5',
-      productName: 'Italian Soda',
-      category: 'Drinks',
-      unitPrice: '6.75',
-      quantityDiscount: '10',
-      discount: '10%',
-      notes: 'aslkdjsalkajsdlkdj aldkjasd',
-      discontinued: 'true',
-    },
-    {
-      id: '6',
-      productName: 'Coffee',
-      category: 'Drinks',
-      unitPrice: '6.75',
-      quantityDiscount: '10',
-      discount: '10%',
-      notes: 'aslkdjsalkajsdlkdj aldkjasd',
-      discontinued: 'true',
-    },
-  ]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagesAvailable, setPagesAvailable] = useState(0);
   const [queryPage, setQueryPage] = useQueryParam('page', NumberParam);
@@ -120,7 +58,6 @@ const ListProducts: React.FC = () => {
     (id) => {
       api.delete(`/products/${id}`);
 
-      // reload list
       async function loadProducts(): Promise<void> {
         try {
           setLoading(true);
@@ -240,11 +177,11 @@ const ListProducts: React.FC = () => {
           <tbody>
             {products.map((product) => (
               <S.CustomerRow key={product.id}>
-                <td>{product.productName}</td>
+                <td>{product.name}</td>
                 <td>{product.category}</td>
                 <td>{product.unitPrice}</td>
-                <td>{product.quantityDiscount}</td>
-                <td>{product.discount}</td>
+                <td>{product.qtyDiscount}</td>
+                <td>{product.discount}%</td>
                 <td>
                   <div>
                     <FiEdit

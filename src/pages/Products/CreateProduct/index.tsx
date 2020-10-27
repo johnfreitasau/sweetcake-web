@@ -14,15 +14,15 @@ import { Container, Content } from './styles';
 
 interface IProductFormData {
   id: string;
-  productName: string;
+  name: string;
   category: string;
-  unitPrice: string;
-  quantityDiscount: string;
-  discount: string;
+  unitPrice: number;
+  qtyDiscount: number;
+  discount: number;
   notes: string;
 }
 
-const CreateCustomer: React.FC = () => {
+const CreateProduct: React.FC = () => {
   const { addToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const formRef = useRef<FormHandles>(null);
@@ -35,48 +35,48 @@ const CreateCustomer: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: IProductFormData) => {
-      // formRef.current?.setErrors({});
+      formRef.current?.setErrors({});
 
       try {
         const schema = Yup.object().shape({
-          productName: Yup.string().required(),
+          name: Yup.string().required(),
           category: Yup.string().required(),
-          unitPrice: Yup.string().required(),
-          quantityDiscount: Yup.string(),
-          discount: Yup.string(),
-          notes: Yup.string(),
+          unitPrice: Yup.number().required(),
+          quantityDiscount: Yup.number().optional(),
+          discount: Yup.number().optional(),
+          notes: Yup.string().optional(),
         });
 
         await schema.validate(data, { abortEarly: false });
 
         const {
           id,
-          productName,
+          name,
           category,
           unitPrice,
-          quantityDiscount,
+          qtyDiscount,
           discount,
           notes,
         } = data;
 
         const formData = {
           id,
-          productName,
+          name,
           category,
           unitPrice,
-          quantityDiscount,
+          qtyDiscount,
           discount,
           notes,
         };
-        const response = await api.post('/customers', formData);
-        // updateCustomer(response.data);
+        await api.post('/products', formData);
+        // updateProduct(response.data);
 
-        history.push('/customers');
+        history.push('/products');
 
         addToast({
           type: 'success',
           title: 'Success!',
-          description: 'New customer has been added.',
+          description: 'New product has been added.',
         });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -88,7 +88,7 @@ const CreateCustomer: React.FC = () => {
           type: 'error',
           title: 'Error',
           description:
-            'Error ocurred while adding the new customer. Please try again.',
+            'Error ocurred while adding the new product. Please try again.',
         });
       }
     },
@@ -111,20 +111,16 @@ const CreateCustomer: React.FC = () => {
         </header>
 
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <Input name="productName" icon={FiUser} placeholder="Product Name" />
-          <Input name="category" icon={FiMail} placeholder="Category" />
-          <Input name="unitPrice" icon={FiPhone} placeholder="Unit Price" />
-          <Input
-            name="quantityDiscount"
-            icon={FiMapPin}
-            placeholder="Quantity Discount"
-          />
-          <Input name="discount" icon={FiMapPin} placeholder="Discount" />
-          <Input name="notes" icon={FiMapPin} placeholder="Notes" />
+          <Input name="name" placeholder="Product Name" />
+          <Input name="category" placeholder="Category" />
+          <Input name="unitPrice" placeholder="Unit price" />
+          <Input name="qtyDiscount" placeholder="Quantity Discount" />
+          <Input name="discount" placeholder="Discount" />
+          <Input name="notes" placeholder="Notes" />
         </Form>
       </Content>
     </Container>
   );
 };
 
-export default CreateCustomer;
+export default CreateProduct;

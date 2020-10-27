@@ -14,13 +14,12 @@ import { Container, Content } from './styles';
 
 interface IProductFormData {
   id: string;
-  productName: string;
+  name: string;
   category: string;
   unitPrice: string;
-  quantityDiscount: string;
+  qtyDiscount: string;
   discount: string;
   notes: string;
-  discontinued: string;
 }
 
 const EditProduct: React.FC = () => {
@@ -28,7 +27,6 @@ const EditProduct: React.FC = () => {
 
   const { addToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
 
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
@@ -43,42 +41,36 @@ const EditProduct: React.FC = () => {
 
       try {
         const schema = Yup.object().shape({
-          productName: Yup.string().required(),
+          name: Yup.string().required(),
           category: Yup.string().required(),
-          unitPrice: Yup.string().required(),
-          quantityDiscount: Yup.string(),
-          discount: Yup.string(),
-          notes: Yup.string(),
-          discontinued: Yup.string(),
+          unitPrice: Yup.number().required(),
+          quantityDiscount: Yup.number().optional(),
+          discount: Yup.number().optional(),
+          notes: Yup.string().optional(),
         });
 
         await schema.validate(data, { abortEarly: false });
 
         const {
           id,
-          productName,
+          name,
           category,
           unitPrice,
-          quantityDiscount,
+          qtyDiscount,
           discount,
           notes,
-          discontinued,
         } = data;
 
         const formData = {
           id,
-          productName,
+          name,
           category,
           unitPrice,
-          quantityDiscount,
+          qtyDiscount,
           discount,
           notes,
-          discontinued,
         };
-        const response = await api.put(
-          `/products/${productFormData.state.id}`,
-          formData,
-        );
+        await api.put(`/products/${productFormData.state.id}`, formData);
 
         history.goBack();
 
@@ -104,13 +96,6 @@ const EditProduct: React.FC = () => {
     [addToast, history],
   );
 
-  const handleCheckboxChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      console.log('Box ticked.');
-    },
-    [],
-  );
-
   return (
     <Container>
       <Content>
@@ -128,20 +113,12 @@ const EditProduct: React.FC = () => {
           onSubmit={handleSubmit}
           initialData={productFormData.state}
         >
-          <Input name="productName" icon={FiUser} placeholder="Product Name" />
-          <Input name="category" icon={FiMail} placeholder="Category" />
-          <Input name="unitPrice" icon={FiPhone} placeholder="Unit Price" />
-          <Input
-            name="quantityDiscount"
-            icon={FiMapPin}
-            placeholder="Quantity Discount"
-          />
-          <Input name="discount" icon={FiMapPin} placeholder="Discount" />
-          <Input name="notes" icon={FiMapPin} placeholder="Notes" />
-          {/* <label> */}
-          {/* <Checkbox checked={isChecked} onChange={handleCheckboxChange} />
-          <span>Label Text</span> */}
-          {/* </label> */}
+          <Input name="name" placeholder="Product Name" />
+          <Input name="category" placeholder="Category" />
+          <Input name="unitPrice" placeholder="Unit Price" />
+          <Input name="qtyDiscount" placeholder="Quantity Discount" />
+          <Input name="discount" placeholder="Discount" />
+          <Input name="notes" placeholder="Notes" />
         </Form>
       </Content>
     </Container>

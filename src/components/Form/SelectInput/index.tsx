@@ -32,7 +32,6 @@ const SelectInput: React.FC<Props> = ({
     control: (styles) => ({
       ...styles,
       marginTop: 8,
-      marginLeft: 15,
       borderRadius: 10,
       borderColor: error ? '#EE4D64' : '#232129',
       fontSize: 18,
