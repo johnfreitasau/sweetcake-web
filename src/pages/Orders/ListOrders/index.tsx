@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 // import { Ring } from 'react-awesome-spinners';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
 import { useHistory } from 'react-router-dom';
-import { FiCheckCircle, FiEdit, FiTrash2 } from 'react-icons/fi';
+import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import Header from '../../../components/Header';
 import api from '../../../services/api';
 
@@ -10,7 +10,7 @@ import ChangePageButton from '../../../components/ChangePageButton';
 import { useToast } from '../../../hooks/toast';
 
 import * as S from './styles';
-import Button from '../../../components/Button';
+// import Button from '../../../components/Button';
 
 interface Order {
   id: string;
