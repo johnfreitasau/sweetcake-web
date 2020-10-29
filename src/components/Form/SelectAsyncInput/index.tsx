@@ -93,18 +93,10 @@ const SelectAsyncInput: React.FC<Props> = ({
     });
   }, [fieldName, registerField, rest.isMulti]);
 
-  const handleSelectedValue = useCallback((e) => {
-    console.log('e', e);
-    console.log('label_name', label_name);
-    console.log('selectRef', selectRef);
-    // console.log(selectValue);
-  }, []);
-
   return (
     <LabelContainer htmlFor={label_name || name}>
       {label}
       <Select
-        // onChange={handleSelectedValue}
         cacheOptions
         isClearable
         isSearchable

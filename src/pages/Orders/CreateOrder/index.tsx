@@ -23,11 +23,14 @@ import { Container, Content } from './styles';
 
 interface Product {
   id: string;
-  productName: string;
-  unitPrice: number;
+  name: string;
+  category: number;
   quantity: string;
-  UnitPriceQuantityFormatted: string;
-  discontinued: boolean;
+  unitPrice: number;
+  unitPriceFormatted: string;
+  qtyDiscount: number;
+  discount: number;
+  notes: string;
 }
 
 interface ContractFormData {

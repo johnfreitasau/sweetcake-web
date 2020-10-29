@@ -47,8 +47,8 @@ const InputCurrency: React.FC<Props> = ({
       <NumberFormat
         getInputRef={inputRef}
         ref={NumberFormatRef}
-        placeholder="R$ 0,00"
-        prefix="R$ "
+        placeholder="AUD$ 0,00"
+        prefix="AUD$ "
         thousandSeparator="."
         decimalSeparator=","
         fixedDecimalScale

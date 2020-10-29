@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FormHandles } from '@unform/core';
-import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
 
 import DatePickerInput from '../../../../../components/Form/DatePickerInput';
 import { SelectAsyncInput, SelectInput } from '../../../../../components/Form';
@@ -42,10 +41,6 @@ interface CheckboxOption {
 }
 
 const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
-  // JF
-  const [queryPage, setQueryPage] = useQueryParam('page', NumberParam);
-  const [queryName, setQueryName] = useQueryParam('name', StringParam);
-
   const [customerOptions, setCustomerOptions] = useState<Option[]>([]);
   const [paymentMethodOptions, setPaymentMethodOptions] = useState<Option[]>([
     { value: 'creditCard', label: 'Credit Card' },
@@ -55,29 +50,11 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
   const [optionsIsLoading, setOptionsIsLoading] = useState(true);
   const [customersPage, setCustomersPage] = useState(1);
   const [customersPagesAvailable, setCustomersPagesAvailable] = useState(0);
-  const [enableCustomerInfo, setEnableCustomerInfo] = useState(false);
-
-  // DatePicker
-  const [startDate, setStartDate] = useState(new Date());
-  // const renderDayContents = (day, date) => {
-  //   const tooltipText = `Tooltip for date: ${date}`;
-  //   return <span title={tooltipText}>{getDate(date)}</span>;
-  // };
-
-  // datepicker TEST 2
 
   useEffect(() => {
     async function loadCustomerOptions(): Promise<void> {
-      // const response = await api.get<Customer[]>('/customers');
+      const response = await api.get<Customer[]>('/customers');
 
-      const response = await api.get<Customer[]>('/customers', {
-        params: {
-          page: queryPage || 1,
-          name: queryName || undefined,
-        },
-      });
-
-      console.log('data:', response.data);
       const customersTotalCount = response.headers['x-total-count'];
 
       setCustomersPagesAvailable(Math.ceil(customersTotalCount / 7));
@@ -89,9 +66,10 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
       );
       setOptionsIsLoading(false);
     }
+    console.log('loaded UseEffect');
 
     loadCustomerOptions();
-  }, [queryName, queryPage]);
+  }, []);
 
   const handleCustomersMenuScrollToBottom = useCallback(async () => {
     if (customersPage === customersPagesAvailable) return;
@@ -121,7 +99,6 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
       );
 
       if (data.length === 0) {
-        // fazer debaunce
         setOptionsIsLoading(true);
         const response = await api.get<Customer[]>('/customers', {
           params: {
@@ -144,57 +121,6 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
     },
     [customerOptions],
   );
-
-  // const handleSelectCustomer = useCallback(async (e) => {
-  //   console.log('current:', formRef.current);
-  //   // console.log('value:', formRef.select.state.value);
-  //   //    console.log(e.target.value);
-
-  //   //   this.setState({ selectedOption });
-  //   //   console.log(`Option selected:`, selectedOption);
-  //   // };
-  // }, []);
-
-  const handleLoadPaymentMethodOptions = useCallback(
-    async (inputValue: string, callback) => {
-      const data = customerOptions.filter((customer) =>
-        customer.label.includes(inputValue),
-      );
-
-      if (data.length === 0) {
-        // fazer debaunce
-        setOptionsIsLoading(true);
-        const response = await api.get<Customer[]>('/customers', {
-          params: {
-            name: inputValue,
-          },
-        });
-
-        setOptionsIsLoading(false);
-
-        callback(
-          response.data.map((customer) => ({
-            label: customer.name,
-            value: customer.id,
-          })),
-        );
-        return;
-      }
-
-      callback(data);
-    },
-    [customerOptions],
-  );
-
-  const handleDateChange = useCallback((date) => {
-    setStartDate(date);
-  }, []);
-
-  const handleSelectedValue = useCallback((e) => {
-    console.log('e', e);
-    console.log('selectRef', formRef);
-    // console.log(selectValue);
-  }, []);
 
   return (
     <div>
@@ -228,10 +154,6 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
           />
         </InputFormRow>
       </Form>
-      {/* {
-  enableCustomerInfo && (
-    
-  )} */}
     </div>
   );
 };

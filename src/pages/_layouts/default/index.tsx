@@ -22,15 +22,6 @@ const DefaultLayout: React.FC = ({ children }) => {
     setTheme(theme.title === 'dark' ? dark : light);
   }, []);
 
-  const handleSearchSubmit = useCallback(
-    ({ name }: SearchFormData) => {
-      // setQueryPage(1);
-      // setQueryName(name || undefined);
-      console.log('handleSearchSubmit');
-    },
-    [setQueryName, setQueryPage],
-  );
-
   return (
     <ThemeProvider theme={theme}>
       <Wrapper>

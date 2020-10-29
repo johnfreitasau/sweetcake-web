@@ -75,10 +75,8 @@ const EditProduct: React.FC = () => {
           notes,
           discontinued,
         };
-        const response = await api.put(
-          `/products/${productFormData.state.id}`,
-          formData,
-        );
+
+        await api.put(`/products/${productFormData.state.id}`, formData);
 
         history.goBack();
 
@@ -101,14 +99,7 @@ const EditProduct: React.FC = () => {
         });
       }
     },
-    [addToast, history],
-  );
-
-  const handleCheckboxChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      console.log('Box ticked.');
-    },
-    [],
+    [addToast, history, productFormData.state.id],
   );
 
   return (

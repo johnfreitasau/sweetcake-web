@@ -27,11 +27,14 @@ import { ProductsForm, QuantityInput, AddButton } from './styles';
 
 interface Product {
   id: string;
-  productName: string;
-  unitPrice: number;
+  name: string;
+  category: number;
   quantity: string;
-  UnitPriceQuantityFormatted: string;
-  discontinued: boolean;
+  unitPrice: number;
+  unitPriceFormatted: string;
+  qtyDiscount: number;
+  discount: number;
+  notes: string;
 }
 
 interface Option {
@@ -52,40 +55,7 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
   const formRef = useRef<FormHandles>(null);
 
   const [productsPagesAvailable, setProductsPagesAvailable] = useState(0);
-  const [products, setProducts] = useState<Product[]>([
-    // {
-    //   id: '1',
-    //   productName: 'Cookies',
-    //   unitPrice: 20,
-    //   quantity: '6.75',
-    //   UnitPriceQuantityFormatted: '10',
-    //   discontinued: false,
-    // },
-    // {
-    //   id: '2',
-    //   productName: 'Cookies',
-    //   unitPrice: 20,
-    //   quantity: '6.75',
-    //   UnitPriceQuantityFormatted: '10',
-    //   discontinued: false,
-    // },
-    // {
-    //   id: '3',
-    //   productName: 'Cookies',
-    //   unitPrice: 20,
-    //   quantity: '6.75',
-    //   UnitPriceQuantityFormatted: '10',
-    //   discontinued: false,
-    // },
-    // {
-    //   id: '4',
-    //   productName: 'Cookies',
-    //   unitPrice: 20,
-    //   quantity: '6.75',
-    //   UnitPriceQuantityFormatted: '10',
-    //   discontinued: false,
-    // },
-  ]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [productsPage, setProductsPage] = useState(1);
   const [optionsIsLoading, setOptionsIsLoading] = useState(true);
 
@@ -105,7 +75,7 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
   const productOptions = useMemo<Option[]>(() => {
     return products.map((product) => ({
       value: product.id,
-      label: `${product.productName} - ${formatPrice(product.unitPrice)}`,
+      label: `${product.name} - ${formatPrice(product.unitPrice)}`,
     }));
   }, [products]);
 
@@ -127,7 +97,7 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
 
         callback(
           response.data.map((product) => ({
-            label: product.productName,
+            label: product.name,
             value: product.id,
           })),
         );
@@ -175,7 +145,7 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
 
         const addedProduct = {
           ...productFind,
-          quantity_daily_price_formatted: formatPrice(
+          unitPriceFormatted: formatPrice(
             Number(data.quantity) * productFind.unitPrice,
           ),
           quantity,

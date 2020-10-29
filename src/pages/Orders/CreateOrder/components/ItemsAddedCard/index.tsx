@@ -11,12 +11,24 @@ interface Props {
     // daily_price: number;
     // quantity_daily_price_formatted: string;
 
+    // 2
+    // id: string;
+    // productName: string;
+    // unitPrice: number;
+    // quantity: string;
+    // UnitPriceQuantityFormatted: string;
+    // discontinued: boolean;
+
+    // 3
     id: string;
-    productName: string;
-    unitPrice: number;
+    name: string;
+    category: number;
     quantity: string;
-    UnitPriceQuantityFormatted: string;
-    discontinued: boolean;
+    unitPrice: number;
+    unitPriceFormatted: string;
+    qtyDiscount: number;
+    discount: number;
+    notes: string;
   }[];
   onClickRemoveButton(id: string): void;
 }
@@ -37,9 +49,9 @@ const ItemsAddedCard: React.FC<Props> = ({ products, onClickRemoveButton }) => {
           <tbody>
             {products.map((product) => (
               <MaterialRow key={product.id}>
-                <td>{product.productName}</td>
+                <td>{product.name}</td>
                 <td>{product.quantity}</td>
-                <td>{product.UnitPriceQuantityFormatted}</td>
+                <td>{product.unitPriceFormatted}</td>
                 <td>
                   <RemoveButton onClick={() => onClickRemoveButton(product.id)}>
                     <FiX size={20} />

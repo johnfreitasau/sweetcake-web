@@ -33,8 +33,6 @@ const SignUp: React.FC = () => {
   const { addToast } = useToast();
   const history = useHistory();
 
-  // console.log(formRef);
-
   const handleSubmit = useCallback(
     async (data: SignUpFormData) => {
       formRef.current?.setErrors({});

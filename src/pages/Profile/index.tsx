@@ -30,7 +30,6 @@ const Profile: React.FC = () => {
   const history = useHistory();
 
   const { user, updateUser } = useAuth();
-  // console.log(formRef);
 
   const handleSubmit = useCallback(
     async (data: ProfileFormData) => {
