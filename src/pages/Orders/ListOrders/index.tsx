@@ -14,6 +14,7 @@ import * as S from './styles';
 
 interface Order {
   id: string;
+  number: string;
   customerName: string;
   orderDate: string;
   deliveryDate: string;
@@ -28,58 +29,7 @@ interface SearchFormData {
 }
 
 const ListOrders: React.FC = () => {
-  const [orders, setOrders] = useState<Order[]>([
-    {
-      id: '123',
-      customerName: 'John',
-      orderDate: '24/10/2020 - 12:00PM',
-      deliveryDate: '24/10/2020 - 12:00PM',
-      status: 'Delivered',
-      paymentMethod: 'Bank deposit',
-      paid: 'OK',
-      total: 'AU$ 34.56',
-    },
-    {
-      id: '123',
-      customerName: 'John',
-      orderDate: '24/10/2020 - 12:00PM',
-      deliveryDate: '24/10/2020 - 12:00PM',
-      status: 'Delivered',
-      paymentMethod: 'Bank deposit',
-      paid: 'OK',
-      total: 'AU$ 34.56',
-    },
-    {
-      id: '123',
-      customerName: 'John',
-      orderDate: '24/10/2020 - 12:00PM',
-      deliveryDate: '24/10/2020 - 12:00PM',
-      status: 'Delivered',
-      paymentMethod: 'Bank deposit',
-      paid: 'OK',
-      total: 'AU$ 34.56',
-    },
-    {
-      id: '123',
-      customerName: 'John',
-      orderDate: '24/10/2020 - 12:00PM',
-      deliveryDate: '24/10/2020 - 12:00PM',
-      status: 'Delivered',
-      paymentMethod: 'Bank deposit',
-      paid: 'OK',
-      total: 'AU$ 34.56',
-    },
-    {
-      id: '123',
-      customerName: 'John',
-      orderDate: '24/10/2020 - 12:00PM',
-      deliveryDate: '24/10/2020 - 12:00PM',
-      status: 'Delivered',
-      paymentMethod: 'Bank deposit',
-      paid: 'OK',
-      total: 'AU$ 34.56',
-    },
-  ]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagesAvailable, setPagesAvailable] = useState(0);
   const [queryPage, setQueryPage] = useQueryParam('page', NumberParam);
@@ -134,6 +84,7 @@ const ListOrders: React.FC = () => {
           setLoading(false);
         }
       }
+
       loadOrders();
       // setCustomers(customers.filter((customer) => customer.id !== id));
     },
@@ -163,6 +114,7 @@ const ListOrders: React.FC = () => {
 
         setPagesAvailable(Math.ceil(totalCount / 7));
         setOrders(response.data);
+        console.log('RESULT:', response.data);
       } catch (err) {
         addToast({
           type: 'error',
@@ -221,7 +173,7 @@ const ListOrders: React.FC = () => {
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>Customer Name</th>
+              <th>Customer</th>
               <th>Order Date</th>
               <th>Delivery Date</th>
               <th>Payment Method</th>
@@ -234,7 +186,7 @@ const ListOrders: React.FC = () => {
           <tbody>
             {orders.map((order) => (
               <S.CustomerRow key={order.id} orderStatus={order.status}>
-                <td>{order.id}</td>
+                <td>{order.number}</td>
                 <td>{order.customerName}</td>
                 <td>{order.orderDate}</td>
                 <td>{order.deliveryDate}</td>

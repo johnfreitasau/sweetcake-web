@@ -79,8 +79,13 @@ const CreateOrder: React.FC = () => {
         setSubmitIsLoading(true);
         await api.post('/orders', {
           customerId,
-          delivery_price: Number(delivery_price),
-          materials: itemsAdded.map((product) => ({
+          paymentMethod: 'Cash',
+          isPaid: true,
+          isPickup: false,
+          deliveryFee: '2',
+          deliveryDate: new Date(),
+          // delivery_price: Number(delivery_price),
+          products: itemsAdded.map((product) => ({
             id: product.id,
             quantity: product.quantity,
           })),
