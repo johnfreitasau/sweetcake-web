@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 // import { Ring } from 'react-awesome-spinners';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
 import { useHistory } from 'react-router-dom';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
-import { format } from 'date-fns';
-
+import { format, parseISO } from 'date-fns';
+import { formatPrice } from '../../../utils/format';
 import Header from '../../../components/Header';
 import api from '../../../services/api';
 
@@ -19,10 +19,10 @@ interface Order {
   number: string;
   customer: Customer;
   customerId: string;
-  created_at: Date;
+  created_at: string;
   orderDateFormatted: string;
-  deliveryDate: Date;
-  deliveryDateFomatted: string;
+  deliveryDate: string;
+  deliveryDateFormatted: string;
   deliveryFee: number;
   finalPrice: number;
   paymentMethod: string;
@@ -115,29 +115,7 @@ const ListOrders: React.FC = () => {
       try {
         console.log('useEffect Started');
         setLoading(true);
-        // api
-        //   .get<Order[]>('/orders', {
-        //     params: {
-        //       page: queryPage || 1,
-        //       name: queryName || undefined,
-        //     },
-        //   })
-        //   .then((response) => {
-        //     const totalCount = response.headers['x-total-count'];
 
-        //     const formattedResponse = response.data.map((order) => {
-        //       return {
-        //         ...order,
-        //         orderDateFormatted: format(order.created_at, 'dd/MM/yyyy'),
-        //         deliveryDateFormatted: format(order.deliveryDate, 'dd/MM/yyyy'),
-        //       };
-        //     });
-
-        //     setPagesAvailable(Math.ceil(totalCount / 7));
-        //     setOrders(response.data);
-        //     console.log('RESULT:', response.data);
-        //   });
-        // ORIG
         const response = await api.get<Order[]>('/orders', {
           params: {
             page: queryPage || 1,
@@ -147,6 +125,20 @@ const ListOrders: React.FC = () => {
 
         const totalCount = response.headers['x-total-count'];
 
+        const formattedOrders = response.data.map((order) => {
+          return {
+            ...order,
+            orderDateFormatted: format(
+              parseISO(order.created_at),
+              'dd/MM/yyyy hh:mm bb',
+            ),
+            deliveryDateFormatted: format(
+              parseISO(order.deliveryDate),
+              'dd/MM/yyyy hh:mm bb',
+            ),
+          };
+        });
+
         // const formattedResponse = response.data.map((order) => {
         //   return {
         //     ...order,
@@ -155,11 +147,12 @@ const ListOrders: React.FC = () => {
         //   };
         // });
 
-        console.log('formattedResponse:', response.data);
+        console.log('response.data:', response.data);
+        console.log('formattedResponse:', formattedOrders);
 
         setPagesAvailable(Math.ceil(totalCount / 7));
-        setOrders(response.data);
-        console.log('RESULT:', response.data);
+        setOrders(formattedOrders);
+        console.log('RESULT:', formattedOrders);
         // ORIG
       } catch (err) {
         addToast({
@@ -173,6 +166,12 @@ const ListOrders: React.FC = () => {
 
     loadCustomers();
   }, [addToast, queryName, queryPage]);
+
+  // const ordersFormatted = useMemo<Order[]>(() => {
+  //   return orders.map(order => {
+
+  //   })
+  // }, []);
 
   if (loading) {
     return (
@@ -224,6 +223,7 @@ const ListOrders: React.FC = () => {
               <th>Delivery Date</th>
               <th>Payment Method</th>
               <th>Paid</th>
+              <th>Pick-up</th>
               <th>Total</th>
               <th>Status</th>
               <th>Action</th>
@@ -235,10 +235,11 @@ const ListOrders: React.FC = () => {
                 <td>{order.number}</td>
                 <td>{order.customer.name}</td>
                 <td>{order.orderDateFormatted}</td>
-                <td>{order.deliveryDateFomatted}</td>
+                <td>{order.deliveryDateFormatted}</td>
                 <td>{order.paymentMethod}</td>
                 <td>{order.isPaid === true ? 'OK' : 'X'}</td>
                 <td>{order.isPickup === true ? 'OK' : 'X'}</td>
+                <td>{formatPrice(order.finalPrice)}</td>
                 <td>{order.status}</td>
                 <td>
                   <div>

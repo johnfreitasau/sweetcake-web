@@ -84,6 +84,7 @@ export const CustomerRow = styled.tr<TStyledOrderStatus>`
     height: 56px;
   }
   td:nth-child(1) {
+    text-align: center;
     padding-left: 16px;
     border-radius: 10px 0 0 10px;
   }
@@ -113,6 +114,10 @@ export const CustomerRow = styled.tr<TStyledOrderStatus>`
   td:nth-child(8) {
     text-align: center;
     padding-right: 16px;
+  }
+  td:nth-child(9) {
+    text-align: center;
+    padding-right: 16px;
     color: ${({ orderStatus }: any) => {
       if (
         orderStatus === 'Ready to pick-up' ||
@@ -132,7 +137,7 @@ export const CustomerRow = styled.tr<TStyledOrderStatus>`
       return '#000';
     }};
   }
-  td:nth-child(9) {
+  td:nth-child(10) {
     text-align: right;
     padding-right: 16px;
     border-radius: 0 10px 10px 0;
