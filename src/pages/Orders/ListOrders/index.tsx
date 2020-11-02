@@ -3,6 +3,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
 import { useHistory } from 'react-router-dom';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
+import { format } from 'date-fns';
+
 import Header from '../../../components/Header';
 import api from '../../../services/api';
 
@@ -15,13 +17,22 @@ import * as S from './styles';
 interface Order {
   id: string;
   number: string;
-  customerName: string;
-  orderDate: string;
-  deliveryDate: string;
-  status: string;
+  customer: Customer;
+  customerId: string;
+  created_at: Date;
+  orderDateFormatted: string;
+  deliveryDate: Date;
+  deliveryDateFomatted: string;
+  deliveryFee: number;
+  finalPrice: number;
   paymentMethod: string;
-  paid: string;
-  total: string;
+  isPaid: boolean;
+  isPickup: boolean;
+  status: string;
+}
+
+interface Customer {
+  name: string;
 }
 
 interface SearchFormData {
@@ -102,7 +113,31 @@ const ListOrders: React.FC = () => {
   useEffect(() => {
     async function loadCustomers(): Promise<void> {
       try {
+        console.log('useEffect Started');
         setLoading(true);
+        // api
+        //   .get<Order[]>('/orders', {
+        //     params: {
+        //       page: queryPage || 1,
+        //       name: queryName || undefined,
+        //     },
+        //   })
+        //   .then((response) => {
+        //     const totalCount = response.headers['x-total-count'];
+
+        //     const formattedResponse = response.data.map((order) => {
+        //       return {
+        //         ...order,
+        //         orderDateFormatted: format(order.created_at, 'dd/MM/yyyy'),
+        //         deliveryDateFormatted: format(order.deliveryDate, 'dd/MM/yyyy'),
+        //       };
+        //     });
+
+        //     setPagesAvailable(Math.ceil(totalCount / 7));
+        //     setOrders(response.data);
+        //     console.log('RESULT:', response.data);
+        //   });
+        // ORIG
         const response = await api.get<Order[]>('/orders', {
           params: {
             page: queryPage || 1,
@@ -112,9 +147,20 @@ const ListOrders: React.FC = () => {
 
         const totalCount = response.headers['x-total-count'];
 
+        // const formattedResponse = response.data.map((order) => {
+        //   return {
+        //     ...order,
+        //     orderDateFormatted: format(order.created_at, 'dd/MM/yyyy'),
+        //     deliveryDateFormatted: format(order.deliveryDate, 'dd/MM/yyyy'),
+        //   };
+        // });
+
+        console.log('formattedResponse:', response.data);
+
         setPagesAvailable(Math.ceil(totalCount / 7));
         setOrders(response.data);
         console.log('RESULT:', response.data);
+        // ORIG
       } catch (err) {
         addToast({
           type: 'error',
@@ -187,12 +233,12 @@ const ListOrders: React.FC = () => {
             {orders.map((order) => (
               <S.CustomerRow key={order.id} orderStatus={order.status}>
                 <td>{order.number}</td>
-                <td>{order.customerName}</td>
-                <td>{order.orderDate}</td>
-                <td>{order.deliveryDate}</td>
+                <td>{order.customer.name}</td>
+                <td>{order.orderDateFormatted}</td>
+                <td>{order.deliveryDateFomatted}</td>
                 <td>{order.paymentMethod}</td>
-                <td>{order.paid}</td>
-                <td>{order.total}</td>
+                <td>{order.isPaid === true ? 'OK' : 'X'}</td>
+                <td>{order.isPickup === true ? 'OK' : 'X'}</td>
                 <td>{order.status}</td>
                 <td>
                   <div>
