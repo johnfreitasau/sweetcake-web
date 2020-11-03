@@ -1,13 +1,12 @@
 import React, { useCallback, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
 
 import api from '../../../services/api';
-
 import { BackButton, RegisterButton } from '../../../components/Form';
 import { useToast } from '../../../hooks/toast';
 import getValidationErrors from '../../../utils/getValidationErrors';
-
 import ContractForm from './components/ContractForm';
 import ItemsForm from './components/ItemsForm';
 import ItemsAddedCard from './components/ItemsAddedCard';
@@ -42,6 +41,7 @@ const CreateOrder: React.FC = () => {
   const contractFormRef = useRef<FormHandles>(null);
 
   const { addToast } = useToast();
+  const history = useHistory();
 
   const [submitIsLoading, setSubmitIsLoading] = useState(false);
   const [itemsAdded, setItemsAdded] = useState<Product[]>([]);
@@ -84,7 +84,6 @@ const CreateOrder: React.FC = () => {
           isPickup: false,
           deliveryFee: '2',
           deliveryDate: new Date(),
-          // delivery_price: Number(delivery_price),
           products: itemsAdded.map((product) => ({
             id: product.id,
             quantity: product.quantity,
@@ -93,9 +92,13 @@ const CreateOrder: React.FC = () => {
 
         contractFormRef.current?.reset();
         setItemsAdded([]);
+
+        history.goBack();
+
         addToast({
-          title: 'Order created successfully!',
           type: 'success',
+          title: 'Success!',
+          description: 'Order has been created.',
         });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -107,7 +110,7 @@ const CreateOrder: React.FC = () => {
         setSubmitIsLoading(false);
       }
     },
-    [itemsAdded, addToast],
+    [itemsAdded, addToast, history],
   );
 
   return (

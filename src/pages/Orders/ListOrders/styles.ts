@@ -79,7 +79,7 @@ export const Table = styled.table`
   }
 `;
 
-export const CustomerRow = styled.tr<TStyledOrderStatus>`
+export const OrderRow = styled.tr<TStyledOrderStatus>`
   td {
     height: 56px;
   }

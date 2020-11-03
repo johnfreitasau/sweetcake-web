@@ -53,10 +53,9 @@ const ListCustomers: React.FC = () => {
   );
 
   const handleDeleteButton = useCallback(
-    (id) => {
-      api.delete(`/customers/${id}`);
+    async (id) => {
+      await api.delete(`/customers/${id}`);
 
-      // reload list
       async function loadCustomers(): Promise<void> {
         try {
           setLoading(true);
