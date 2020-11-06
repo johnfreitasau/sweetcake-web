@@ -23,14 +23,14 @@ interface Option {
   label: string;
 }
 
-interface ContractFormData {
+interface OrderFormData {
   customerId: string;
   deliveryFee?: string;
   deliveryDate: string;
 }
 
-interface ContractFormProps {
-  onSubmit(data: ContractFormData): void;
+interface OrderFormProps {
+  onSubmit(data: OrderFormData): void;
   formRef: React.RefObject<FormHandles>;
 }
 
@@ -40,7 +40,7 @@ interface CheckboxOption {
   label: string;
 }
 
-const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
+const OrderForm: React.FC<OrderFormProps> = ({ onSubmit, formRef }) => {
   const [customerOptions, setCustomerOptions] = useState<Option[]>([]);
   const [paymentMethodOptions, setPaymentMethodOptions] = useState<Option[]>([
     { value: 'creditCard', label: 'Credit Card' },
@@ -50,6 +50,11 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
   const [optionsIsLoading, setOptionsIsLoading] = useState(true);
   const [customersPage, setCustomersPage] = useState(1);
   const [customersPagesAvailable, setCustomersPagesAvailable] = useState(0);
+
+  const checkboxOptions: CheckboxOption[] = [
+    { id: 'paid', value: 'paid', label: 'Order Paid' },
+    { id: 'pickup', value: 'pickup', label: 'Customer Pickup' },
+  ];
 
   useEffect(() => {
     async function loadCustomerOptions(): Promise<void> {
@@ -66,8 +71,6 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
       );
       setOptionsIsLoading(false);
     }
-    // console.log('loaded UseEffect');
-
     loadCustomerOptions();
   }, []);
 
@@ -141,21 +144,15 @@ const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
         <InputFormRow>
           <DatePickerInput name="deliveryDate" label="Delivery Date" />
           <SelectInput
-            label="Payment Method"
             name="paymentMethod"
             options={paymentMethodOptions}
+            label="Payment Method"
           />
-          <CheckboxInput
-            name="checkboxOptions"
-            options={[
-              { id: 'paid', value: 'paid', label: 'Order Paid' },
-              { id: 'pickup', value: 'pickup', label: 'Customer Pickup' },
-            ]}
-          />
+          <CheckboxInput name="checkbox" options={checkboxOptions} />
         </InputFormRow>
       </Form>
     </div>
   );
 };
 
-export default ContractForm;
+export default OrderForm;

@@ -7,16 +7,13 @@ import React, {
 } from 'react';
 import Switch from 'react-switch';
 import {
-  FiGrid,
   FiTruck,
   FiBox,
   FiChevronsLeft,
   FiUsers,
-  FiLayers,
   FiMenu,
   FiLogOut,
   FiSettings,
-  FiFileText,
 } from 'react-icons/fi';
 import { NavLink } from 'react-router-dom';
 import { shade } from 'polished';
@@ -70,11 +67,10 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
         </button>
       </div>
       <nav>
-        <NavLink to="/dashboard">
+        {/* <NavLink to="/dashboard">
           {isOpened && 'Dashboard'}
-          {/* <img src={toolSvg} alt="tool" /> */}
           <FiGrid size={24} />
-        </NavLink>
+        </NavLink> */}
         <NavLink to="/customers">
           {isOpened && 'Customers'}
           <FiUsers size={24} />

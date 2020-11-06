@@ -9,7 +9,7 @@ interface DatePickerProps extends Omit<ReactDatePickerProps, 'onChange'> {
   name: string;
   label: string;
   label_name?: string;
-  showErro?: 'bottom' | 'border';
+  showError?: 'bottom' | 'border';
 }
 
 const InputLabel: React.FC<DatePickerProps> = ({
@@ -17,7 +17,7 @@ const InputLabel: React.FC<DatePickerProps> = ({
   label,
   label_name = '',
   className,
-  showErro = 'bottom',
+  showError = 'bottom',
   ...rest
 }) => {
   const { fieldName, defaultValue, error, registerField } = useField(name);
@@ -42,7 +42,7 @@ const InputLabel: React.FC<DatePickerProps> = ({
 
   return (
     <LabelContainer
-      showErro={showErro}
+      showErro={showError}
       hasError={!!error}
       htmlFor={label_name || name}
       className={className}
@@ -57,7 +57,7 @@ const InputLabel: React.FC<DatePickerProps> = ({
         dateFormat="dd/MM/yyyy - hh:00 aa"
         {...rest}
       />
-      {error && showErro === 'bottom' && <span>{error}</span>}
+      {error && showError === 'bottom' && <span>{error}</span>}
     </LabelContainer>
   );
 };

@@ -1,6 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react';
 // import { Ring } from 'react-awesome-spinners';
-import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
+import {
+  NumberParam,
+  useQueryParam,
+  StringParam,
+  BooleanParam,
+} from 'use-query-params';
 import { useHistory } from 'react-router-dom';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import {
@@ -29,7 +34,7 @@ interface Order {
   orderDateFormatted: string;
   deliveryDate: string;
   deliveryDateFormatted: string;
-  deliveryFee: number;
+  deliveryFee?: string;
   finalPrice: number;
   finalPriceFormatted: string;
   paymentMethod: string;
@@ -52,6 +57,11 @@ const ListOrders: React.FC = () => {
   const [pagesAvailable, setPagesAvailable] = useState(0);
   const [queryPage, setQueryPage] = useQueryParam('page', NumberParam);
   const [queryName, setQueryName] = useQueryParam('name', StringParam);
+
+  const [queryFinished, setQueryFinished] = useQueryParam(
+    'finished',
+    BooleanParam,
+  );
 
   const { addToast } = useToast();
   const history = useHistory();
@@ -108,7 +118,7 @@ const ListOrders: React.FC = () => {
   useEffect(() => {
     async function loadOrders(): Promise<void> {
       try {
-        console.log('useEffect Started');
+        // console.log('useEffect Started');
         setLoading(true);
 
         const response = await api.get<Order[]>('/orders', {
@@ -135,12 +145,12 @@ const ListOrders: React.FC = () => {
           };
         });
 
-        console.log('response.data:', response.data);
-        console.log('formattedResponse:', formattedOrders);
+        // console.log('response.data:', response.data);
+        // console.log('formattedResponse:', formattedOrders);
 
         setPagesAvailable(Math.ceil(totalCount / 7));
         setOrders(formattedOrders);
-        console.log('RESULT:', formattedOrders);
+        // console.log('RESULT:', formattedOrders);
       } catch (err) {
         addToast({
           type: 'error',
@@ -179,6 +189,16 @@ const ListOrders: React.FC = () => {
   const decrementPage = useCallback(() => {
     setQueryPage((state) => (state || 2) - 1);
   }, [setQueryPage]);
+
+  const handleToggleFinished = useCallback(
+    async (finished: boolean) => {
+      if (queryFinished === finished) return;
+
+      setQueryPage(1);
+      setQueryFinished((state) => !state);
+    },
+    [setQueryFinished, setQueryPage, queryFinished],
+  );
 
   if (loading) {
     return (
@@ -233,12 +253,18 @@ const ListOrders: React.FC = () => {
               <th>Pick-up</th>
               <th>Total</th>
               <th>Status</th>
-              <th>Action</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {orders.map((order) => (
-              <S.OrderRow key={order.id} orderStatus={order.status}>
+              <S.OrderRow
+                key={order.id}
+                orderStatus={order.status}
+                onClick={() => {
+                  history.push(`/orders/details/${order.id}`);
+                }}
+              >
                 <td>{order.number}</td>
                 <td>{order.customer.name}</td>
                 <td>{order.orderDateFormatted}</td>
@@ -307,6 +333,39 @@ const ListOrders: React.FC = () => {
             />
           )}
         </S.Pagination>
+
+        {/* NEW */}
+
+        <S.Pagination>
+          {!(queryPage === 1 || !queryPage) && (
+            <ChangePageButton
+              changePageTo="decrement"
+              onClick={decrementPage}
+            />
+          )}
+          <div>
+            <S.FinishedFilterButton
+              isSelected={!queryFinished}
+              onClick={() => handleToggleFinished(false)}
+            >
+              Open
+            </S.FinishedFilterButton>
+            <S.FinishedFilterButton
+              isSelected={!!queryFinished}
+              onClick={() => handleToggleFinished(true)}
+            >
+              Closed
+            </S.FinishedFilterButton>
+          </div>
+          {!(pagesAvailable <= 1 || queryPage === pagesAvailable) && (
+            <ChangePageButton
+              changePageTo="increment"
+              onClick={incrementPage}
+              style={{ marginLeft: 'auto' }}
+            />
+          )}
+        </S.Pagination>
+        {/* NEW END */}
       </S.Content>
     </S.Container>
   );

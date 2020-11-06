@@ -1,21 +1,18 @@
-import React, { useRef, useEffect, useCallback, useState } from 'react';
-import Select, {
-  GroupedOptionsType,
-  OptionsType,
+import React, { useRef, useEffect } from 'react';
+import ReactSelect, {
   OptionTypeBase,
   StylesConfig,
   Theme,
+  Props as SelectProps,
 } from 'react-select';
-// import Select, { Props as AsyncProps } from 'react-select/async';
 import { useField } from '@unform/core';
 
 import { LabelContainer } from './styles';
 
-interface Props {
+interface Props extends SelectProps<OptionTypeBase> {
   name: string;
   label: string;
   label_name?: string;
-  options?: GroupedOptionsType<OptionTypeBase> | OptionsType<OptionTypeBase>;
 }
 
 const SelectInput: React.FC<Props> = ({
@@ -74,29 +71,29 @@ const SelectInput: React.FC<Props> = ({
       name: fieldName,
       ref: selectRef.current,
       getValue: (ref: any) => {
-        if (!ref.select.state.value) {
+        if (rest.isMulti) {
+          if (!ref.state.value) {
+            return [];
+          }
+
+          return ref.state.value.map((option: OptionTypeBase) => option.value);
+        }
+        if (!ref.state.value) {
           return '';
         }
-
-        return ref.select.state.value.value;
-      },
-      setValue: (ref: any, value: any) => {
-        ref.select.state.value = value;
-      },
-      clearValue: (ref: any) => {
-        ref.select.select.clearValue();
+        return ref.state.value.value;
       },
     });
-  }, [fieldName, registerField]);
+  }, [fieldName, registerField, rest.isMulti]);
 
   return (
     <LabelContainer htmlFor={label_name || name}>
       {label}
-      <Select
+      <ReactSelect
         cacheOptions
         isClearable
         isSearchable
-        // defaultValue={defaultValue}
+        defaultValue={defaultValue}
         ref={selectRef}
         classNamePrefix="react-select"
         theme={themeProps}

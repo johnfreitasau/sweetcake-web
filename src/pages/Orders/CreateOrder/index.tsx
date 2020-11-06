@@ -12,14 +12,6 @@ import ItemsForm from './components/ItemsForm';
 import ItemsAddedCard from './components/ItemsAddedCard';
 import { Container, Content } from './styles';
 
-// interface Product {
-//   id: string;
-//   quantity: string;
-//   name: string;
-//   daily_price: number;
-//   quantity_daily_price_formatted: string;
-// }
-
 interface Product {
   id: string;
   name: string;
@@ -34,7 +26,13 @@ interface Product {
 
 interface ContractFormData {
   customerId: string;
+  deliveryFee?: string;
+  deliveryDate: string;
+  paymentMethod: string;
   delivery_price?: string;
+  isPaid: string;
+  isPickup: string;
+  checkboxOptions: string[];
 }
 
 const CreateOrder: React.FC = () => {
@@ -56,12 +54,20 @@ const CreateOrder: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: ContractFormData) => {
+      console.log('DATA:', data);
+      console.log('PAYMENT METHOD:', data.paymentMethod);
       try {
         contractFormRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
           customerId: Yup.string().required('Customer is required'),
           delivery_price: Yup.string().default('0'),
+          deliveryFee: Yup.string().default('0'),
+          deliveryDate: Yup.string(),
+          paymentMethod: Yup.string(),
+          isPaid: Yup.string(),
+          isPickup: Yup.string(),
+          checkboxOptions: Yup.array(),
         });
 
         await schema.validate(data, { abortEarly: false });
@@ -74,16 +80,24 @@ const CreateOrder: React.FC = () => {
           return;
         }
 
-        const { customerId, delivery_price = 0 } = data;
+        const {
+          customerId,
+          deliveryFee,
+          deliveryDate,
+          paymentMethod,
+          checkboxOptions,
+        } = data;
+
+        console.log('DELIVERY DATE:', deliveryDate);
 
         setSubmitIsLoading(true);
         await api.post('/orders', {
           customerId,
-          paymentMethod: 'Cash',
-          isPaid: true,
-          isPickup: false,
-          deliveryFee: '2',
-          deliveryDate: new Date(),
+          deliveryFee,
+          deliveryDate,
+          paymentMethod,
+          isPaid: checkboxOptions.indexOf('paid') > -1,
+          isPickup: checkboxOptions.indexOf('pickup') > -1,
           products: itemsAdded.map((product) => ({
             id: product.id,
             quantity: product.quantity,
