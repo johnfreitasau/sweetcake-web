@@ -44,7 +44,7 @@ const Routes: React.FC = () => {
 
       <Route path="/orders" exact component={ListOrders} isPrivate />
       <Route path="/orders/register" component={CreateOrder} isPrivate />
-      <Route path="/orders/edit/:id" component={EditOrder} isPrivate />
+      {/* <Route path="/orders/edit/:id" component={EditOrder} isPrivate /> */}
       <Route path="/orders/details/:id" component={OrderDetails} isPrivate />
     </Switch>
   );

@@ -64,6 +64,8 @@ interface OrderData {
     quantity: number;
     qtyPrice: number;
     qtyPriceFormatted: string;
+    finalPrice: number;
+    finalPriceFormatted: string;
 
     product: {
       id: string;
@@ -85,6 +87,8 @@ interface FormData {
 }
 
 const OrderDetails: React.FC = () => {
+  console.log('Chamou OrdersDetails component');
+
   const formRef = useRef<FormHandles>(null);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -102,11 +106,11 @@ const OrderDetails: React.FC = () => {
       deliveryFee: order?.deliveryFee || 0,
     });
 
-    formRef.current?.setFieldValue('final_price', finalPrice);
+    formRef.current?.setFieldValue('finalPrice', finalPrice);
   }, [order]);
 
   const theme = useTheme();
-  const id = useParams();
+  const { id } = useParams();
   console.log('ID:', id);
   const toggleShowForm = useCallback(() => {
     setShowForm((state) => !state);
@@ -141,8 +145,9 @@ const OrderDetails: React.FC = () => {
       try {
         console.log('ORDERS DETAILS - useEffect');
         const response = await api.get<OrderData>(`/orders/${id}`);
+        console.log(response);
         const { data } = response;
-
+        console.log('DATA:', data);
         const createdAtDate = new Date(data.created_at);
         let dateFormated = createdAtDate.toLocaleDateString('en-AU');
         let timeFormated = createdAtDate.toLocaleTimeString('en-AU');
@@ -267,15 +272,15 @@ const OrderDetails: React.FC = () => {
         )}
 
         <Customer>
-          <h1>Customer</h1>
+          <h1>Customer Details</h1>
           <section>
             <h2>{order.customer.name}</h2>
-            <Line />
+            {/* <Line /> */}
             <h2>{order.customer.email}</h2>
           </section>
           <section>
             <h2>{order.customer.phoneNumber}</h2>
-            <Line />
+            {/* <Line /> */}
             <h2>{order.customer.notes}</h2>
           </section>
         </Customer>
@@ -284,8 +289,7 @@ const OrderDetails: React.FC = () => {
           <h1>Order Items</h1>
           <section>
             <h2>Delivery Fee</h2>
-            <Line />
-            <h2>{order.deliveryFeeFormatted}</h2>
+            {/* <Line /> */}
           </section>
           {/* {order.deliveryDate && (
             <section>
@@ -296,7 +300,7 @@ const OrderDetails: React.FC = () => {
           )} */}
           <section>
             <h2>Pickup / Delivery Date</h2>
-            <Line />
+            {/* <Line /> */}
             <h2>{order.created_at_formatted}</h2>
           </section>
           {/* {order.deliveryDate && (
@@ -311,10 +315,10 @@ const OrderDetails: React.FC = () => {
         <ProductTable>
           <thead>
             <tr>
-              <th>MATERIAL</th>
-              <th>DIÁRIA</th>
-              <th>QUANTIDADE</th>
-              <th>DIÁRIA TOTAL</th>
+              <th>Product</th>
+              <th>Unit Price</th>
+              <th>Quantity</th>
+              <th>TOTAL</th>
             </tr>
           </thead>
           <tbody>
@@ -323,7 +327,7 @@ const OrderDetails: React.FC = () => {
                 <td>{item.product.name}</td>
                 <td>{item.product.unitPriceFormatted}</td>
                 <td>{item.quantity}</td>
-                {/* <td>{item.finalPriceFormatted}</td> */}
+                <td>{item.finalPrice}</td>
               </ProductRow>
             ))}
           </tbody>
