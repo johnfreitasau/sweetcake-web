@@ -55,6 +55,7 @@ const InputLabel: React.FC<DatePickerProps> = ({
         showTimeSelect
         timeIntervals={60}
         dateFormat="dd/MM/yyyy - hh:00 aa"
+        minDate={new Date()}
         {...rest}
       />
       {error && showError === 'bottom' && <span>{error}</span>}

@@ -43,9 +43,9 @@ interface CheckboxOption {
 const ContractForm: React.FC<ContractFormProps> = ({ onSubmit, formRef }) => {
   const [customerOptions, setCustomerOptions] = useState<Option[]>([]);
   const [paymentMethodOptions, setPaymentMethodOptions] = useState<Option[]>([
-    { value: 'creditCard', label: 'Credit Card' },
-    { value: 'bankTransfer', label: 'Bank Transfer' },
-    { value: 'cash', label: 'Cash' },
+    { value: 'Credit Card', label: 'Credit Card' },
+    { value: 'Bank Statement', label: 'Bank Transfer' },
+    { value: 'Cash', label: 'Cash' },
   ]);
   const [optionsIsLoading, setOptionsIsLoading] = useState(true);
   const [customersPage, setCustomersPage] = useState(1);

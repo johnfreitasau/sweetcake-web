@@ -5,7 +5,7 @@ type TStyledOrderStatus = {
   orderStatus: string;
 };
 
-interface FinishedFilterButtonProps {
+interface CompletedFilterButtonProps {
   isSelected: boolean;
 }
 
@@ -123,29 +123,16 @@ export const OrderRow = styled.tr<TStyledOrderStatus>`
   td:nth-child(9) {
     text-align: center;
     padding-right: 16px;
+    border-radius: 0 10px 10px 0;
     color: ${({ orderStatus }: any) => {
-      if (
-        orderStatus === 'Ready to pick-up' ||
-        orderStatus === 'Ready to deliver'
-      ) {
-        return '#39B60C';
-      }
-      if (orderStatus === 'In progress') {
+      if (orderStatus === 'Open') {
         return '#E1F011';
       }
-      if (orderStatus === 'To be started') {
-        return '#EB3D3D';
-      }
-      if (orderStatus === 'Delivered') {
-        return '#336600';
+      if (orderStatus === 'Closed') {
+        return '#39B60C';
       }
       return '#000';
     }};
-  }
-  td:nth-child(10) {
-    text-align: right;
-    padding-right: 16px;
-    border-radius: 0 10px 10px 0;
 
     div :nth-child(1):hover {
       color: ${({ theme }) => theme.colors.gray};
@@ -178,7 +165,7 @@ export const Pagination = styled.div`
 `;
 
 // NEW BELOW
-export const FinishedFilterButton = styled.button<FinishedFilterButtonProps>`
+export const CompletedFilterButton = styled.button<CompletedFilterButtonProps>`
   height: 46px;
   border: none;
   padding: 0 8px 0 16px;

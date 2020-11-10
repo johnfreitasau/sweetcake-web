@@ -10,11 +10,11 @@ export const LabelContainer = styled.label<LabelContainerProp>`
   width: 100%;
   flex-direction: column;
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.grayHard};
   input {
     margin-top: 8px;
     background: ${({ theme }) => theme.colors.dark};
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.gray};
     font-size: 18px;
     border: ${({ theme }) => `1px solid ${theme.colors.dark}`};
     border-radius: 10px;

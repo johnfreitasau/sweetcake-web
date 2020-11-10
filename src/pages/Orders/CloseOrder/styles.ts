@@ -47,21 +47,29 @@ export const MessageContainer = styled.div`
   }
 `;
 
-export const Customer = styled.div`
+export const CustomerList = styled.div`
   margin: 56px 0 0 0;
   h1 {
     font-size: 28px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     color: ${({ theme }) => theme.colors.yellow};
   }
-  section {
+  ul {
+    font-size: 20px;
+    list-style-type: none;
+
+    span {
+      font-weight: bold;
+    }
+  }
+  /* section {
     display: flex;
     align-items: center;
     justify-content: space-between;
     & + section {
       margin-top: 16px;
     }
-  }
+  } */
 `;
 
 export const Line = styled.div`
@@ -71,7 +79,7 @@ export const Line = styled.div`
   border-top: ${({ theme }) => `2px dashed ${theme.colors.yellow}`};
 `;
 
-export const Order = styled.div`
+export const OrderList = styled.div`
   margin: 48px 0 0 0;
   h1 {
     font-size: 28px;
@@ -157,7 +165,7 @@ export const Form = styled(UnForm)`
   }
 `;
 
-export const FinishButton = styled.button.attrs({
+export const CloseButton = styled.button.attrs({
   type: 'submit',
 })`
   border: none;

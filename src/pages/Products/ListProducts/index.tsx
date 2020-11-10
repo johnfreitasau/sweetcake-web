@@ -55,8 +55,8 @@ const ListProducts: React.FC = () => {
   );
 
   const handleDeleteButton = useCallback(
-    (id) => {
-      api.delete(`/products/${id}`);
+    async (id) => {
+      await api.delete(`/products/${id}`);
 
       async function loadProducts(): Promise<void> {
         try {

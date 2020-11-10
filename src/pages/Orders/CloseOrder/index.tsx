@@ -1,14 +1,25 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  useMemo,
+} from 'react';
 import { Ring } from 'react-awesome-spinners';
+import { FiTrash2 } from 'react-icons/fi';
 import { useParams, useHistory } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 import { FormHandles } from '@unform/core';
 
 import api from '../../../services/api';
 
-import { BackButton, InputCurrency } from '../../../components/Form';
+import {
+  BackButton,
+  DeleteButton,
+  InputCurrency,
+} from '../../../components/Form';
 import { formatPrice } from '../../../utils/format';
-import FinishOrderButton from '../../../components/FinishOrderButton';
+import CloseOrderButton from '../../../components/CompleteOrderButton';
 import orderFinalPrice from '../../../utils/orderFinalPrice';
 import { useToast } from '../../../hooks/toast';
 
@@ -16,19 +27,29 @@ import {
   Container,
   Content,
   MessageContainer,
-  Customer,
+  CustomerList,
   Line,
-  Order,
+  OrderList,
   ProductTable,
   ProductRow,
   FinalInformation,
   Form,
-  FinishButton,
+  CloseButton,
 } from './styles';
 
 interface OrderData {
   id: string;
   number: number;
+
+  paymentMethod: string;
+
+  isPaid: boolean;
+  isPaidFormatted: string;
+
+  isPickup: boolean;
+  isPickupFormatted: string;
+
+  status: string;
 
   collect_price: number | null;
   collect_price_formatted: string;
@@ -49,13 +70,16 @@ interface OrderData {
   deliveryDateFormatted: string;
 
   created_at: string;
-  created_at_formatted: string;
+  createOrderDateFormatted: string;
 
   customer: {
     id: string;
     name: string;
     email: string;
     phoneNumber: string;
+    address: string;
+    city: string;
+    postalCode: string;
     notes: string;
   };
 
@@ -86,17 +110,17 @@ interface FormData {
   collect_price: number;
 }
 
-const OrderDetails: React.FC = () => {
-  console.log('Chamou OrdersDetails component');
-
+const CloseOrder: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const [isLoading, setIsLoading] = useState(true);
   const [order, setOrder] = useState<OrderData | null>(null);
   const [showForm, setShowForm] = useState(false);
 
-  const { addToast } = useToast();
+  const theme = useTheme();
   const history = useHistory();
+  const { id } = useParams();
+  const { addToast } = useToast();
 
   const handleCollectPriceChange = useCallback(() => {
     const finalPrice = orderFinalPrice({
@@ -109,54 +133,106 @@ const OrderDetails: React.FC = () => {
     formRef.current?.setFieldValue('finalPrice', finalPrice);
   }, [order]);
 
-  const theme = useTheme();
-  const { id } = useParams();
-  console.log('ID:', id);
-  const toggleShowForm = useCallback(() => {
-    setShowForm((state) => !state);
-  }, []);
-
   const handleSubmit = useCallback(
-    async (data: FormData) => {
-      try {
-        setIsLoading(true);
-        await api.put(`/orders/${id}/finish`, {
-          collect_price: Number(data.collect_price),
-        });
-        setIsLoading(false);
-
-        addToast({
-          type: 'success',
-          title: 'order completed successfully!',
-        });
-        history.goBack();
-      } catch (err) {
-        addToast({
-          type: 'error',
-          title: 'Error to complete order.',
-        });
-      }
+    async () => {
+      setIsLoading(true);
+      await api.put(`/orders/${id}/close`);
+      setIsLoading(true);
+      addToast({
+        type: 'success',
+        title: 'order closed successfully!',
+      });
+      history.goBack();
     },
-    [id, addToast, history],
+    [addToast, history, id],
+    // async (data: FormData) => {
+    //   try {
+    //     setIsLoading(true);
+    //     await api.put(`/orders/${id}/close`, {
+    //       collect_price: Number(data.collect_price),
+    //     });
+    //     setIsLoading(false);
+
+    //     addToast({
+    //       type: 'success',
+    //       title: 'order completed successfully!',
+    //     });
+    //     history.goBack();
+    //   } catch (err) {
+    //     addToast({
+    //       type: 'error',
+    //       title: 'Error to complete order.',
+    //     });
+    //   }
+    // },
+    // [id, addToast, history],
   );
+
+  // const handleDeleteButton = useCallback(async () => {
+  //   await api.delete(`/orders/${id}`);
+
+  //   history.goBack();
+
+  //   // async function loadOrders(): Promise<void> {
+  //   //   try {
+  //   //     setLoading(true);
+  //   //     const response = await api.get<Order[]>('/orders', {
+  //   //       params: {
+  //   //         page: queryPage || 1,
+  //   //         name: queryName || undefined,
+  //   //       },
+  //   //     });
+
+  //   //     const totalCount = response.headers['x-total-count'];
+
+  //   //     const formattedOrders = response.data.map((order) => {
+  //   //       return {
+  //   //         ...order,
+  //   //         orderDateFormatted: format(
+  //   //           parseISO(order.created_at),
+  //   //           'dd/MM/yyyy hh:mm bb',
+  //   //         ),
+  //   //         deliveryDateFormatted: format(
+  //   //           parseISO(order.deliveryDate),
+  //   //           'dd/MM/yyyy hh:mm bb',
+  //   //         ),
+  //   //         finalPriceFormatted: formatPrice(order.finalPrice),
+  //   //       };
+  //   //     });
+
+  //   //     setPagesAvailable(Math.ceil(totalCount / 7));
+  //   //     setOrders(formattedOrders);
+  //   //   } catch (err) {
+  //   //     addToast({
+  //   //       type: 'error',
+  //   //       title: 'Error',
+  //   //       description: 'Error has ocurred. Please try again.',
+  //   //     });
+  //   //   } finally {
+  //   //     setLoading(false);
+  //   //   }
+  //   // }
+
+  //   // loadOrders();
+  // }, [addToast]);
 
   useEffect(() => {
     async function loadOrder(): Promise<void> {
       try {
-        console.log('ORDERS DETAILS - useEffect');
+        // console.log('ORDERS DETAILS - useEffect');
         const response = await api.get<OrderData>(`/orders/${id}`);
-        console.log(response);
+        // console.log(response);
         const { data } = response;
         console.log('DATA:', data);
         const createdAtDate = new Date(data.created_at);
         let dateFormated = createdAtDate.toLocaleDateString('en-AU');
         let timeFormated = createdAtDate.toLocaleTimeString('en-AU');
-        const created_at_formatted = `${dateFormated} às ${timeFormated}`;
+        const createOrderDateFormatted = `${dateFormated} at ${timeFormated}`;
 
-        const collectAt = new Date(data.deliveryDate || 0);
-        dateFormated = collectAt.toLocaleDateString('en-AU');
-        timeFormated = collectAt.toLocaleTimeString('en-AU');
-        const collect_at_formatted = `${dateFormated} às ${timeFormated}`;
+        const deliveryDate = new Date(data.deliveryDate || 0);
+        dateFormated = deliveryDate.toLocaleDateString('en-AU');
+        timeFormated = deliveryDate.toLocaleTimeString('en-AU');
+        const deliveryDateFormatted = `${dateFormated} at ${timeFormated}`;
 
         const orderItems = data.orderItems.map((item) => ({
           ...item,
@@ -173,12 +249,12 @@ const OrderDetails: React.FC = () => {
           // daily_total_price_formatted: formatPrice(data.),
           // collect_price_formatted: formatPrice(data.collect_price || 0),
           finalPriceFormatted: formatPrice(data.finalPrice),
-          created_at_formatted,
+          createOrderDateFormatted,
           orderItems,
           // deliveryDateFormatted,
         });
 
-        console.log('ORDER DETAILS - RESPONSE:', response);
+        // console.log('ORDER DETAILS - RESPONSE:', response);
       } catch (err) {
         addToast({
           type: 'error',
@@ -186,8 +262,6 @@ const OrderDetails: React.FC = () => {
           description:
             'Error trying to load the order details. Please try again.',
         });
-
-        console.log('finished useEffect');
       } finally {
         setIsLoading(false);
       }
@@ -195,6 +269,14 @@ const OrderDetails: React.FC = () => {
 
     loadOrder();
   }, [id, addToast]);
+
+  const isPickupFormatted = useMemo(() => {
+    return order?.isPickup === true ? 'Pick-up order' : 'Delivery';
+  }, [order]);
+
+  const isPaidFormatted = useMemo(() => {
+    return order?.isPaid === true ? 'Paid' : 'Not Paid';
+  }, [order]);
 
   if (isLoading) {
     return (
@@ -206,7 +288,7 @@ const OrderDetails: React.FC = () => {
             <section>
               <BackButton />
 
-              <FinishOrderButton
+              <CloseOrderButton
                 disabled={!!order?.deliveryDate}
                 isLoading={isLoading}
               />
@@ -230,7 +312,7 @@ const OrderDetails: React.FC = () => {
             <section>
               <BackButton />
 
-              <FinishOrderButton disabled={!order} isLoading={isLoading} />
+              <CloseOrderButton isLoading={isLoading} />
             </section>
           </header>
         </Content>
@@ -246,71 +328,79 @@ const OrderDetails: React.FC = () => {
 
           <section>
             <BackButton />
-            <FinishOrderButton
-              onClick={toggleShowForm}
-              isLoading={isLoading}
-              disabled={!!order.deliveryDate}
-              showForm={showForm}
-            />
+            {order.status !== 'Closed' && (
+              <>
+                <DeleteButton path={`/orders/${id}`} />
+                <CloseOrderButton
+                  onClick={handleSubmit}
+                  isLoading={isLoading}
+                  // disabled={!!order.deliveryDate}
+                  showForm={showForm}
+                />
+              </>
+            )}
           </section>
         </header>
 
-        {showForm && (
+        {/* {showForm && (
           <Form ref={formRef} onSubmit={handleSubmit}>
             <InputCurrency disabled name="final_price" label="VALOR FINAL" />
             <InputCurrency
               name="collect_price"
-              label="VALOR DE COLETA"
-              placeholder="R$ 0,00"
+              label="Total collect"
+              placeholder="$ 0,00"
               onKeyUp={handleCollectPriceChange}
               onFocus={handleCollectPriceChange}
               autoFocus
             />
 
-            <FinishButton>Confirm</FinishButton>
+            <CloseButton>Confirm</CloseButton>
           </Form>
-        )}
+        )} */}
 
-        <Customer>
+        <CustomerList>
           <h1>Customer Details</h1>
           <section>
-            <h2>{order.customer.name}</h2>
-            {/* <Line /> */}
-            <h2>{order.customer.email}</h2>
+            <ul>
+              <li>
+                Name: <span>{order.customer.name}</span>
+              </li>
+              <li>
+                EMail: <span>{order.customer.email}</span>
+              </li>
+              <li>
+                Phone: <span>{order.customer.phoneNumber}</span>
+              </li>
+              <li>
+                Address: <span>{order.customer.address}</span>
+              </li>
+              <li>
+                City: <span>{order.customer.city}</span>
+              </li>
+              <li>
+                Postal Code:<span>{order.customer.postalCode}</span>
+              </li>
+              {order.customer.notes && (
+                <li>
+                  Notes: <span>{order.customer.notes}</span>
+                </li>
+              )}
+            </ul>
           </section>
-          <section>
-            <h2>{order.customer.phoneNumber}</h2>
-            {/* <Line /> */}
-            <h2>{order.customer.notes}</h2>
-          </section>
-        </Customer>
+        </CustomerList>
 
-        <Order>
-          <h1>Order Items</h1>
+        <OrderList>
+          <h1>Order Details ({isPickupFormatted})</h1>
           <section>
-            <h2>Delivery Fee</h2>
-            {/* <Line /> */}
+            <ul>
+              <li>Order Date: {order.createOrderDateFormatted}</li>
+              <li>Delivery Date: {order.deliveryDate}</li>
+              <li>Paid: {isPaidFormatted}</li>
+              <li>Delivery Fee: {order.deliveryFee}</li>
+              <li>Payment Method: {order.paymentMethod}</li>
+            </ul>
           </section>
-          {/* {order.deliveryDate && (
-            <section>
-              <h2>Valor de coleta</h2>
-              <Line />
-              <h2>{order.collect_price_formatted}</h2>
-            </section>
-          )} */}
-          <section>
-            <h2>Pickup / Delivery Date</h2>
-            {/* <Line /> */}
-            <h2>{order.created_at_formatted}</h2>
-          </section>
-          {/* {order.deliveryDate && (
-            <section>
-              <h2>Data de devolução</h2>
-              <Line />
-              <h2>{order.deliveryDateFormatted}</h2>
-            </section>
-          )} */}
-        </Order>
+        </OrderList>
 
         <ProductTable>
           <thead>
@@ -347,4 +437,4 @@ const OrderDetails: React.FC = () => {
   );
 };
 
-export default OrderDetails;
+export default CloseOrder;

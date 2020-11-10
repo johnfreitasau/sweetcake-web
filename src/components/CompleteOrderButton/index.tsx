@@ -8,7 +8,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   showForm?: boolean;
 };
 
-const FinishOrderButton: React.FC<ButtonProps> = ({
+const CompleteOrderButton: React.FC<ButtonProps> = ({
   onClick,
   isLoading,
   showForm = false,
@@ -23,7 +23,7 @@ const FinishOrderButton: React.FC<ButtonProps> = ({
         {...rest}
       >
         <FiXCircle size={20} />
-        CANCELAR
+        Cancel
       </ButtonContainer>
     );
   }
@@ -41,4 +41,4 @@ const FinishOrderButton: React.FC<ButtonProps> = ({
   );
 };
 
-export default FinishOrderButton;
+export default CompleteOrderButton;

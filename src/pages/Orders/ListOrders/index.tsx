@@ -58,8 +58,8 @@ const ListOrders: React.FC = () => {
   const [queryPage, setQueryPage] = useQueryParam('page', NumberParam);
   const [queryName, setQueryName] = useQueryParam('name', StringParam);
 
-  const [queryFinished, setQueryFinished] = useQueryParam(
-    'finished',
+  const [queryCompleted, setQueryCompleted] = useQueryParam(
+    'completed',
     BooleanParam,
   );
 
@@ -93,7 +93,6 @@ const ListOrders: React.FC = () => {
                 parseISO(order.deliveryDate),
                 'dd/MM/yyyy hh:mm bb',
               ),
-              finalPriceFormatted: formatPrice(order.finalPrice),
             };
           });
 
@@ -172,15 +171,15 @@ const ListOrders: React.FC = () => {
     [setQueryName, setQueryPage],
   );
 
-  const handleEditButton = useCallback(
-    (order) => {
-      history.push({
-        pathname: `/orders/edit/${order.id}`,
-        state: order,
-      });
-    },
-    [history],
-  );
+  // const handleEditButton = useCallback(
+  //   (order) => {
+  //     history.push({
+  //       pathname: `/orders/edit/${order.id}`,
+  //       state: order,
+  //     });
+  //   },
+  //   [history],
+  // );
 
   const incrementPage = useCallback(() => {
     setQueryPage((state) => (state || 1) + 1);
@@ -190,14 +189,14 @@ const ListOrders: React.FC = () => {
     setQueryPage((state) => (state || 2) - 1);
   }, [setQueryPage]);
 
-  const handleToggleFinished = useCallback(
-    async (finished: boolean) => {
-      if (queryFinished === finished) return;
+  const handleToggleCompleted = useCallback(
+    async (completed: boolean) => {
+      if (queryCompleted === completed) return;
 
       setQueryPage(1);
-      setQueryFinished((state) => !state);
+      setQueryCompleted((state) => !state);
     },
-    [setQueryFinished, setQueryPage, queryFinished],
+    [setQueryCompleted, setQueryPage, queryCompleted],
   );
 
   if (loading) {
@@ -247,13 +246,12 @@ const ListOrders: React.FC = () => {
               <th>Order ID</th>
               <th>Customer</th>
               <th>Order Date</th>
-              <th>Delivery Date</th>
+              <th>Due Date</th>
               <th>Payment Method</th>
               <th>Paid</th>
               <th>Pick-up</th>
               <th>Total</th>
               <th>Status</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -262,7 +260,7 @@ const ListOrders: React.FC = () => {
                 key={order.id}
                 orderStatus={order.status}
                 onClick={() => {
-                  history.push(`/orders/details/${order.id}`);
+                  history.push(`/order/details/${order.id}`);
                 }}
               >
                 <td>{order.number}</td>
@@ -296,28 +294,10 @@ const ListOrders: React.FC = () => {
                 </td>
                 <td>{order.finalPriceFormatted}</td>
                 <td>{order.status}</td>
-                <td>
-                  <div>
-                    <FiEdit
-                      size={20}
-                      onClick={() => handleEditButton(order)}
-                      title="Edit"
-                    />
-
-                    <FiTrash2
-                      size={20}
-                      title="Delete"
-                      onClick={() => {
-                        handleDeleteButton(order.id);
-                      }}
-                    />
-                  </div>
-                </td>
               </S.OrderRow>
             ))}
           </tbody>
         </S.Table>
-
         <S.Pagination>
           {!(queryPage === 1 || !queryPage) && (
             <ChangePageButton
@@ -333,30 +313,28 @@ const ListOrders: React.FC = () => {
             />
           )}
         </S.Pagination>
-
-        {/* NEW */}
-
-        <S.Pagination>
+        <div>
+          <S.CompletedFilterButton
+            isSelected={!queryCompleted}
+            onClick={() => handleToggleCompleted(false)}
+          >
+            Open
+          </S.CompletedFilterButton>
+          <S.CompletedFilterButton
+            isSelected={!!queryCompleted}
+            onClick={() => handleToggleCompleted(true)}
+          >
+            Closed
+          </S.CompletedFilterButton>
+        </div>
+        ; ;{/* NEW */}
+        {/* <S.Pagination>
           {!(queryPage === 1 || !queryPage) && (
             <ChangePageButton
               changePageTo="decrement"
               onClick={decrementPage}
             />
           )}
-          <div>
-            <S.FinishedFilterButton
-              isSelected={!queryFinished}
-              onClick={() => handleToggleFinished(false)}
-            >
-              Open
-            </S.FinishedFilterButton>
-            <S.FinishedFilterButton
-              isSelected={!!queryFinished}
-              onClick={() => handleToggleFinished(true)}
-            >
-              Closed
-            </S.FinishedFilterButton>
-          </div>
           {!(pagesAvailable <= 1 || queryPage === pagesAvailable) && (
             <ChangePageButton
               changePageTo="increment"
@@ -364,7 +342,20 @@ const ListOrders: React.FC = () => {
               style={{ marginLeft: 'auto' }}
             />
           )}
-        </S.Pagination>
+        </S.Pagination> */}
+        {/* {!(queryPage === 1 || !queryPage) && (
+            <ChangePageButton
+              changePageTo="decrement"
+              onClick={decrementPage}
+            />
+          )} */}
+        {/* {!(pagesAvailable <= 1 || queryPage === pagesAvailable) && (
+            <ChangePageButton
+              changePageTo="increment"
+              onClick={incrementPage}
+              style={{ marginLeft: 'auto' }}
+            />
+          )} */}
         {/* NEW END */}
       </S.Content>
     </S.Container>
