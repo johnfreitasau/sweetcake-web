@@ -48,11 +48,7 @@ const Header: React.FC<HeaderProps> = ({
           // disabled={disabled}
           clearValue={clearValue}
         />
-        <SearchButton
-          type="submit"
-          style={{ marginLeft: 16 }}
-          // disabled={disabled}
-        />
+        <SearchButton type="submit" style={{ marginLeft: 16 }} />
       </S.Form>
 
       <LinkToCreatePage to={createPage} />

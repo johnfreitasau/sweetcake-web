@@ -7,6 +7,8 @@ import React, {
 } from 'react';
 import Switch from 'react-switch';
 import {
+  FiPackage,
+  FiBook,
   FiTruck,
   FiBox,
   FiChevronsLeft,
@@ -15,6 +17,7 @@ import {
   FiLogOut,
   FiSettings,
 } from 'react-icons/fi';
+// import { BiFoodMenu } from 'react-icons/bi';
 import { NavLink } from 'react-router-dom';
 import { shade } from 'polished';
 // import toolSvg from '../../assets/tool.svg';
@@ -77,11 +80,11 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
         </NavLink>
         <NavLink to="/products">
           {isOpened && 'Products'}
-          <FiBox size={24} />
+          <FiBook size={24} />
         </NavLink>
         <NavLink to="/orders">
           {isOpened && 'Orders'}
-          <FiTruck size={24} />
+          <FiPackage size={24} />
         </NavLink>
         {/* <NavLink to="/inventory">
           {isOpened && 'Inventory'}

@@ -124,15 +124,24 @@ export const OrderRow = styled.tr<TStyledOrderStatus>`
     text-align: center;
     padding-right: 16px;
     border-radius: 0 10px 10px 0;
-    color: ${({ orderStatus }: any) => {
-      if (orderStatus === 'Open') {
-        return '#E1F011';
-      }
-      if (orderStatus === 'Closed') {
-        return '#39B60C';
-      }
-      return '#000';
-    }};
+
+    div {
+      border-radius: 7px;
+      width: 60px;
+      height: 20px;
+      color: 'yellow' !important;
+      text-shadow: 1px 1px 0 #444;
+      color: #fff !important;
+      background: ${({ orderStatus }: any) => {
+        if (orderStatus === 'Open') {
+          return '#FBC131';
+        }
+        if (orderStatus === 'Closed') {
+          return '#009900';
+        }
+        return '#000';
+      }};
+    }
 
     div :nth-child(1):hover {
       color: ${({ theme }) => theme.colors.gray};

@@ -5,7 +5,7 @@ import React, {
   useRef,
   useMemo,
 } from 'react';
-import { Ring } from 'react-awesome-spinners';
+import { Ellipsis } from 'react-awesome-spinners';
 import { FiTrash2 } from 'react-icons/fi';
 import { useParams, useHistory } from 'react-router-dom';
 import { useTheme } from 'styled-components';
@@ -296,7 +296,7 @@ const CloseOrder: React.FC = () => {
           </header>
         </Content>
         <MessageContainer>
-          <Ring size={100} color={theme.colors.yellow} />
+          <Ellipsis size={100} color={theme.colors.yellow} />
         </MessageContainer>
       </Container>
     );

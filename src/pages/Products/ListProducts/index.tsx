@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-// import { Ring } from 'react-awesome-spinners';
+import { Ellipsis } from 'react-awesome-spinners';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
 import { useHistory } from 'react-router-dom';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
@@ -128,7 +128,7 @@ const ListProducts: React.FC = () => {
       <S.Container>
         <S.Content>
           <S.MessageContainer>
-            {/* <Ring size={100} color="#FBC131" /> */}
+            <Ellipsis size={100} color="#FBC131" />
           </S.MessageContainer>
         </S.Content>
       </S.Container>

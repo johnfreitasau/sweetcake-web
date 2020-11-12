@@ -1,13 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
-// import { Ring } from 'react-awesome-spinners';
-import {
-  NumberParam,
-  useQueryParam,
-  StringParam,
-  BooleanParam,
-} from 'use-query-params';
+import { Ellipsis } from 'react-awesome-spinners';
+import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
 import { useHistory } from 'react-router-dom';
-import { FiEdit, FiTrash2 } from 'react-icons/fi';
+import { AiOutlineDollarCircle, AiFillDollarCircle } from 'react-icons/ai';
+// import { RiEBike2Fill } from 'react-icons/ri';
+import { FiHome, FiTruck } from 'react-icons/fi';
 import {
   FcPaid,
   FcPodiumWithoutSpeaker,
@@ -23,7 +20,6 @@ import ChangePageButton from '../../../components/ChangePageButton';
 import { useToast } from '../../../hooks/toast';
 
 import * as S from './styles';
-// import Button from '../../../components/Button';
 
 interface Order {
   id: string;
@@ -58,66 +54,12 @@ const ListOrders: React.FC = () => {
   const [queryPage, setQueryPage] = useQueryParam('page', NumberParam);
   const [queryName, setQueryName] = useQueryParam('name', StringParam);
 
-  const [queryCompleted, setQueryCompleted] = useQueryParam(
-    'completed',
-    BooleanParam,
-  );
-
   const { addToast } = useToast();
   const history = useHistory();
-
-  const handleDeleteButton = useCallback(
-    async (id) => {
-      await api.delete(`/orders/${id}`);
-
-      async function loadOrders(): Promise<void> {
-        try {
-          setLoading(true);
-          const response = await api.get<Order[]>('/orders', {
-            params: {
-              page: queryPage || 1,
-              name: queryName || undefined,
-            },
-          });
-
-          const totalCount = response.headers['x-total-count'];
-
-          const formattedOrders = response.data.map((order) => {
-            return {
-              ...order,
-              orderDateFormatted: format(
-                parseISO(order.created_at),
-                'dd/MM/yyyy hh:mm bb',
-              ),
-              deliveryDateFormatted: format(
-                parseISO(order.deliveryDate),
-                'dd/MM/yyyy hh:mm bb',
-              ),
-            };
-          });
-
-          setPagesAvailable(Math.ceil(totalCount / 7));
-          setOrders(formattedOrders);
-        } catch (err) {
-          addToast({
-            type: 'error',
-            title: 'Error',
-            description: 'Error has ocurred. Please try again.',
-          });
-        } finally {
-          setLoading(false);
-        }
-      }
-
-      loadOrders();
-    },
-    [addToast, queryName, queryPage],
-  );
 
   useEffect(() => {
     async function loadOrders(): Promise<void> {
       try {
-        // console.log('useEffect Started');
         setLoading(true);
 
         const response = await api.get<Order[]>('/orders', {
@@ -144,12 +86,8 @@ const ListOrders: React.FC = () => {
           };
         });
 
-        // console.log('response.data:', response.data);
-        // console.log('formattedResponse:', formattedOrders);
-
         setPagesAvailable(Math.ceil(totalCount / 7));
         setOrders(formattedOrders);
-        // console.log('RESULT:', formattedOrders);
       } catch (err) {
         addToast({
           type: 'error',
@@ -171,16 +109,6 @@ const ListOrders: React.FC = () => {
     [setQueryName, setQueryPage],
   );
 
-  // const handleEditButton = useCallback(
-  //   (order) => {
-  //     history.push({
-  //       pathname: `/orders/edit/${order.id}`,
-  //       state: order,
-  //     });
-  //   },
-  //   [history],
-  // );
-
   const incrementPage = useCallback(() => {
     setQueryPage((state) => (state || 1) + 1);
   }, [setQueryPage]);
@@ -189,22 +117,12 @@ const ListOrders: React.FC = () => {
     setQueryPage((state) => (state || 2) - 1);
   }, [setQueryPage]);
 
-  const handleToggleCompleted = useCallback(
-    async (completed: boolean) => {
-      if (queryCompleted === completed) return;
-
-      setQueryPage(1);
-      setQueryCompleted((state) => !state);
-    },
-    [setQueryCompleted, setQueryPage, queryCompleted],
-  );
-
   if (loading) {
     return (
       <S.Container>
         <S.Content>
           <S.MessageContainer>
-            {/* <Ring size={100} color="#FBC131" /> */}
+            <Ellipsis size={100} color="#FBC131" />
           </S.MessageContainer>
         </S.Content>
       </S.Container>
@@ -271,29 +189,31 @@ const ListOrders: React.FC = () => {
                 <td>
                   {order.isPaid === true && (
                     <div>
-                      <FcPaid size={20} title="Paid" />
+                      <AiFillDollarCircle size={20} title="Paid" />
                     </div>
                   )}
                   {order.isPaid === false && (
                     <div>
-                      <FcPodiumWithoutSpeaker size={20} title="Not Paid" />
+                      <AiOutlineDollarCircle size={20} title="Not Paid" />
                     </div>
                   )}
                 </td>
                 <td>
                   {order.isPickup === true && (
                     <div>
-                      <FcShop size={20} title="Pickup" />
+                      <FiHome size={20} title="Pickup" />
                     </div>
                   )}
                   {order.isPickup === false && (
                     <div>
-                      <FcShipped size={20} title="Delivery" />
+                      <FiTruck size={20} title="Delivery" />
                     </div>
                   )}
                 </td>
                 <td>{order.finalPriceFormatted}</td>
-                <td>{order.status}</td>
+                <td>
+                  <div>{order.status}</div>
+                </td>
               </S.OrderRow>
             ))}
           </tbody>
@@ -313,50 +233,6 @@ const ListOrders: React.FC = () => {
             />
           )}
         </S.Pagination>
-        <div>
-          <S.CompletedFilterButton
-            isSelected={!queryCompleted}
-            onClick={() => handleToggleCompleted(false)}
-          >
-            Open
-          </S.CompletedFilterButton>
-          <S.CompletedFilterButton
-            isSelected={!!queryCompleted}
-            onClick={() => handleToggleCompleted(true)}
-          >
-            Closed
-          </S.CompletedFilterButton>
-        </div>
-        ; ;{/* NEW */}
-        {/* <S.Pagination>
-          {!(queryPage === 1 || !queryPage) && (
-            <ChangePageButton
-              changePageTo="decrement"
-              onClick={decrementPage}
-            />
-          )}
-          {!(pagesAvailable <= 1 || queryPage === pagesAvailable) && (
-            <ChangePageButton
-              changePageTo="increment"
-              onClick={incrementPage}
-              style={{ marginLeft: 'auto' }}
-            />
-          )}
-        </S.Pagination> */}
-        {/* {!(queryPage === 1 || !queryPage) && (
-            <ChangePageButton
-              changePageTo="decrement"
-              onClick={decrementPage}
-            />
-          )} */}
-        {/* {!(pagesAvailable <= 1 || queryPage === pagesAvailable) && (
-            <ChangePageButton
-              changePageTo="increment"
-              onClick={incrementPage}
-              style={{ marginLeft: 'auto' }}
-            />
-          )} */}
-        {/* NEW END */}
       </S.Content>
     </S.Container>
   );
