@@ -15,6 +15,7 @@ export const Content = styled.div`
   border-radius: 10px;
   padding: 32px;
   border: 1px black;
+
   header {
     width: 100%;
     display: flex;

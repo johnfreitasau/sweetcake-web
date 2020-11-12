@@ -45,7 +45,7 @@ export const Table = styled.table`
       padding-left: 16px;
     }
     th:nth-child(3) {
-      text-align: right;
+      text-align: center;
       padding-right: 16px;
     }
     th:nth-child(4) {
@@ -71,7 +71,7 @@ export const CustomerRow = styled.tr`
     text-align: center;
   }
   td:nth-child(3) {
-    text-align: right;
+    text-align: center;
     padding-right: 16px;
   }
   td:nth-child(4) {

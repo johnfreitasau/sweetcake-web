@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { Ellipsis } from 'react-awesome-spinners';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
 import { useHistory } from 'react-router-dom';
@@ -11,14 +11,14 @@ import { useToast } from '../../../hooks/toast';
 
 import * as S from './styles';
 import Button from '../../../components/Button';
+import { formatPrice } from '../../../utils/format';
 
 interface Product {
   id: string;
   name: string;
   category: string;
   unitPrice: number;
-  qtyDiscount: number;
-  discount: number;
+  unitPriceFormatted: string;
   notes: string;
 }
 
@@ -82,7 +82,6 @@ const ListProducts: React.FC = () => {
         }
       }
       loadProducts();
-      // setCustomers(customers.filter((customer) => customer.id !== id));
     },
     [addToast, queryName, queryPage],
   );
@@ -94,6 +93,13 @@ const ListProducts: React.FC = () => {
   const decrementPage = useCallback(() => {
     setQueryPage((state) => (state || 2) - 1);
   }, [setQueryPage]);
+
+  const formattedProducts = useMemo(() => {
+    return products.map((product) => ({
+      ...product,
+      unitPriceFormatted: formatPrice(product.unitPrice),
+    }));
+  }, [products]);
 
   useEffect(() => {
     async function loadCustomers(): Promise<void> {
@@ -135,7 +141,7 @@ const ListProducts: React.FC = () => {
     );
   }
 
-  if (products.length === 0) {
+  if (formattedProducts.length === 0) {
     return (
       <S.Container>
         <S.Content>
@@ -170,18 +176,15 @@ const ListProducts: React.FC = () => {
               <th>Product Name</th>
               <th>Category</th>
               <th>Unit Price</th>
-              <th>Quantity Discount</th>
-              <th>Discount</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {formattedProducts.map((product) => (
               <S.CustomerRow key={product.id}>
                 <td>{product.name}</td>
                 <td>{product.category}</td>
-                <td>{product.unitPrice}</td>
-                <td>{product.qtyDiscount}</td>
-                <td>{product.discount}%</td>
+                <td>{product.unitPriceFormatted}</td>
                 <td>
                   <div>
                     <FiEdit

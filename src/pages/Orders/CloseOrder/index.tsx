@@ -88,8 +88,6 @@ interface OrderData {
     quantity: number;
     qtyPrice: number;
     qtyPriceFormatted: string;
-    finalPrice: number;
-    finalPriceFormatted: string;
 
     product: {
       id: string;
@@ -417,7 +415,7 @@ const CloseOrder: React.FC = () => {
                 <td>{item.product.name}</td>
                 <td>{item.product.unitPriceFormatted}</td>
                 <td>{item.quantity}</td>
-                <td>{item.finalPrice}</td>
+                <td>{item.qtyPriceFormatted}</td>
               </ProductRow>
             ))}
           </tbody>

@@ -14,11 +14,16 @@ export const InputFormRow = styled.div`
 `;
 
 export const DeliveryFeeInput = styled(InputCurrency)`
+  color: ${({ theme }) => theme.colors.grayHard};
   margin: 0;
   padding: 0;
   max-width: 200px;
   width: 100%;
   margin-left: 16px;
+
+  input {
+    color: ${({ theme }) => theme.colors.grayHard};
+  }
 `;
 
 export const DeliveryDateInput = styled(InputCurrency)`

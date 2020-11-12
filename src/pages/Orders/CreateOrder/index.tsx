@@ -7,7 +7,7 @@ import api from '../../../services/api';
 import { BackButton, RegisterButton } from '../../../components/Form';
 import { useToast } from '../../../hooks/toast';
 import getValidationErrors from '../../../utils/getValidationErrors';
-import ContractForm from './components/ContractForm';
+import OrderForm from './components/OrderForm';
 import ItemsForm from './components/ItemsForm';
 import ItemsAddedCard from './components/ItemsAddedCard';
 import { Container, Content } from './styles';
@@ -24,7 +24,7 @@ interface Product {
   notes: string;
 }
 
-interface ContractFormData {
+interface OrderFormData {
   customerId: string;
   deliveryFee?: string;
   deliveryDate: string;
@@ -36,7 +36,7 @@ interface ContractFormData {
 }
 
 const CreateOrder: React.FC = () => {
-  const contractFormRef = useRef<FormHandles>(null);
+  const orderFormRef = useRef<FormHandles>(null);
 
   const { addToast } = useToast();
   const history = useHistory();
@@ -45,7 +45,7 @@ const CreateOrder: React.FC = () => {
   const [itemsAdded, setItemsAdded] = useState<Product[]>([]);
 
   const handleButtonSubmit = useCallback(() => {
-    contractFormRef.current?.submitForm();
+    orderFormRef.current?.submitForm();
   }, []);
 
   const handleRemoveMaterial = useCallback((id: string) => {
@@ -53,11 +53,11 @@ const CreateOrder: React.FC = () => {
   }, []);
 
   const handleSubmit = useCallback(
-    async (data: ContractFormData) => {
+    async (data: OrderFormData) => {
       console.log('DATA:', data);
       console.log('PAYMENT METHOD:', data.paymentMethod);
       try {
-        contractFormRef.current?.setErrors({});
+        orderFormRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
           customerId: Yup.string().required('Customer is required'),
@@ -104,7 +104,7 @@ const CreateOrder: React.FC = () => {
           })),
         });
 
-        contractFormRef.current?.reset();
+        orderFormRef.current?.reset();
         setItemsAdded([]);
 
         history.goBack();
@@ -118,7 +118,7 @@ const CreateOrder: React.FC = () => {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
 
-          contractFormRef.current?.setErrors(errors);
+          orderFormRef.current?.setErrors(errors);
         }
       } finally {
         setSubmitIsLoading(false);
@@ -143,8 +143,7 @@ const CreateOrder: React.FC = () => {
           </section>
         </header>
 
-        <ContractForm onSubmit={handleSubmit} formRef={contractFormRef} />
-
+        <OrderForm onSubmit={handleSubmit} formRef={orderFormRef} />
         <ItemsForm addProduct={setItemsAdded} />
         {itemsAdded.length !== 0 && (
           <ItemsAddedCard

@@ -43,18 +43,13 @@ interface CheckboxOption {
 const OrderForm: React.FC<OrderFormProps> = ({ onSubmit, formRef }) => {
   const [customerOptions, setCustomerOptions] = useState<Option[]>([]);
   const [paymentMethodOptions, setPaymentMethodOptions] = useState<Option[]>([
-    { value: 'creditCard', label: 'Credit Card' },
-    { value: 'bankTransfer', label: 'Bank Transfer' },
-    { value: 'cash', label: 'Cash' },
+    { value: 'Credit Card', label: 'Credit Card' },
+    { value: 'Bank Statement', label: 'Bank Transfer' },
+    { value: 'Cash', label: 'Cash' },
   ]);
   const [optionsIsLoading, setOptionsIsLoading] = useState(true);
   const [customersPage, setCustomersPage] = useState(1);
   const [customersPagesAvailable, setCustomersPagesAvailable] = useState(0);
-
-  const checkboxOptions: CheckboxOption[] = [
-    { id: 'paid', value: 'paid', label: 'Order Paid' },
-    { id: 'pickup', value: 'pickup', label: 'Customer Pickup' },
-  ];
 
   useEffect(() => {
     async function loadCustomerOptions(): Promise<void> {
@@ -71,6 +66,8 @@ const OrderForm: React.FC<OrderFormProps> = ({ onSubmit, formRef }) => {
       );
       setOptionsIsLoading(false);
     }
+    // console.log('loaded UseEffect');
+
     loadCustomerOptions();
   }, []);
 
@@ -144,11 +141,17 @@ const OrderForm: React.FC<OrderFormProps> = ({ onSubmit, formRef }) => {
         <InputFormRow>
           <DatePickerInput name="deliveryDate" label="Delivery Date" />
           <SelectInput
+            label="Payment Method"
             name="paymentMethod"
             options={paymentMethodOptions}
-            label="Payment Method"
           />
-          <CheckboxInput name="checkbox" options={checkboxOptions} />
+          <CheckboxInput
+            name="checkboxOptions"
+            options={[
+              { id: 'paid', value: 'paid', label: 'Order Paid' },
+              { id: 'pickup', value: 'pickup', label: 'Customer Pickup' },
+            ]}
+          />
         </InputFormRow>
       </Form>
     </div>

@@ -169,7 +169,7 @@ const ListCustomers: React.FC = () => {
               <th>Email</th>
               <th>Phone</th>
               <th>Notes</th>
-              <th> </th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
