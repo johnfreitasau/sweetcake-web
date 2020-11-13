@@ -60,7 +60,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ onSubmit, formRef }) => {
       setCustomersPagesAvailable(Math.ceil(customersTotalCount / 7));
       setCustomerOptions(
         response.data.map((customer) => ({
-          label: customer.name,
+          label: `${customer.name} [ ${customer.email} ]`,
           value: customer.id,
         })),
       );
@@ -84,7 +84,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ onSubmit, formRef }) => {
     setCustomerOptions((state) => [
       ...state,
       ...response.data.map((customer) => ({
-        label: customer.name,
+        label: `${customer.name} [ ${customer.email} ]`,
         value: customer.id,
       })),
     ]);

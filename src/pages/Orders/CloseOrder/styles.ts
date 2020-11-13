@@ -26,8 +26,10 @@ export const Content = styled.div`
     align-items: center;
     justify-content: space-between;
     h1 {
+      color: ${({ theme }) => theme.colors.white};
       font-size: 24px;
-      font-weight: 500;
+      font-weight: bold;
+      //font-weight: 500;
     }
     section {
       display: flex;
@@ -49,17 +51,25 @@ export const MessageContainer = styled.div`
 
 export const CustomerList = styled.div`
   margin: 56px 0 0 0;
+  align-items: center;
   h1 {
     font-size: 28px;
     margin-bottom: 10px;
+
     color: ${({ theme }) => theme.colors.yellow};
   }
-  ul {
+  table {
+    border-spacing: 15px;
     font-size: 20px;
     list-style-type: none;
 
-    span {
+    td:nth-child(1) {
+      text-align: right;
       font-weight: bold;
+      color: ${({ theme }) => theme.colors.white};
+    }
+    td:nth-child(2) {
+      color: ${({ theme }) => theme.colors.white};
     }
   }
   /* section {
@@ -80,18 +90,26 @@ export const Line = styled.div`
 `;
 
 export const OrderList = styled.div`
-  margin: 48px 0 0 0;
+  margin: 56px 0 0 0;
+  align-items: center;
   h1 {
     font-size: 28px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
+
     color: ${({ theme }) => theme.colors.yellow};
   }
-  section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    & + section {
-      margin-top: 16px;
+  table {
+    border-spacing: 15px;
+    font-size: 20px;
+    list-style-type: none;
+
+    td:nth-child(1) {
+      text-align: right;
+      font-weight: bold;
+      color: ${({ theme }) => theme.colors.white};
+    }
+    td:nth-child(2) {
+      color: ${({ theme }) => theme.colors.white};
     }
   }
 `;

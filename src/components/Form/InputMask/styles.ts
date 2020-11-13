@@ -11,6 +11,10 @@ export const ReactInputMask = styled(RInputMask)`
   height: 56px;
   width: 100%;
   font-size: 18px;
+
+  &:hover {
+    border-color: #fbc131;
+  }
 `;
 
 export const Error = styled.small`

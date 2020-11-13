@@ -7,7 +7,7 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  max-width: 900px;
+  max-width: 550px;
   width: 100%;
   background: ${({ theme }) => theme.colors.shape};
   margin: 0 auto;

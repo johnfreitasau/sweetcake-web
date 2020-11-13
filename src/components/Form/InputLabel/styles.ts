@@ -14,7 +14,8 @@ export const LabelContainer = styled.label<LabelContainerProp>`
   input {
     margin-top: 8px;
     background: ${({ theme }) => theme.colors.dark};
-    color: ${({ theme }) => theme.colors.gray};
+    //color: ${({ theme }) => theme.colors.gray};
+    color: #f4ede8 !important;
     font-size: 18px;
     border: ${({ theme }) => `1px solid ${theme.colors.dark}`};
     border-radius: 10px;
@@ -27,6 +28,11 @@ export const LabelContainer = styled.label<LabelContainerProp>`
       css`
         border-color: ${({ theme }) => theme.colors.error};
       `}
+
+    &:hover {
+      border-color: #fbc131;
+    }
+
     &::placeholder {
       color: ${({ theme }) => theme.colors.grayHard};
     }

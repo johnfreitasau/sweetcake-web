@@ -49,23 +49,13 @@ const CreateProduct: React.FC = () => {
 
         await schema.validate(data, { abortEarly: false });
 
-        const {
-          id,
-          name,
-          category,
-          unitPrice,
-          qtyDiscount,
-          discount,
-          notes,
-        } = data;
+        const { id, name, category, unitPrice, notes } = data;
 
         const formData = {
           id,
           name,
           category,
           unitPrice,
-          qtyDiscount,
-          discount,
           notes,
         };
         await api.post('/products', formData);
@@ -114,8 +104,6 @@ const CreateProduct: React.FC = () => {
           <Input name="name" placeholder="Product Name" />
           <Input name="category" placeholder="Category" />
           <Input name="unitPrice" placeholder="Unit price" />
-          <Input name="qtyDiscount" placeholder="Quantity Discount" />
-          <Input name="discount" placeholder="Discount" />
           <Input name="notes" placeholder="Notes" />
         </Form>
       </Content>

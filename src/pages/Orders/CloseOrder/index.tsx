@@ -66,11 +66,11 @@ interface OrderData {
   // final_price: number;
   // final_price_formatted: string;
 
-  deliveryDate: Date | null;
-  deliveryDateFormatted: string;
+  createdAt: string;
+  createAtFormatted: string;
 
-  created_at: string;
-  createOrderDateFormatted: string;
+  deliveryDate: string;
+  deliveryDateFormatted: string;
 
   customer: {
     id: string;
@@ -123,7 +123,7 @@ const CloseOrder: React.FC = () => {
   const handleCollectPriceChange = useCallback(() => {
     const finalPrice = orderFinalPrice({
       // deliveryF: formRef.current?.getFieldValue('collect_price'),
-      created_at: order?.created_at || '',
+      createdAt: order?.createdAt || '',
       unitPrice: order?.unitPrice || 0,
       deliveryFee: order?.deliveryFee || 0,
     });
@@ -222,10 +222,10 @@ const CloseOrder: React.FC = () => {
         // console.log(response);
         const { data } = response;
         console.log('DATA:', data);
-        const createdAtDate = new Date(data.created_at);
+        const createdAtDate = new Date(data.createdAt);
         let dateFormated = createdAtDate.toLocaleDateString('en-AU');
         let timeFormated = createdAtDate.toLocaleTimeString('en-AU');
-        const createOrderDateFormatted = `${dateFormated} at ${timeFormated}`;
+        const createAtFormatted = `${dateFormated} at ${timeFormated}`;
 
         const deliveryDate = new Date(data.deliveryDate || 0);
         dateFormated = deliveryDate.toLocaleDateString('en-AU');
@@ -247,7 +247,7 @@ const CloseOrder: React.FC = () => {
           // daily_total_price_formatted: formatPrice(data.),
           // collect_price_formatted: formatPrice(data.collect_price || 0),
           finalPriceFormatted: formatPrice(data.finalPrice),
-          createOrderDateFormatted,
+          createAtFormatted,
           orderItems,
           // deliveryDateFormatted,
         });
@@ -273,7 +273,7 @@ const CloseOrder: React.FC = () => {
   }, [order]);
 
   const isPaidFormatted = useMemo(() => {
-    return order?.isPaid === true ? 'Paid' : 'Not Paid';
+    return order?.isPaid === true ? 'YES' : 'NO';
   }, [order]);
 
   if (isLoading) {
@@ -281,7 +281,7 @@ const CloseOrder: React.FC = () => {
       <Container>
         <Content>
           <header>
-            <h1>ORDER DETAILS</h1>
+            <h1>ORDER</h1>
 
             <section>
               <BackButton />
@@ -322,7 +322,7 @@ const CloseOrder: React.FC = () => {
     <Container>
       <Content>
         <header>
-          <h1>{`Order details - #${order.number}`}</h1>
+          <h1>{`${isPickupFormatted}  Order [#${order.number}]`}</h1>
 
           <section>
             <BackButton />
@@ -332,7 +332,6 @@ const CloseOrder: React.FC = () => {
                 <CloseOrderButton
                   onClick={handleSubmit}
                   isLoading={isLoading}
-                  // disabled={!!order.deliveryDate}
                   showForm={showForm}
                 />
               </>
@@ -358,46 +357,65 @@ const CloseOrder: React.FC = () => {
 
         <CustomerList>
           <h1>Customer Details</h1>
-          <section>
-            <ul>
-              <li>
-                Name: <span>{order.customer.name}</span>
-              </li>
-              <li>
-                EMail: <span>{order.customer.email}</span>
-              </li>
-              <li>
-                Phone: <span>{order.customer.phoneNumber}</span>
-              </li>
-              <li>
-                Address: <span>{order.customer.address}</span>
-              </li>
-              <li>
-                City: <span>{order.customer.city}</span>
-              </li>
-              <li>
-                Postal Code:<span>{order.customer.postalCode}</span>
-              </li>
-              {order.customer.notes && (
-                <li>
-                  Notes: <span>{order.customer.notes}</span>
-                </li>
-              )}
-            </ul>
-          </section>
+          <table>
+            <tr>
+              <td>Name: </td>
+              <td>{order.customer.name}</td>
+            </tr>
+            <tr>
+              <td>EMail: </td>
+              <td>{order.customer.email}</td>
+            </tr>
+            <tr>
+              <td>Phone: </td>
+              <td>{order.customer.phoneNumber}</td>
+            </tr>
+            <tr>
+              <td>Address: </td>
+              <td>{order.customer.address}</td>
+            </tr>
+            <tr>
+              <td>City: </td>
+              <td>{order.customer.city}</td>
+            </tr>
+            <tr>
+              <td>Postal Code: </td>
+              <td>{order.customer.postalCode}</td>
+            </tr>
+            <tr />
+            {order.customer.notes && (
+              <tr>
+                <td>Notes: </td>
+                <td>{order.customer.notes}</td>
+              </tr>
+            )}
+          </table>
         </CustomerList>
 
         <OrderList>
           <h1>Order Details ({isPickupFormatted})</h1>
-          <section>
-            <ul>
-              <li>Order Date: {order.createOrderDateFormatted}</li>
-              <li>Delivery Date: {order.deliveryDate}</li>
-              <li>Paid: {isPaidFormatted}</li>
-              <li>Delivery Fee: {order.deliveryFee}</li>
-              <li>Payment Method: {order.paymentMethod}</li>
-            </ul>
-          </section>
+          <table>
+            <tr>
+              <td>Created at: </td>
+              <td>{order.createAtFormatted}</td>
+            </tr>
+            <tr>
+              <td>Due date: </td>
+              <td>{order.deliveryDateFormatted}</td>
+            </tr>
+            <tr>
+              <td>Paid: </td>
+              <td>{isPaidFormatted}</td>
+            </tr>
+            <tr>
+              <td>Payment Method: </td>
+              <td>{order.paymentMethod}</td>
+            </tr>
+            <tr>
+              <td>Delivery Fee: </td>
+              <td>{order.deliveryFee}</td>
+            </tr>
+          </table>
         </OrderList>
 
         <ProductTable>
@@ -420,7 +438,6 @@ const CloseOrder: React.FC = () => {
             ))}
           </tbody>
         </ProductTable>
-
         <FinalInformation>
           <span>
             {`TOTAL: ${

@@ -12,13 +12,17 @@ export const LabelContainer = styled.label`
   input {
     margin-top: 8px;
     background: ${({ theme }) => theme.colors.dark};
-    color: ${({ theme }) => theme.colors.white};
+    color: #f4ede8 !important;
     font-size: 18px;
-    border: none;
     border-radius: 10px;
     padding: 16px;
     height: 56px;
     width: 100%;
+    border: 1px solid #232129;
+
+    &:hover {
+      border-color: #fbc131;
+    }
 
     &::placeholder {
       color: ${({ theme }) => theme.colors.grayHard};
@@ -29,6 +33,10 @@ export const LabelContainer = styled.label`
       ::-webkit-outer-spin-button {
         appearance: none;
       }
+    }
+
+    &:hover {
+      border-color: #fbc131;
     }
   }
 

@@ -7,8 +7,8 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  max-width: 900px;
-  width: 100%;
+  max-width: 550px;
+  width: 60%;
   background: ${({ theme }) => theme.colors.shape};
   margin: 0 auto;
   margin-top: 64px;

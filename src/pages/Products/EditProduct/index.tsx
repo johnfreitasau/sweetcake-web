@@ -44,30 +44,18 @@ const EditProduct: React.FC = () => {
           name: Yup.string().required(),
           category: Yup.string().required(),
           unitPrice: Yup.number().required(),
-          quantityDiscount: Yup.number().optional(),
-          discount: Yup.number().optional(),
           notes: Yup.string().optional(),
         });
 
         await schema.validate(data, { abortEarly: false });
 
-        const {
-          id,
-          name,
-          category,
-          unitPrice,
-          qtyDiscount,
-          discount,
-          notes,
-        } = data;
+        const { id, name, category, unitPrice, notes } = data;
 
         const formData = {
           id,
           name,
           category,
           unitPrice,
-          qtyDiscount,
-          discount,
           notes,
         };
         await api.put(`/products/${productFormData.state.id}`, formData);
@@ -116,8 +104,6 @@ const EditProduct: React.FC = () => {
           <Input name="name" placeholder="Product Name" />
           <Input name="category" placeholder="Category" />
           <Input name="unitPrice" placeholder="Unit Price" />
-          <Input name="qtyDiscount" placeholder="Quantity Discount" />
-          <Input name="discount" placeholder="Discount" />
           <Input name="notes" placeholder="Notes" />
         </Form>
       </Content>
