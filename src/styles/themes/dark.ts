@@ -5,6 +5,7 @@ export default {
     primary: '#3E3B47',
     secondary: '#999591',
     yellow: '#FBC131',
+    green: '#c8db37',
     gray: '#999591',
     grayHard: '#666360',
     white: '#F4EDE8',

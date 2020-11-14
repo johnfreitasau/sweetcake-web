@@ -1,32 +1,34 @@
-import React, { useCallback, useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useCallback, useState, useRef, ChangeEvent } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { FiUser, FiMail, FiPhone, FiMapPin, FiEdit } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import getValidationErrors from '../../../utils/getValidationErrors';
-import { BackButton, RegisterButton } from '../../../components/Form';
+import { BackButton, SaveButton } from '../../../components/Form';
 
 import { useToast } from '../../../hooks/toast';
 import api from '../../../services/api';
 import Input from '../../../components/Form/Input';
 import { Container, Content } from './styles';
 
-interface IProductFormData {
+interface ICategoryFormData {
   id: string;
   name: string;
   category: string;
-  unitPrice: number;
-  qtyDiscount: number;
-  discount: number;
+  unitPrice: string;
+  qtyDiscount: string;
+  discount: string;
   notes: string;
 }
 
-const CreateProduct: React.FC = () => {
+const EditCategory: React.FC = () => {
+  const categoryFormData = useLocation<ICategoryFormData>();
+
   const { addToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const formRef = useRef<FormHandles>(null);
 
+  const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
   const handleSubmitButton = useCallback(() => {
@@ -34,7 +36,7 @@ const CreateProduct: React.FC = () => {
   }, []);
 
   const handleSubmit = useCallback(
-    async (data: IProductFormData) => {
+    async (data: ICategoryFormData) => {
       formRef.current?.setErrors({});
 
       try {
@@ -42,30 +44,25 @@ const CreateProduct: React.FC = () => {
           name: Yup.string().required(),
           category: Yup.string().required(),
           unitPrice: Yup.number().required(),
-          quantityDiscount: Yup.number().optional(),
-          discount: Yup.number().optional(),
           notes: Yup.string().optional(),
         });
 
         await schema.validate(data, { abortEarly: false });
 
-        const { id, name, category, unitPrice, notes } = data;
+        const { id, name } = data;
 
         const formData = {
           id,
           name,
-          category,
-          unitPrice,
-          notes,
         };
-        await api.post('/products', formData);
+        await api.put(`/categories/${categoryFormData.state.id}`, formData);
 
-        history.push('/products');
+        history.goBack();
 
         addToast({
           type: 'success',
           title: 'Success!',
-          description: 'New product has been added.',
+          description: 'Category has been saved.',
         });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -77,7 +74,7 @@ const CreateProduct: React.FC = () => {
           type: 'error',
           title: 'Error',
           description:
-            'Error ocurred while adding the new product. Please try again.',
+            'Error ocurred while adding the new category. Please try again.',
         });
       }
     },
@@ -88,26 +85,24 @@ const CreateProduct: React.FC = () => {
     <Container>
       <Content>
         <header>
-          <h1>Create Product</h1>
+          <h1>Edit Category</h1>
 
           <section>
             <BackButton />
-            <RegisterButton
-              isLoading={isLoading}
-              onClick={handleSubmitButton}
-            />
+            <SaveButton isLoading={isLoading} onClick={handleSubmitButton} />
           </section>
         </header>
 
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <Input name="name" placeholder="Product Name" />
-          <Input name="category" placeholder="Category" />
-          <Input name="unitPrice" placeholder="Unit price" />
-          <Input name="notes" placeholder="Notes" />
+        <Form
+          ref={formRef}
+          onSubmit={handleSubmit}
+          initialData={categoryFormData.state}
+        >
+          <Input name="name" placeholder="Category Name" />
         </Form>
       </Content>
     </Container>
   );
 };
 
-export default CreateProduct;
+export default EditCategory;

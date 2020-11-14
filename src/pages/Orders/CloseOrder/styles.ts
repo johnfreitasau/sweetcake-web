@@ -56,7 +56,7 @@ export const CustomerList = styled.div`
     font-size: 28px;
     margin-bottom: 10px;
 
-    color: ${({ theme }) => theme.colors.yellow};
+    color: ${({ theme }) => theme.colors.green};
   }
   table {
     border-spacing: 15px;
@@ -86,7 +86,7 @@ export const Line = styled.div`
   height: 1px;
   flex: 1;
   margin: 0 16px;
-  border-top: ${({ theme }) => `2px dashed ${theme.colors.yellow}`};
+  border-top: ${({ theme }) => `2px dashed ${theme.colors.green}`};
 `;
 
 export const OrderList = styled.div`
@@ -96,7 +96,7 @@ export const OrderList = styled.div`
     font-size: 28px;
     margin-bottom: 10px;
 
-    color: ${({ theme }) => theme.colors.yellow};
+    color: ${({ theme }) => theme.colors.green};
   }
   table {
     border-spacing: 15px;
@@ -167,7 +167,7 @@ export const FinalInformation = styled.div`
   display: flex;
   justify-content: flex-end;
   span {
-    background: ${({ theme }) => theme.colors.yellow};
+    background: ${({ theme }) => theme.colors.green};
     color: ${({ theme }) => theme.colors.dark};
     padding: 16px;
     border-radius: 10px;

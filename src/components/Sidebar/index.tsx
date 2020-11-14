@@ -11,6 +11,7 @@ import {
   FiBook,
   FiTruck,
   FiBox,
+  FiGrid,
   FiChevronsLeft,
   FiUsers,
   FiMenu,
@@ -78,6 +79,10 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
           {isOpened && 'Customers'}
           <FiUsers size={24} />
         </NavLink>
+        <NavLink to="/categories">
+          {isOpened && 'Categories'}
+          <FiGrid size={24} />
+        </NavLink>
         <NavLink to="/products">
           {isOpened && 'Products'}
           <FiBook size={24} />
@@ -86,15 +91,6 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
           {isOpened && 'Orders'}
           <FiPackage size={24} />
         </NavLink>
-        {/* <NavLink to="/inventory">
-          {isOpened && 'Inventory'}
-          <FiLayers size={24} />
-        </NavLink>
-        <NavLink to="/reports">
-          {isOpened && 'Reports'}
-          <FiFileText size={24} />
-        </NavLink> */}
-
         {/* <Switch
           onChange={toggleTheme}
           checked={title === 'dark'}

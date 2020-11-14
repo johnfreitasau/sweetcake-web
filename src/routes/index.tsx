@@ -14,6 +14,10 @@ import ListCustomers from '../pages/Customers/ListCustomers';
 import CreateCustomer from '../pages/Customers/CreateCustomer';
 import EditCustommer from '../pages/Customers/EditCustomer';
 
+import ListCategories from '../pages/Categories/ListCategories';
+import CreateCategory from '../pages/Categories/CreateCategory';
+import EditCategory from '../pages/Categories/EditCategory';
+
 import ListProducts from '../pages/Products/ListProducts';
 import CreateProduct from '../pages/Products/CreateProduct';
 import EditProduct from '../pages/Products/EditProduct';
@@ -38,13 +42,16 @@ const Routes: React.FC = () => {
       <Route path="/customers/register" component={CreateCustomer} isPrivate />
       <Route path="/customers/edit/:id" component={EditCustommer} isPrivate />
 
+      <Route path="/categories" exact component={ListCategories} isPrivate />
+      <Route path="/categories/register" component={CreateCategory} isPrivate />
+      <Route path="/categories/edit/:id" component={EditCategory} isPrivate />
+
       <Route path="/products" exact component={ListProducts} isPrivate />
       <Route path="/products/register" component={CreateProduct} isPrivate />
       <Route path="/products/edit/:id" component={EditProduct} isPrivate />
 
       <Route path="/orders" exact component={ListOrders} isPrivate />
       <Route path="/orders/register" component={CreateOrder} isPrivate />
-      {/* <Route path="/orders/edit/:id" component={EditOrder} isPrivate /> */}
       <Route path="/order/details/:id" component={CloseOrder} isPrivate />
     </Switch>
   );

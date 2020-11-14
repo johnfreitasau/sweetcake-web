@@ -38,7 +38,7 @@ export const Container = styled.div<ContainerProps>`
       color: ${({ theme }) => theme.colors.white};
       transition: color 0.3s;
       &:hover {
-        color: ${({ theme }) => theme.colors.yellow};
+        color: ${({ theme }) => theme.colors.green};
       }
     }
   }

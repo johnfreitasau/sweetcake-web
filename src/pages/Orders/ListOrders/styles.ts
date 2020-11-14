@@ -129,7 +129,7 @@ export const OrderRow = styled.tr<TStyledOrderStatus>`
       border-radius: 7px;
       width: 60px;
       height: 20px;
-      color: 'yellow' !important;
+      color: 'green' !important;
       text-shadow: 1px 1px 0 #444;
       color: #fff !important;
       background: ${({ orderStatus }: any) => {
@@ -185,12 +185,12 @@ export const CompletedFilterButton = styled.button<CompletedFilterButtonProps>`
   justify-content: center;
   transition: background 0.3s, color 0.3s;
   background: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.yellow : theme.colors.dark};
+    isSelected ? theme.colors.green : theme.colors.dark};
   color: ${({ theme, isSelected }) =>
     isSelected ? theme.colors.dark : theme.colors.white};
   &:hover {
     background: ${({ theme, isSelected }) =>
-      !isSelected && shade(0.5, theme.colors.yellow)};
+      !isSelected && shade(0.5, theme.colors.green)};
   }
   cursor: ${({ isSelected }) => (isSelected ? 'not-allowed' : 'pointer')};
   & + button {

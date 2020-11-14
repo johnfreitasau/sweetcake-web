@@ -294,7 +294,7 @@ const CloseOrder: React.FC = () => {
           </header>
         </Content>
         <MessageContainer>
-          <Ellipsis size={100} color={theme.colors.yellow} />
+          <Ellipsis size={100} color={theme.colors.green} />
         </MessageContainer>
       </Container>
     );
