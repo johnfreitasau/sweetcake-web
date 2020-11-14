@@ -104,7 +104,7 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
         /> */}
       </nav>
 
-      <SettingsButton onClick={signOut}>
+      <SettingsButton>
         {isOpened && <strong>Settings</strong>}
         <FiSettings size={24} />
       </SettingsButton>

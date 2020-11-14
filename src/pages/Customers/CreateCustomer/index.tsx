@@ -109,7 +109,7 @@ const CreateCustomer: React.FC = () => {
     <Container>
       <Content>
         <header>
-          <h1>Add new Customer</h1>
+          <h1>Create Customer</h1>
 
           <section>
             <BackButton />

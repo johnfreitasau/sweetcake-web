@@ -1,30 +1,41 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { FiUser, FiMail, FiPhone, FiMapPin, FiEdit } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import getValidationErrors from '../../../utils/getValidationErrors';
-import { BackButton, RegisterButton } from '../../../components/Form';
-
+import {
+  BackButton,
+  RegisterButton,
+  SelectInput,
+} from '../../../components/Form';
 import { useToast } from '../../../hooks/toast';
 import api from '../../../services/api';
 import Input from '../../../components/Form/Input';
 import { Container, Content } from './styles';
+
+interface Category {
+  value: string;
+  label: string;
+}
 
 interface IProductFormData {
   id: string;
   name: string;
   category: string;
   unitPrice: number;
-  qtyDiscount: number;
-  discount: number;
   notes: string;
 }
 
 const CreateProduct: React.FC = () => {
   const { addToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([
+    { value: 'sweets', label: 'sweets' },
+    { value: 'savery', label: 'savery' },
+    { value: 'drinks', label: 'drinks' },
+  ]);
+
   const formRef = useRef<FormHandles>(null);
 
   const history = useHistory();
@@ -101,7 +112,8 @@ const CreateProduct: React.FC = () => {
 
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input name="name" placeholder="Product Name" />
-          <Input name="category" placeholder="Category" />
+          {/* <Input name="category" placeholder="Category" /> */}
+          <SelectInput label="" name="category" options={categories} />
           <Input name="unitPrice" placeholder="Unit price" />
           <Input name="notes" placeholder="Notes" />
         </Form>

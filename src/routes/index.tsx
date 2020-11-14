@@ -52,7 +52,7 @@ const Routes: React.FC = () => {
 
       <Route path="/orders" exact component={ListOrders} isPrivate />
       <Route path="/orders/register" component={CreateOrder} isPrivate />
-      <Route path="/order/details/:id" component={CloseOrder} isPrivate />
+      <Route path="/orders/details/:id" component={CloseOrder} isPrivate />
     </Switch>
   );
 };

@@ -19,8 +19,8 @@ interface Product {
   quantity: string;
   unitPrice: number;
   unitPriceFormatted: string;
-  qtyDiscount: number;
-  discount: number;
+  // qtyDiscount: number;
+  // discount: number;
   notes: string;
 }
 
@@ -131,7 +131,7 @@ const CreateOrder: React.FC = () => {
     <Container>
       <Content>
         <header>
-          <h1>Add new Order</h1>
+          <h1>Create Order</h1>
 
           <section>
             <BackButton />

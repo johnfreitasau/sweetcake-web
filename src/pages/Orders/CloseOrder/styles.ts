@@ -82,13 +82,6 @@ export const CustomerList = styled.div`
   } */
 `;
 
-export const Line = styled.div`
-  height: 1px;
-  flex: 1;
-  margin: 0 16px;
-  border-top: ${({ theme }) => `2px dashed ${theme.colors.green}`};
-`;
-
 export const OrderList = styled.div`
   margin: 56px 0 0 0;
   align-items: center;
@@ -98,7 +91,7 @@ export const OrderList = styled.div`
 
     color: ${({ theme }) => theme.colors.green};
   }
-  table {
+  tbody {
     border-spacing: 15px;
     font-size: 20px;
     list-style-type: none;

@@ -6,11 +6,11 @@ import React, {
   useMemo,
 } from 'react';
 import { Ellipsis } from 'react-awesome-spinners';
-import { FiTrash2 } from 'react-icons/fi';
 import { useParams, useHistory } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 import { FormHandles } from '@unform/core';
 
+import { format, parseISO } from 'date-fns';
 import api from '../../../services/api';
 
 import {
@@ -28,7 +28,6 @@ import {
   Content,
   MessageContainer,
   CustomerList,
-  Line,
   OrderList,
   ProductTable,
   ProductRow,
@@ -66,8 +65,9 @@ interface OrderData {
   // final_price: number;
   // final_price_formatted: string;
 
-  createdAt: string;
+  created_at: string;
   createAtFormatted: string;
+  // orderDateFormatted: string;
 
   deliveryDate: string;
   deliveryDateFormatted: string;
@@ -97,8 +97,8 @@ interface OrderData {
       unitPrice: number;
       unitPriceFormatted: string;
 
-      qtyDiscount: number;
-      discount: number;
+      // qtyDiscount: number;
+      // discount: number;
       notes: string;
     };
   }>;
@@ -120,16 +120,21 @@ const CloseOrder: React.FC = () => {
   const { id } = useParams();
   const { addToast } = useToast();
 
-  const handleCollectPriceChange = useCallback(() => {
-    const finalPrice = orderFinalPrice({
-      // deliveryF: formRef.current?.getFieldValue('collect_price'),
-      createdAt: order?.createdAt || '',
-      unitPrice: order?.unitPrice || 0,
-      deliveryFee: order?.deliveryFee || 0,
-    });
+  // deliveryDateFormatted: format(
+  //   parseISO(order.deliveryDate),
+  //   'dd/MM/yyyy hh:mm bb',
+  // ),
+  //-------------
+  // const handleCollectPriceChange = useCallback(() => {
+  //   const finalPrice = orderFinalPrice({
+  //     // deliveryF: formRef.current?.getFieldValue('collect_price'),
+  //     created_at: order?.created_at || '',
+  //     unitPrice: order?.unitPrice || 0,
+  //     deliveryFee: order?.deliveryFee || 0,
+  //   });
 
-    formRef.current?.setFieldValue('finalPrice', finalPrice);
-  }, [order]);
+  //   formRef.current?.setFieldValue('finalPrice', finalPrice);
+  // }, [order]);
 
   const handleSubmit = useCallback(
     async () => {
@@ -222,15 +227,16 @@ const CloseOrder: React.FC = () => {
         // console.log(response);
         const { data } = response;
         console.log('DATA:', data);
-        const createdAtDate = new Date(data.createdAt);
-        let dateFormated = createdAtDate.toLocaleDateString('en-AU');
-        let timeFormated = createdAtDate.toLocaleTimeString('en-AU');
+
+        const createdAtDate = new Date(data.created_at);
+        const dateFormated = createdAtDate.toLocaleDateString('en-AU');
+        const timeFormated = createdAtDate.toLocaleTimeString('en-AU');
         const createAtFormatted = `${dateFormated} at ${timeFormated}`;
 
-        const deliveryDate = new Date(data.deliveryDate || 0);
-        dateFormated = deliveryDate.toLocaleDateString('en-AU');
-        timeFormated = deliveryDate.toLocaleTimeString('en-AU');
-        const deliveryDateFormatted = `${dateFormated} at ${timeFormated}`;
+        // const deliveryDate = new Date(data.deliveryDate || 0);
+        // dateFormated = deliveryDate.toLocaleDateString('en-AU');
+        // timeFormated = deliveryDate.toLocaleTimeString('en-AU');
+        // const deliveryDateFormatted = `${dateFormated} at ${timeFormated}`;
 
         const orderItems = data.orderItems.map((item) => ({
           ...item,
@@ -268,12 +274,28 @@ const CloseOrder: React.FC = () => {
     loadOrder();
   }, [id, addToast]);
 
-  const isPickupFormatted = useMemo(() => {
-    return order?.isPickup === true ? 'Pick-up order' : 'Delivery';
+  const createdAtFormatted = useMemo(() => {
+    return order?.deliveryDate
+      ? format(parseISO(order?.created_at), 'dd/MM/yyyy hh:mm bb')
+      : undefined;
+  }, [order]);
+
+  const deliveryDateFormatted = useMemo(() => {
+    return order?.deliveryDate
+      ? format(parseISO(order?.deliveryDate), 'dd/MM/yyyy hh:mm bb')
+      : undefined;
+  }, [order]);
+
+  const deliveryFeeFormatted = useMemo(() => {
+    return order?.deliveryFee ? formatPrice(order?.deliveryFee) : undefined;
   }, [order]);
 
   const isPaidFormatted = useMemo(() => {
     return order?.isPaid === true ? 'YES' : 'NO';
+  }, [order]);
+
+  const isPickupFormatted = useMemo(() => {
+    return order?.isPickup === true ? 'Pick-up' : 'Delivery';
   }, [order]);
 
   if (isLoading) {
@@ -357,7 +379,7 @@ const CloseOrder: React.FC = () => {
 
         <CustomerList>
           <h1>Customer Details</h1>
-          <table>
+          <tbody>
             <tr>
               <td>Name: </td>
               <td>{order.customer.name}</td>
@@ -389,19 +411,19 @@ const CloseOrder: React.FC = () => {
                 <td>{order.customer.notes}</td>
               </tr>
             )}
-          </table>
+          </tbody>
         </CustomerList>
 
         <OrderList>
-          <h1>Order Details ({isPickupFormatted})</h1>
-          <table>
+          <h1>Order Details</h1>
+          <tbody>
             <tr>
               <td>Created at: </td>
-              <td>{order.createAtFormatted}</td>
+              <td>{createdAtFormatted}</td>
             </tr>
             <tr>
               <td>Due date: </td>
-              <td>{order.deliveryDateFormatted}</td>
+              <td>{deliveryDateFormatted}</td>
             </tr>
             <tr>
               <td>Paid: </td>
@@ -413,9 +435,9 @@ const CloseOrder: React.FC = () => {
             </tr>
             <tr>
               <td>Delivery Fee: </td>
-              <td>{order.deliveryFee}</td>
+              <td>{deliveryFeeFormatted}</td>
             </tr>
-          </table>
+          </tbody>
         </OrderList>
 
         <ProductTable>

@@ -1,5 +1,5 @@
 interface Data {
-  createdAt: string;
+  created_at: Date;
   unitPrice: number;
   deliveryFee: number;
   // collect_price: number;

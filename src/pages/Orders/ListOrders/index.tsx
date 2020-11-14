@@ -3,14 +3,8 @@ import { Ellipsis } from 'react-awesome-spinners';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
 import { useHistory } from 'react-router-dom';
 import { AiOutlineDollarCircle, AiFillDollarCircle } from 'react-icons/ai';
-// import { RiEBike2Fill } from 'react-icons/ri';
 import { FiHome, FiTruck } from 'react-icons/fi';
-import {
-  FcPaid,
-  FcPodiumWithoutSpeaker,
-  FcShipped,
-  FcShop,
-} from 'react-icons/fc';
+
 import { format, parseISO } from 'date-fns';
 import { formatPrice } from '../../../utils/format';
 import Header from '../../../components/Header';
@@ -178,7 +172,7 @@ const ListOrders: React.FC = () => {
                 key={order.id}
                 orderStatus={order.status}
                 onClick={() => {
-                  history.push(`/order/details/${order.id}`);
+                  history.push(`/orders/details/${order.id}`);
                 }}
               >
                 <td>{order.number}</td>

@@ -13,8 +13,6 @@ export const Container = styled.div`
   width: 100%;
   display: flex;
   padding: 0 16px;
-  /* padding: 60px 48px 0; */
-  /* padding: 60px 135px 0 55px; */
 `;
 
 export const Content = styled.div`
@@ -173,7 +171,6 @@ export const Pagination = styled.div`
   margin-bottom: 60px;
 `;
 
-// NEW BELOW
 export const CompletedFilterButton = styled.button<CompletedFilterButtonProps>`
   height: 46px;
   border: none;

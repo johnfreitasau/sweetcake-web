@@ -26,8 +26,8 @@ interface Props {
     quantity: string;
     unitPrice: number;
     unitPriceFormatted: string;
-    qtyDiscount: number;
-    discount: number;
+    // qtyDiscount: number;
+    // discount: number;
     notes: string;
   }[];
   onClickRemoveButton(id: string): void;

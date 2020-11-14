@@ -17,8 +17,8 @@ interface IProductFormData {
   name: string;
   category: string;
   unitPrice: string;
-  qtyDiscount: string;
-  discount: string;
+  // qtyDiscount: string;
+  // discount: string;
   notes: string;
 }
 
