@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -7,22 +7,27 @@ import getValidationErrors from '../../../utils/getValidationErrors';
 import {
   BackButton,
   RegisterButton,
-  SelectInput,
+  SelectAsyncInput,
 } from '../../../components/Form';
 import { useToast } from '../../../hooks/toast';
 import api from '../../../services/api';
 import Input from '../../../components/Form/Input';
 import { Container, Content } from './styles';
 
-interface Category {
+interface ICategoryOptions {
   value: string;
   label: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
 }
 
 interface IProductFormData {
   id: string;
   name: string;
-  category: string;
+  categoryId: string;
   unitPrice: number;
   notes: string;
 }
@@ -30,12 +35,13 @@ interface IProductFormData {
 const CreateProduct: React.FC = () => {
   const { addToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([
-    { value: 'sweets', label: 'sweets' },
-    { value: 'savery', label: 'savery' },
-    { value: 'drinks', label: 'drinks' },
+  // const [categories, setCategories] = useState<Category[]>([]);
+  const [categoriesPage, setCategoriesPage] = useState(1);
+  const [categoriesPagesAvailable, setCategoriesPagesAvailable] = useState(0);
+  const [categoryOptions, setCategoryOptions] = useState<ICategoryOptions[]>([
+    { value: '0015aeb4-3ee4-45c3-9dd9-5f8b30df6a0e', label: 'Sweets' },
   ]);
-
+  const [optionsIsLoading, setOptionsIsLoading] = useState(true);
   const formRef = useRef<FormHandles>(null);
 
   const history = useHistory();
@@ -47,25 +53,25 @@ const CreateProduct: React.FC = () => {
   const handleSubmit = useCallback(
     async (data: IProductFormData) => {
       formRef.current?.setErrors({});
-
+      console.log('Chegou AQUI1!');
       try {
         const schema = Yup.object().shape({
           name: Yup.string().required(),
-          category: Yup.string().required(),
+          categoryId: Yup.string().required(),
           unitPrice: Yup.number().required(),
-          quantityDiscount: Yup.number().optional(),
-          discount: Yup.number().optional(),
           notes: Yup.string().optional(),
         });
-
+        console.log('Chegou AQUI2!');
         await schema.validate(data, { abortEarly: false });
 
-        const { id, name, category, unitPrice, notes } = data;
+        const { id, name, categoryId, unitPrice, notes } = data;
+
+        console.log('DATA:', id, name, categoryId, unitPrice, notes);
 
         const formData = {
           id,
           name,
-          category,
+          categoryId,
           unitPrice,
           notes,
         };
@@ -95,6 +101,86 @@ const CreateProduct: React.FC = () => {
     [addToast, history],
   );
 
+  const handleLoadCategoryOptions = useCallback(
+    async (inputValue: string, callback) => {
+      const data = categoryOptions.filter((category) =>
+        category.label.includes(inputValue),
+      );
+
+      if (data.length === 0) {
+        setOptionsIsLoading(true);
+        const response = await api.get<Category[]>('/categories', {
+          params: {
+            name: inputValue,
+          },
+        });
+
+        setOptionsIsLoading(false);
+
+        callback(
+          response.data.map((category) => ({
+            label: category.name,
+            value: category.id,
+          })),
+        );
+        return;
+      }
+
+      callback(data);
+    },
+    [categoryOptions],
+  );
+
+  const handleCategoriesMenuScrollToBottom = useCallback(async () => {
+    if (categoriesPage === categoriesPagesAvailable) return;
+
+    setOptionsIsLoading(true);
+    const response = await api.get<Category[]>('/categories', {
+      params: {
+        page: categoriesPage + 1,
+      },
+    });
+
+    setCategoryOptions((state) => [
+      ...state,
+      ...response.data.map((category) => ({
+        label: category.name,
+        value: category.id,
+      })),
+    ]);
+    setCategoriesPage(categoriesPage + 1);
+    setOptionsIsLoading(false);
+  }, [categoriesPage, categoriesPagesAvailable]);
+
+  useEffect(() => {
+    // async function loadCategories(): Promise<void> {
+    //   const response = await api.get('/categories');
+    //   // categories.setCategories(categoriesResult.data);
+    //   console.log('CATEGORY:', id, name);
+    // }
+    // loadCategories();
+
+    async function loadCategoryOptions(): Promise<void> {
+      const response = await api.get<Category[]>('/categories');
+
+      const customersTotalCount = response.headers['x-total-count'];
+
+      setCategoriesPagesAvailable(Math.ceil(customersTotalCount / 7));
+
+      setCategoryOptions(
+        response.data.map((category) => ({
+          label: category.name,
+          value: category.id,
+        })),
+      );
+
+      setOptionsIsLoading(false);
+    }
+    // console.log('loaded UseEffect');
+
+    loadCategoryOptions();
+  }, []);
+
   return (
     <Container>
       <Content>
@@ -113,7 +199,17 @@ const CreateProduct: React.FC = () => {
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input name="name" placeholder="Product Name" />
           {/* <Input name="category" placeholder="Category" /> */}
-          <SelectInput label="" name="category" options={categories} />
+          <SelectAsyncInput
+            placeholder="Category"
+            label=""
+            name="categoryId"
+            defaultOptions={categoryOptions}
+            loadOptions={handleLoadCategoryOptions}
+            onMenuScrollToBottom={handleCategoriesMenuScrollToBottom}
+            noOptionsMessage={() => 'Category not found'}
+            isLoading={optionsIsLoading}
+            select
+          />
           <Input name="unitPrice" placeholder="Unit price" />
           <Input name="notes" placeholder="Notes" />
         </Form>

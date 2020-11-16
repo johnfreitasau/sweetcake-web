@@ -102,7 +102,7 @@ const ListProducts: React.FC = () => {
   }, [products]);
 
   useEffect(() => {
-    async function loadCustomers(): Promise<void> {
+    async function loadProducts(): Promise<void> {
       try {
         setLoading(true);
         const response = await api.get<Product[]>('/products', {
@@ -126,7 +126,7 @@ const ListProducts: React.FC = () => {
       }
     }
 
-    loadCustomers();
+    loadProducts();
   }, [addToast, queryName, queryPage]);
 
   if (loading) {

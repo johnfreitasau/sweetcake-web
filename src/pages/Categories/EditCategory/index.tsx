@@ -1,6 +1,5 @@
-import React, { useCallback, useState, useRef, ChangeEvent } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { FiUser, FiMail, FiPhone, FiMapPin, FiEdit } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
@@ -15,15 +14,12 @@ import { Container, Content } from './styles';
 interface ICategoryFormData {
   id: string;
   name: string;
-  category: string;
-  unitPrice: string;
-  // qtyDiscount: string;
-  // discount: string;
-  notes: string;
 }
 
 const EditCategory: React.FC = () => {
   const categoryFormData = useLocation<ICategoryFormData>();
+
+  console.log('INITIAL DATA!!!:', categoryFormData.state);
 
   const { addToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -42,9 +38,6 @@ const EditCategory: React.FC = () => {
       try {
         const schema = Yup.object().shape({
           name: Yup.string().required(),
-          category: Yup.string().required(),
-          unitPrice: Yup.number().required(),
-          notes: Yup.string().optional(),
         });
 
         await schema.validate(data, { abortEarly: false });
