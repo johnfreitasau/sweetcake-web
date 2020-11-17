@@ -16,7 +16,7 @@ import Button from '../../components/Button';
 
 import {
   Container,
-  Content,
+  FormContainer,
   ImageContainer,
   AnimationContainer,
 } from './styles';
@@ -73,36 +73,31 @@ const SignIn: React.FC = () => {
   );
 
   return (
-    <>
-      <Container>
-        <ImageContainer>
-          <img src={logoImg} alt="JustCupcakes" />
-        </ImageContainer>
-        <Content>
-          <AnimationContainer>
-            <h1>JustCupcakes</h1>
-            <Form ref={formRef} onSubmit={handleSubmit}>
-              <h2>Login</h2>
-              <Input name="email" icon={FiMail} placeholder="E-mail" />
+    <Container>
+      <h1>cupcakes.co</h1>
+      <FormContainer>
+        <AnimationContainer>
+          <Form ref={formRef} onSubmit={handleSubmit}>
+            <h2>Login</h2>
+            <Input name="email" icon={FiMail} placeholder="E-mail" />
 
-              <Input
-                name="password"
-                icon={FiLock}
-                type="password"
-                placeholder="Password"
-              />
+            <Input
+              name="password"
+              icon={FiLock}
+              type="password"
+              placeholder="Password"
+            />
 
-              <Button type="submit">Sign In</Button>
-              <Link to="/forgot-password">Forgot my password</Link>
-            </Form>
-            <Link to="/signup">
-              <FiLogIn />
-              Create account
-            </Link>
-          </AnimationContainer>
-        </Content>
-      </Container>
-    </>
+            <Button type="submit">Sign In</Button>
+            <Link to="/forgot-password">Forgot my password</Link>
+          </Form>
+          <Link to="/signup">
+            <FiLogIn />
+            Create account
+          </Link>
+        </AnimationContainer>
+      </FormContainer>
+    </Container>
   );
 };
 

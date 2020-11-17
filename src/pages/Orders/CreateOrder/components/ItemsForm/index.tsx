@@ -16,6 +16,7 @@ import getValidationErrors from '../../../../../utils/getValidationErrors';
 import { formatPrice } from '../../../../../utils/format';
 
 import { ProductsForm, QuantityInput, AddButton } from './styles';
+import { useToast } from '../../../../../hooks/toast';
 
 // interface MProduct {
 //   id: string;
@@ -53,6 +54,7 @@ interface ItemsFormProps {
 
 const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
   const formRef = useRef<FormHandles>(null);
+  const { addToast } = useToast();
 
   const [productsPagesAvailable, setProductsPagesAvailable] = useState(0);
   const [products, setProducts] = useState<Product[]>([]);
@@ -151,6 +153,8 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
           quantity,
         } as Product;
 
+        console.log('Added Product:', addedProduct);
+
         addProduct((state) => [...state, addedProduct]);
         formRef.current?.reset();
       } catch (err) {
@@ -158,6 +162,12 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
           const errors = getValidationErrors(err);
 
           formRef.current?.setErrors(errors);
+
+          // addToast({
+          //   title: 'You need to add items to this order.',
+          //   type: 'error',
+
+          // });
         }
       }
     },

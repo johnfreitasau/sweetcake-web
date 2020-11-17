@@ -3,21 +3,39 @@ import { shade } from 'polished';
 
 export const Container = styled.div`
   height: 100vh;
-
+  width: 100%;
   display: flex;
-  align-items: stretch;
-
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  //background-color: #4a4e69;
+  background-color: #666360;
+
+  h1 {
+    font-family: 'Sacramento', sans-serif;
+    color: #c8db37;
+    font-size: 64px;
+  }
 `;
 
-export const Content = styled.div`
-  display: flex;
+export const FormContainer = styled.div`
+  /* display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 700px;
+  max-width: 700px; */
+
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  max-width: 80%;
+  min-width: 100px;
+  min-height: 400px;
+  padding: 20px 40px;
+  border-radius: 6px;
+  box-shadow: 0px 8px 36px #222;
+  background-color: #fefefe;
 `;
 
 const appearFromLeft = keyframes`
@@ -51,21 +69,15 @@ export const AnimationContainer = styled.div`
 
   animation: ${appearFromLeft} 1s;
 
-  h1 {
-    font-family: 'Sacramento', sans-serif;
-    color: #bf7878;
-    font-size: 64px;
-  }
-
   form {
     margin: 80px 0;
     width: 340px;
     text-align: center;
-  }
 
-  h2 {
-    margin-bottom: 24px;
-    font-size: 16px;
+    h2 {
+      margin-bottom: 24px;
+      font-size: 20px;
+    }
   }
 
   a {
@@ -81,7 +93,7 @@ export const AnimationContainer = styled.div`
   }
 
   > a {
-    color: #e5989b;
+    color: #c8db37;
     display: block;
     margin-top: 24px;
     text-decoration: none;
@@ -94,7 +106,7 @@ export const AnimationContainer = styled.div`
       margin-right: 16px;
     }
     &:hover {
-      color: ${shade(0.2, '#e5989b')};
+      color: ${shade(0.2, '#c8db37')};
     }
   }
 `;
