@@ -29,9 +29,9 @@ const InputCurrency: React.FC<Props> = ({
         return ref.state.numAsString ? Number(ref.state.numAsString) : '';
       },
       setValue: (ref, value) => {
-        ref.state.value = `AUD$ ${value}`;
+        ref.state.value = `$ ${value}`;
         ref.state.numAsString = `${value}`;
-        if (inputRef.current) inputRef.current.value = `R$ ${value}`;
+        if (inputRef.current) inputRef.current.value = `$ ${value}`;
       },
       clearValue: (ref) => {
         ref.state.value = '';
@@ -47,10 +47,10 @@ const InputCurrency: React.FC<Props> = ({
       <NumberFormat
         getInputRef={inputRef}
         ref={NumberFormatRef}
-        placeholder="$ 0,00"
+        placeholder="$ 0.00"
         prefix="$ "
-        thousandSeparator="."
-        decimalSeparator=","
+        thousandSeparator=","
+        decimalSeparator="."
         fixedDecimalScale
         decimalScale={2}
         defaultValue={defaultValue}

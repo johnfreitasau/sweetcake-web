@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import getValidationErrors from '../../../utils/getValidationErrors';
 import {
   BackButton,
+  InputCurrency,
   RegisterButton,
   SelectAsyncInput,
 } from '../../../components/Form';
@@ -210,7 +211,14 @@ const CreateProduct: React.FC = () => {
             isLoading={optionsIsLoading}
             select
           />
-          <Input name="unitPrice" placeholder="Unit price" />
+          {/* <Input name="unitPrice" placeholder="Unit price" /> */}
+          <InputCurrency
+            name="unitPrice"
+            label=""
+            placeholder="$ 0.00"
+            autoFocus
+          />
+
           <Input name="notes" placeholder="Notes" />
         </Form>
       </Content>

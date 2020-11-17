@@ -16,10 +16,16 @@ import { formatPrice } from '../../../utils/format';
 interface Product {
   id: string;
   name: string;
-  category: string;
+  categoryId: string;
+  categoryFormatted: string;
   unitPrice: number;
   unitPriceFormatted: string;
   notes: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
 }
 
 interface SearchFormData {
@@ -28,6 +34,7 @@ interface SearchFormData {
 
 const ListProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagesAvailable, setPagesAvailable] = useState(0);
   const [queryPage, setQueryPage] = useQueryParam('page', NumberParam);
@@ -116,6 +123,7 @@ const ListProducts: React.FC = () => {
 
         setPagesAvailable(Math.ceil(totalCount / 7));
         setProducts(response.data);
+        console.log('PRODUCTS:', response.data);
       } catch (err) {
         addToast({
           type: 'error',
@@ -127,6 +135,14 @@ const ListProducts: React.FC = () => {
     }
 
     loadProducts();
+
+    async function getCategories(): Promise<void> {
+      const categoriesResult = await api.get('/categories');
+
+      setCategories(categoriesResult.data);
+    }
+
+    getCategories();
   }, [addToast, queryName, queryPage]);
 
   if (loading) {
@@ -134,7 +150,7 @@ const ListProducts: React.FC = () => {
       <S.Container>
         <S.Content>
           <S.MessageContainer>
-            <Ellipsis size={100} color="#FBC131" />
+            <Ellipsis size={100} color="#c8db37" />
           </S.MessageContainer>
         </S.Content>
       </S.Container>
@@ -176,6 +192,7 @@ const ListProducts: React.FC = () => {
               <th>Product Name</th>
               <th>Category</th>
               <th>Unit Price</th>
+              <th>Notes</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -183,8 +200,9 @@ const ListProducts: React.FC = () => {
             {formattedProducts.map((product) => (
               <S.CustomerRow key={product.id}>
                 <td>{product.name}</td>
-                <td>{product.category}</td>
+                <td>{product.categoryId}</td>
                 <td>{product.unitPriceFormatted}</td>
+                <td>{product.notes}</td>
                 <td>
                   <div>
                     <FiEdit

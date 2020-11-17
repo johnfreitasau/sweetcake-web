@@ -21,7 +21,7 @@ export const LabelContainer = styled.label`
     border: 1px solid #232129;
 
     &:hover {
-      border-color: #fbc131;
+      border-color: ${({ theme }) => theme.colors.green};
     }
 
     &::placeholder {
@@ -36,7 +36,7 @@ export const LabelContainer = styled.label`
     }
 
     &:hover {
-      border-color: #fbc131;
+      border-color: ${({ theme }) => theme.colors.green};
     }
   }
 

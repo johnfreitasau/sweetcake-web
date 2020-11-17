@@ -49,40 +49,40 @@ export const MessageContainer = styled.div`
   }
 `;
 
+// export const CustomerList = styled.div`
+//   margin: 56px 0 0 0;
+//   align-items: center;
+//   h1 {
+//     font-size: 28px;
+//     margin-bottom: 10px;
+
+//     color: ${({ theme }) => theme.colors.green};
+//   }
+//   table {
+//     border-spacing: 15px;
+//     font-size: 20px;
+//     list-style-type: none;
+
+//     td:nth-child(1) {
+//       text-align: right;
+//       font-weight: bold;
+//       color: ${({ theme }) => theme.colors.white};
+//     }
+//     td:nth-child(2) {
+//       color: ${({ theme }) => theme.colors.white};
+//     }
+//   }
+//   /* section {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     & + section {
+//       margin-top: 16px;
+//     }
+//   } */
+// `;
+
 export const CustomerList = styled.div`
-  margin: 56px 0 0 0;
-  align-items: center;
-  h1 {
-    font-size: 28px;
-    margin-bottom: 10px;
-
-    color: ${({ theme }) => theme.colors.green};
-  }
-  table {
-    border-spacing: 15px;
-    font-size: 20px;
-    list-style-type: none;
-
-    td:nth-child(1) {
-      text-align: right;
-      font-weight: bold;
-      color: ${({ theme }) => theme.colors.white};
-    }
-    td:nth-child(2) {
-      color: ${({ theme }) => theme.colors.white};
-    }
-  }
-  /* section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    & + section {
-      margin-top: 16px;
-    }
-  } */
-`;
-
-export const OrderList = styled.div`
   margin: 56px 0 0 0;
   align-items: center;
   h1 {
@@ -95,10 +95,38 @@ export const OrderList = styled.div`
     border-spacing: 15px;
     font-size: 20px;
     list-style-type: none;
+    line-height: 1.6;
 
     td:nth-child(1) {
       text-align: right;
       font-weight: bold;
+      min-width: 150px;
+      color: ${({ theme }) => theme.colors.white};
+    }
+    td:nth-child(2) {
+      color: ${({ theme }) => theme.colors.white};
+    }
+  }
+`;
+
+export const OrderList = styled.div`
+  margin: 56px 0 0 0;
+  align-items: center;
+  h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+
+    color: ${({ theme }) => theme.colors.green};
+  }
+  tbody {
+    //border-spacing: 15px;
+    font-size: 20px;
+    list-style-type: none;
+    line-height: 1.6;
+    td:nth-child(1) {
+      text-align: right;
+      font-weight: bold;
+      min-width: 150px;
       color: ${({ theme }) => theme.colors.white};
     }
     td:nth-child(2) {

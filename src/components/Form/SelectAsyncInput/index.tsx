@@ -17,7 +17,6 @@ const SelectAsyncInput: React.FC<Props> = ({
   name,
   label,
   label_name,
-  defaultList,
   ...rest
 }) => {
   const selectRef = useRef(null);
@@ -31,7 +30,7 @@ const SelectAsyncInput: React.FC<Props> = ({
   //     .map((category: any) => category.name),
   // );
 
-  console.log('CATEGORY RESULT:', categoryResult);
+  // console.log('CATEGORY RESULT:', categoryResult);
 
   const colourStyles: StylesConfig = {
     control: (styles) => ({
@@ -63,7 +62,7 @@ const SelectAsyncInput: React.FC<Props> = ({
         neutral5: '#f2f2f2',
         neutral10: '#e6e6e6',
         neutral20: '#cccccc',
-        neutral30: '#FBC131',
+        neutral30: '#c8db37',
         neutral40: '#999999',
         neutral50: '#808080',
         neutral60: '#666666',
@@ -74,55 +73,50 @@ const SelectAsyncInput: React.FC<Props> = ({
     };
   };
 
-  useEffect(() => {
-    registerField({
-      name: fieldName,
-      ref: selectRef.current,
-      setValue: (ref, value) => {
-        ref.select.setValue(value || null);
-      },
-      getValue: (ref: any) => {
-        if (rest.isMulti) {
-          if (!ref.state.value) {
-            return [];
-          }
-          return ref.state.value.map((option: OptionTypeBase) => option.value);
-        }
-        if (!ref.state.value) {
-          return '';
-        }
-        return ref.state.value.value;
-      },
-    });
-  }, [fieldName, registerField, rest.isMulti]);
   // useEffect(() => {
   //   registerField({
   //     name: fieldName,
   //     ref: selectRef.current,
+  //     setValue: (ref, value) => {
+  //       ref.select.setValue(value || null);
+  //     },
   //     getValue: (ref: any) => {
   //       if (rest.isMulti) {
-  //         if (!ref.select.state.value) {
+  //         if (!ref.state.value) {
   //           return [];
   //         }
-
-  //         return ref.select.state.value.map(
-  //           (option: OptionTypeBase) => option.value,
-  //         );
+  //         return ref.state.value.map((option: OptionTypeBase) => option.value);
   //       }
-  //       if (!ref.select.state.value) {
+  //       if (!ref.state.value) {
   //         return '';
   //       }
-
-  //       return ref.select.state.value.value;
-  //     },
-  //     setValue: (ref: any, value: any) => {
-  //       ref.select.state.value = value;
-  //     },
-  //     clearValue: (ref: any) => {
-  //       ref.select.select.clearValue();
+  //       return ref.state.value.value;
   //     },
   //   });
   // }, [fieldName, registerField, rest.isMulti]);
+  useEffect(() => {
+    registerField({
+      name: fieldName,
+      ref: selectRef.current,
+      getValue: (ref: any) => {
+        if (rest.isMulti) {
+          if (!ref.select.state.value) {
+            return [];
+          }
+          return ref.select.state.value.map(
+            (option: OptionTypeBase) => option.value,
+          );
+        }
+        if (!ref.select.state.value) {
+          return '';
+        }
+        return ref.select.state.value.value;
+      },
+      setValue: (ref, value) => {
+        ref.select.select.setValue(value);
+      },
+    });
+  }, [fieldName, registerField, rest.isMulti]);
 
   return (
     <LabelContainer htmlFor={label_name || name}>
@@ -207,7 +201,7 @@ export default SelectAsyncInput;
 //         neutral5: '#f2f2f2',
 //         neutral10: '#e6e6e6',
 //         neutral20: '#cccccc',
-//         neutral30: '#FBC131',
+//         neutral30: '#c8db37',
 //         neutral40: '#999999',
 //         neutral50: '#808080',
 //         neutral60: '#666666',

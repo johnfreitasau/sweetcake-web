@@ -12,6 +12,7 @@ import * as Yup from 'yup';
 import getValidationErrors from '../../../utils/getValidationErrors';
 import {
   BackButton,
+  InputCurrency,
   SaveButton,
   SelectAsyncInput,
 } from '../../../components/Form';
@@ -46,7 +47,7 @@ const EditProduct: React.FC = () => {
   const [categoryOptions, setCategoryOptions] = useState<ICategoryOptions[]>(
     [],
   );
-  const [categories, setCategories] = useState<Category[]>([]);
+  // const [categories, setCategories] = useState<Category[]>([]);
   const [optionsIsLoading, setOptionsIsLoading] = useState(true);
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
@@ -59,6 +60,12 @@ const EditProduct: React.FC = () => {
   const handleSubmitButton = useCallback(() => {
     formRef.current?.submitForm();
   }, []);
+
+  // JF
+  formRef.current?.setFieldValue('categoryId', {
+    label: 'car',
+    value: '124b6284-1c97-431a-9060-903c44af4ff0',
+  });
 
   const handleSubmit = useCallback(
     async (data: IProductFormData) => {
@@ -163,17 +170,7 @@ const EditProduct: React.FC = () => {
     setOptionsIsLoading(false);
   }, [categoriesPage, categoriesPagesAvailable]);
 
-  console.log('CATEGORIES STATE:', categories);
-
-  useEffect(() => {
-    api
-      .get<Category[]>('/categories', {
-        // params: {
-        //   name: inputValue,
-        // },
-      })
-      .then((response) => setCategories(response.data));
-  }, []);
+  // useEffect(() => {}, []);
 
   return (
     <Container>
@@ -193,18 +190,27 @@ const EditProduct: React.FC = () => {
           initialData={productFormData.state}
         >
           <Input name="name" placeholder="Product Name" />
-          <SelectAsyncInput
-            placeholder="Category"
-            label=""
-            name="categoryId"
-            defaultOptions
-            loadOptions={handleLoadCategoryOptions}
-            onMenuScrollToBottom={handleCategoriesMenuScrollToBottom}
-            noOptionsMessage={() => 'Category not found'}
-            isLoading={optionsIsLoading}
-            defaultList={categories}
-          />
-          <Input name="unitPrice" placeholder="Unit Price" />
+          <div>
+            <SelectAsyncInput
+              placeholder="Category"
+              label=""
+              name="categoryId"
+              defaultOptions
+              loadOptions={handleLoadCategoryOptions}
+              onMenuScrollToBottom={handleCategoriesMenuScrollToBottom}
+              noOptionsMessage={() => 'Category not found'}
+              isLoading={optionsIsLoading}
+            />
+          </div>
+          {/* <Input name="unitPrice" placeholder="Unit Price" /> */}
+          <div>
+            <InputCurrency
+              name="unitPrice"
+              label=""
+              placeholder="$ 0.00"
+              autoFocus
+            />
+          </div>
           <Input name="notes" placeholder="Notes" />
         </Form>
       </Content>

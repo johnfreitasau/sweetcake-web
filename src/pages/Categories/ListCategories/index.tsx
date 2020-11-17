@@ -123,7 +123,7 @@ const ListCategories: React.FC = () => {
       <S.Container>
         <S.Content>
           <S.MessageContainer>
-            <Ellipsis size={100} color="#FBC131" />
+            <Ellipsis size={100} color="#c8db37" />
           </S.MessageContainer>
         </S.Content>
       </S.Container>

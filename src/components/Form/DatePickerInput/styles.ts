@@ -29,7 +29,7 @@ export const LabelContainer = styled.label<LabelContainerProp>`
       `}
 
     &:hover {
-      border-color: #fbc131;
+      border-color: ${({ theme }) => theme.colors.green};
     }
 
     &::placeholder {

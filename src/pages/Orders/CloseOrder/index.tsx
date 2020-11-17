@@ -367,7 +367,7 @@ const CloseOrder: React.FC = () => {
             <InputCurrency
               name="collect_price"
               label="Total collect"
-              placeholder="$ 0,00"
+              placeholder="$ 0.00"
               onKeyUp={handleCollectPriceChange}
               onFocus={handleCollectPriceChange}
               autoFocus

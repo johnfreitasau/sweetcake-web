@@ -8,6 +8,7 @@ interface ContainerProps {
 }
 
 export const Container = styled.div<ContainerProps>`
+  margin-top: 8px;
   background: #232129;
   border-radius: 10px;
   padding: 16px;
@@ -19,7 +20,7 @@ export const Container = styled.div<ContainerProps>`
   color: #666360;
 
   &:hover {
-    border-color: #fbc131;
+    border-color: ${({ theme }) => theme.colors.green};
   }
 
   & + div {
@@ -44,7 +45,7 @@ export const Container = styled.div<ContainerProps>`
     props.isFilled &&
     css`
       color: #f4ede8;
-      border-color: #fbc131;
+      border-color: ${({ theme }) => theme.colors.green};
     `}
 
 
