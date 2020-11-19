@@ -10,6 +10,7 @@ export const Form = styled(UnForm)`
 export const InputFormRow = styled.div`
   display: flex;
   align-items: flex-end;
+  justify-content: space-between;
   margin-top: 10px;
 `;
 
@@ -17,7 +18,7 @@ export const DeliveryFeeInput = styled(InputCurrency)`
   color: ${({ theme }) => theme.colors.grayHard};
   margin: 0;
   padding: 0;
-  max-width: 200px;
+  max-width: 220px;
   width: 100%;
   margin-left: 16px;
 

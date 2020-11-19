@@ -13,7 +13,7 @@ export const ReactInputMask = styled(RInputMask)`
   font-size: 18px;
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.green};
+    border-color: ${({ theme }) => theme.colors.orange};
   }
 `;
 

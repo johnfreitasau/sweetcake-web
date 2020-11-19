@@ -20,7 +20,7 @@ export const Container = styled.div<ContainerProps>`
   color: #666360;
 
   &:hover {
-    border-color: #c8db37;
+    border-color: #E67E22;
   }
 
   & + div {
@@ -45,7 +45,7 @@ export const Container = styled.div<ContainerProps>`
     props.isFilled &&
     css`
       color: #f4ede8;
-      border-color: #c8db37;
+      border-color: #e67e22;
     `}
 
 

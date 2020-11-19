@@ -9,7 +9,7 @@ export const ButtonContainer = styled.button`
   font-size: 16px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.dark};
-  background: ${({ theme }) => theme.colors.green};
+  background: ${({ theme }) => theme.colors.orange};
   display: flex;
   align-items: center;
   display: flex;
@@ -19,10 +19,10 @@ export const ButtonContainer = styled.button`
   }
   transition: background 0.3s;
   &:hover {
-    background: ${({ theme }) => darken(0.2, theme.colors.green)};
+    background: ${({ theme }) => darken(0.2, theme.colors.orange)};
   }
   &:disabled {
-    background: ${({ theme }) => darken(0.2, theme.colors.green)};
+    background: ${({ theme }) => darken(0.2, theme.colors.orange)};
     cursor: not-allowed;
   }
 `;

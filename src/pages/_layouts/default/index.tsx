@@ -20,7 +20,7 @@ const DefaultLayout: React.FC = ({ children }) => {
 
   const toggleTheme = useCallback(() => {
     setTheme(theme.title === 'dark' ? dark : light);
-  }, []);
+  }, [theme.title]);
 
   return (
     <ThemeProvider theme={theme}>

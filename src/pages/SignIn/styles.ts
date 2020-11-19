@@ -9,11 +9,12 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   //background-color: #4a4e69;
-  background-color: #666360;
+  //background-color: #666360;
+  background-color: #312e38;
 
   h1 {
     font-family: 'Sacramento', sans-serif;
-    color: #c8db37;
+    color: #e67e22;
     font-size: 64px;
   }
 `;
@@ -28,14 +29,14 @@ export const FormContainer = styled.div`
 
   display: flex;
   flex-direction: column;
-  width: 480px;
+  width: 400px;
   max-width: 80%;
   min-width: 100px;
   min-height: 400px;
   padding: 20px 40px;
   border-radius: 6px;
-  box-shadow: 0px 8px 36px #222;
-  background-color: #fefefe;
+  box-shadow: 0px 8px 36px #000;
+  background-color: #f4ede8;
 `;
 
 const appearFromLeft = keyframes`
@@ -70,7 +71,7 @@ export const AnimationContainer = styled.div`
   animation: ${appearFromLeft} 1s;
 
   form {
-    margin: 80px 0;
+    margin: 30px 0;
     width: 340px;
     text-align: center;
 
@@ -93,7 +94,7 @@ export const AnimationContainer = styled.div`
   }
 
   > a {
-    color: #c8db37;
+    color: #e67e22;
     display: block;
     margin-top: 24px;
     text-decoration: none;
@@ -106,7 +107,7 @@ export const AnimationContainer = styled.div`
       margin-right: 16px;
     }
     &:hover {
-      color: ${shade(0.2, '#c8db37')};
+      color: ${shade(0.2, '#E67E22')};
     }
   }
 `;

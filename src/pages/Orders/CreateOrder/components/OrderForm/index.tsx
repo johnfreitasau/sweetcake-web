@@ -148,8 +148,8 @@ const OrderForm: React.FC<OrderFormProps> = ({ onSubmit, formRef }) => {
           <CheckboxInput
             name="checkboxOptions"
             options={[
-              { id: 'paid', value: 'paid', label: 'Order Paid' },
-              { id: 'pickup', value: 'pickup', label: 'Customer Pickup' },
+              { id: 'paid', value: 'paid', label: 'Paid' },
+              { id: 'pickup', value: 'pickup', label: 'Pick-up' },
             ]}
           />
         </InputFormRow>

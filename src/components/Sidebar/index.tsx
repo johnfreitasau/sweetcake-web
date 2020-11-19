@@ -15,7 +15,8 @@ import {
   FiChevronsLeft,
   FiUsers,
   FiMenu,
-  FiLogOut,
+  // FiLogOut,
+  FiPower,
   FiSettings,
 } from 'react-icons/fi';
 // import { BiFoodMenu } from 'react-icons/bi';
@@ -26,8 +27,7 @@ import { shade } from 'polished';
 import { ThemeContext } from 'styled-components';
 import { useAuth } from '../../hooks/auth';
 
-import { Container, SettingsButton, SignOutButton } from './styles';
-import light from '../../styles/themes/light';
+import { Container, SignOutButton } from './styles';
 import dark from '../../styles/themes/dark';
 
 interface Props {
@@ -40,7 +40,7 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
   const { colors, title } = useContext(ThemeContext);
 
   const [isOpened, setIsOpened] = useState(() => {
-    const sidebarState = localStorage.getItem('@JustCupcakes:sidebarState');
+    const sidebarState = localStorage.getItem('@cupcakes.co:sidebarState');
 
     if (sidebarState) {
       return true;
@@ -55,9 +55,9 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
 
   useEffect(() => {
     if (isOpened) {
-      localStorage.setItem('@JustCupcakes:sidebarState', String(isOpened));
+      localStorage.setItem('@cupcakes.co:sidebarState', String(isOpened));
     } else {
-      localStorage.removeItem('@JustCupcakes:sidebarState');
+      localStorage.removeItem('@cupcakes.co:sidebarState');
     }
   }, [isOpened]);
 
@@ -71,46 +71,30 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
         </button>
       </div>
       <nav>
-        {/* <NavLink to="/dashboard">
-          {isOpened && 'Dashboard'}
-          <FiGrid size={24} />
-        </NavLink> */}
+        <NavLink to="/orders">
+          <FiPackage size={24} />
+          {isOpened && 'Orders'}
+        </NavLink>
         <NavLink to="/customers">
-          {isOpened && 'Customers'}
           <FiUsers size={24} />
+          {isOpened && 'Customers'}
         </NavLink>
         <NavLink to="/categories">
-          {isOpened && 'Categories'}
           <FiGrid size={24} />
+          {isOpened && 'Categories'}
         </NavLink>
         <NavLink to="/products">
-          {isOpened && 'Products'}
           <FiBook size={24} />
+          {isOpened && 'Products'}
         </NavLink>
-        <NavLink to="/orders">
-          {isOpened && 'Orders'}
-          <FiPackage size={24} />
-        </NavLink>
-        {/* <Switch
-          onChange={toggleTheme}
-          checked={title === 'dark'}
-          checkedIcon={false}
-          uncheckedIcon={false}
-          height={10}
-          width={40}
-          handleDiameter={20}
-          offColor={shade(0.35, colors.background)}
-          onColor={colors.background}
-        /> */}
       </nav>
-
-      <SettingsButton>
-        {isOpened && <strong>Settings</strong>}
+      {/* <SettingsButton>
         <FiSettings size={24} />
-      </SettingsButton>
+        {isOpened && <strong>Settings</strong>}
+      </SettingsButton> */}
       <SignOutButton onClick={signOut}>
+        <FiPower size={24} />
         {isOpened && <strong>SignOut</strong>}
-        <FiLogOut size={24} />
       </SignOutButton>
     </Container>
   );

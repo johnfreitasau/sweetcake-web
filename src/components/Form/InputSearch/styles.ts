@@ -27,11 +27,11 @@ export const Container = styled.div<ContainerProps>`
   ${(props) =>
     props.isField &&
     css`
-      color: ${props.theme.colors.green};
+      color: ${props.theme.colors.orange};
     `}
   cursor: ${(props) => (props.isDisabled ? 'not-allowed' : 'default')};
   &:focus-within {
-    color: ${({ theme }) => theme.colors.green};
+    color: ${({ theme }) => theme.colors.orange};
   }
   input {
     flex: 1;

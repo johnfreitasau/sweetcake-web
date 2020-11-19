@@ -24,7 +24,7 @@ export const AddButton = styled.button`
   border-radius: 10px;
   margin-left: 16px;
 
-  background: ${({ theme }) => theme.colors.green};
+  background: ${({ theme }) => theme.colors.orange};
 
   display: flex;
   align-items: center;

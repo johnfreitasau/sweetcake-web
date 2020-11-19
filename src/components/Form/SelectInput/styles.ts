@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const LabelContainer = styled.label`
-  width: 370px;
+  width: 270px;
   margin-left: 15px;
   padding-left: 15px;
 `;

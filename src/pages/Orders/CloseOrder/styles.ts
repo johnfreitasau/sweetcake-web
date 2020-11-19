@@ -49,39 +49,6 @@ export const MessageContainer = styled.div`
   }
 `;
 
-// export const CustomerList = styled.div`
-//   margin: 56px 0 0 0;
-//   align-items: center;
-//   h1 {
-//     font-size: 28px;
-//     margin-bottom: 10px;
-
-//     color: ${({ theme }) => theme.colors.green};
-//   }
-//   table {
-//     border-spacing: 15px;
-//     font-size: 20px;
-//     list-style-type: none;
-
-//     td:nth-child(1) {
-//       text-align: right;
-//       font-weight: bold;
-//       color: ${({ theme }) => theme.colors.white};
-//     }
-//     td:nth-child(2) {
-//       color: ${({ theme }) => theme.colors.white};
-//     }
-//   }
-//   /* section {
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-between;
-//     & + section {
-//       margin-top: 16px;
-//     }
-//   } */
-// `;
-
 export const CustomerList = styled.div`
   margin: 56px 0 0 0;
   align-items: center;
@@ -89,7 +56,7 @@ export const CustomerList = styled.div`
     font-size: 28px;
     margin-bottom: 10px;
 
-    color: ${({ theme }) => theme.colors.green};
+    color: ${({ theme }) => theme.colors.orange};
   }
   tbody {
     border-spacing: 15px;
@@ -104,6 +71,7 @@ export const CustomerList = styled.div`
       color: ${({ theme }) => theme.colors.white};
     }
     td:nth-child(2) {
+      padding-left: 20px;
       color: ${({ theme }) => theme.colors.white};
     }
   }
@@ -116,7 +84,7 @@ export const OrderList = styled.div`
     font-size: 28px;
     margin-bottom: 10px;
 
-    color: ${({ theme }) => theme.colors.green};
+    color: ${({ theme }) => theme.colors.orange};
   }
   tbody {
     //border-spacing: 15px;
@@ -130,6 +98,7 @@ export const OrderList = styled.div`
       color: ${({ theme }) => theme.colors.white};
     }
     td:nth-child(2) {
+      padding-left: 20px;
       color: ${({ theme }) => theme.colors.white};
     }
   }
@@ -188,7 +157,7 @@ export const FinalInformation = styled.div`
   display: flex;
   justify-content: flex-end;
   span {
-    background: ${({ theme }) => theme.colors.green};
+    background: ${({ theme }) => theme.colors.orange};
     color: ${({ theme }) => theme.colors.dark};
     padding: 16px;
     border-radius: 10px;

@@ -43,6 +43,7 @@ const CheckboxInput: React.FC<Props> = ({ name, options, ...rest }) => {
       {options.map((option, index) => (
         <label htmlFor={option.id} key={option.id}>
           <div>
+            {option.label}
             <input
               defaultChecked={defaultValue.find(
                 (dv: string) => dv === option.id,
@@ -55,7 +56,6 @@ const CheckboxInput: React.FC<Props> = ({ name, options, ...rest }) => {
               id={option.id}
               {...rest}
             />
-            {option.label}
           </div>
         </label>
       ))}

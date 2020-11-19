@@ -150,7 +150,7 @@ const ListProducts: React.FC = () => {
       <S.Container>
         <S.Content>
           <S.MessageContainer>
-            <Ellipsis size={100} color="#c8db37" />
+            <Ellipsis size={100} color="#E67E22" />
           </S.MessageContainer>
         </S.Content>
       </S.Container>

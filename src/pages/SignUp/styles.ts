@@ -50,7 +50,7 @@ export const AnimationContainer = styled.div`
 
   h1 {
     font-family: 'Sacramento', sans-serif;
-    color: #bf7878;
+    color: #e67e22;
     font-size: 64px;
   }
 
@@ -78,7 +78,7 @@ export const AnimationContainer = styled.div`
   }
 
   > a {
-    color: ${({ theme }) => theme.colors.green};
+    color: ${({ theme }) => theme.colors.orange};
     display: block;
     margin-top: 24px;
     text-decoration: none;
@@ -91,7 +91,7 @@ export const AnimationContainer = styled.div`
       margin-right: 16px;
     }
     &:hover {
-      color: ${shade(0.2, '#c8db37')};
+      color: ${shade(0.2, '#E67E22')};
     }
   }
 `;

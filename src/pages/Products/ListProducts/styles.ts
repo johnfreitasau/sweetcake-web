@@ -10,7 +10,7 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  max-width: 650px;
+  max-width: 1200px;
   width: 100%;
   padding-top: 60px;
   margin: 0 auto;
@@ -34,7 +34,7 @@ export const MessageContainer = styled.div`
 export const Table = styled.table`
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 10px;
+  border-spacing: 0 3px;
   tr {
     th {
       font-size: 18px;
@@ -65,7 +65,7 @@ export const CustomerRow = styled.tr`
   }
   td:nth-child(1) {
     padding-left: 16px;
-    border-radius: 10px 0 0 10px;
+    //border-radius: 10px 0 0 10px;
   }
   td:nth-child(2) {
     text-align: center;
@@ -81,7 +81,7 @@ export const CustomerRow = styled.tr`
   td:nth-child(5) {
     text-align: right;
     padding-right: 16px;
-    border-radius: 0 10px 10px 0;
+    //border-radius: 0 10px 10px 0;
 
     div :nth-child(1):hover {
       color: ${({ theme }) => theme.colors.gray};

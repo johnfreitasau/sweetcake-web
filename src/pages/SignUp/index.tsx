@@ -85,7 +85,7 @@ const SignUp: React.FC = () => {
 
         <Content>
           <AnimationContainer>
-            <h1>JustCupcakes</h1>
+            <h1>cupcakes.co</h1>
 
             <Form ref={formRef} onSubmit={handleSubmit}>
               <h2>Registration</h2>

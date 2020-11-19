@@ -40,7 +40,7 @@ export const MessageContainer = styled.div`
 export const Table = styled.table`
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 10px;
+  border-spacing: 0 3px;
   cursor: pointer;
   tr {
     th {
@@ -89,7 +89,7 @@ export const OrderRow = styled.tr<TStyledOrderStatus>`
   td:nth-child(1) {
     text-align: center;
     padding-left: 16px;
-    border-radius: 10px 0 0 10px;
+    //border-radius: 10px 0 0 10px;
   }
   td:nth-child(2) {
     text-align: center;
@@ -121,13 +121,13 @@ export const OrderRow = styled.tr<TStyledOrderStatus>`
   td:nth-child(9) {
     text-align: center;
     padding-right: 16px;
-    border-radius: 0 10px 10px 0;
+    //border-radius: 0 10px 10px 0;
 
     div {
       border-radius: 7px;
       width: 60px;
       height: 20px;
-      color: 'green' !important;
+      color: 'orange' !important;
       text-shadow: 1px 1px 0 #444;
       color: #fff !important;
       background: ${({ orderStatus }: any) => {
@@ -182,12 +182,12 @@ export const CompletedFilterButton = styled.button<CompletedFilterButtonProps>`
   justify-content: center;
   transition: background 0.3s, color 0.3s;
   background: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.green : theme.colors.dark};
+    isSelected ? theme.colors.orange : theme.colors.dark};
   color: ${({ theme, isSelected }) =>
     isSelected ? theme.colors.dark : theme.colors.white};
   &:hover {
     background: ${({ theme, isSelected }) =>
-      !isSelected && shade(0.5, theme.colors.green)};
+      !isSelected && shade(0.5, theme.colors.orange)};
   }
   cursor: ${({ isSelected }) => (isSelected ? 'not-allowed' : 'pointer')};
   & + button {

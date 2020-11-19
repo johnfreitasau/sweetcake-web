@@ -9,6 +9,7 @@ export const Header = styled.div`
     font-weight: normal;
     font-size: 32px;
     margin-left: auto;
+    color: ${({ theme }) => theme.colors.orange};
   }
 `;
 

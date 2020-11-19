@@ -54,8 +54,6 @@ const CreateOrder: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: OrderFormData) => {
-      console.log('DATA:', data);
-      console.log('PAYMENT METHOD:', data.paymentMethod);
       try {
         orderFormRef.current?.setErrors({});
 

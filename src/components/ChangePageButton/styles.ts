@@ -9,13 +9,13 @@ export const ButtonContainer = styled.button`
   border: none;
   padding: 0 16px;
   border-radius: 10px;
-  background: ${({ theme }) => theme.colors.green};
+  background: ${({ theme }) => theme.colors.orange};
   transition: background 0.3s;
   &:hover {
-    background: ${({ theme }) => shade(0.2, theme.colors.green)};
+    background: ${({ theme }) => shade(0.2, theme.colors.orange)};
   }
   &:disabled {
     cursor: not-allowed;
-    background: ${({ theme }) => shade(0.3, theme.colors.green)};
+    background: ${({ theme }) => shade(0.3, theme.colors.orange)};
   }
 `;

@@ -38,7 +38,7 @@ export const Container = styled.div<ContainerProps>`
       color: ${({ theme }) => theme.colors.white};
       transition: color 0.3s;
       &:hover {
-        color: ${({ theme }) => theme.colors.green};
+        color: ${({ theme }) => theme.colors.orange};
       }
     }
   }
@@ -50,8 +50,11 @@ export const Container = styled.div<ContainerProps>`
       ${(props) =>
         props.isOpened
           ? css`
-              justify-content: space-between;
+              justify-content: left;
               padding: 0 32px;
+              svg {
+                margin-right: 10px;
+              }
             `
           : css`
               justify-content: space-around;
@@ -68,30 +71,15 @@ export const Container = styled.div<ContainerProps>`
       &:hover {
         background: ${({ theme }) => theme.colors.background};
       }
+
+
     }
   }
 `;
 
-export const SettingsButton = styled.button`
-  margin-top: auto;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  color: ${({ theme }) => theme.colors.white};
-  strong {
-    font-size: 20px;
-    margin-right: 16px;
-  }
-  transition: color 0.3s;
-  &:hover {
-    color: ${({ theme }) => lighten(0.06, theme.colors.gray)};
-  }
-`;
-
 export const SignOutButton = styled.button`
+  margin-top: auto;
+
   margin-bottom: 24px;
   display: flex;
   align-items: center;
@@ -103,8 +91,34 @@ export const SignOutButton = styled.button`
     font-size: 20px;
     margin-right: 16px;
   }
+
+  svg {
+    margin-right: 10px;
+  }
+
   transition: color 0.3s;
   &:hover {
     color: ${({ theme }) => lighten(0.06, theme.colors.error)};
   }
 `;
+
+// export const SignOutButton = styled.button`
+//   margin-bottom: 24px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   background: none;
+//   border: none;
+//   color: ${({ theme }) => theme.colors.error};
+//   strong {
+//     font-size: 20px;
+//     margin-right: 16px;
+//   }
+//   svg {
+//     margin-right: 10px;
+//   }
+//   transition: color 0.3s;
+//   &:hover {
+//     color: ${({ theme }) => lighten(0.06, theme.colors.error)};
+//   }
+// `;
