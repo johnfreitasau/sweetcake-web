@@ -13,14 +13,9 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import logoImg from '../../assets/cupcake-img.svg';
 
 import Input from '../../components/Form/Input';
-import Button from '../../components/Button';
+import Button from '../../components/Form/Button';
 
-import {
-  Container,
-  ImageContainer,
-  Content,
-  AnimationContainer,
-} from './styles';
+import { Container, Content, AnimationContainer } from './styles';
 
 interface SignUpFormData {
   name: string;
@@ -44,7 +39,6 @@ const SignUp: React.FC = () => {
             .required('Name is required.')
             .email('Digit a valid e-mail.'),
           password: Yup.string().required('Password required.'),
-          // password: Yup.string().min(6, 'Password must be 6 characters long.'),
         });
 
         await schema.validate(data, { abortEarly: false });
@@ -55,8 +49,8 @@ const SignUp: React.FC = () => {
 
         addToast({
           type: 'success',
-          title: 'SignUp completed successfully.',
-          description: 'You can now log on to the application.',
+          title: 'User created successfully.',
+          description: 'User is now able to Login to the application.',
         });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -69,7 +63,7 @@ const SignUp: React.FC = () => {
         addToast({
           type: 'error',
           title: 'SignUp Error',
-          description: 'Authentication error. Please try again.',
+          description: 'Issues to create a new user. Please try again.',
         });
       }
     },
@@ -79,13 +73,9 @@ const SignUp: React.FC = () => {
   return (
     <>
       <Container>
-        <ImageContainer>
-          <img src={logoImg} alt="JustCupcakes" />
-        </ImageContainer>
-
         <Content>
           <AnimationContainer>
-            <h1>cupcakes.co</h1>
+            <h1>Create new user</h1>
 
             <Form ref={formRef} onSubmit={handleSubmit}>
               <h2>Registration</h2>
@@ -99,12 +89,12 @@ const SignUp: React.FC = () => {
                 placeholder="Password"
               />
 
-              <Button type="submit">Sign Up</Button>
+              <Button type="submit">Create new user</Button>
             </Form>
 
             <Link to="/">
               <FiArrowLeft />
-              Back to the Login page
+              Back
             </Link>
           </AnimationContainer>
         </Content>

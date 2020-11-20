@@ -57,7 +57,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ onSubmit, formRef }) => {
 
       const customersTotalCount = response.headers['x-total-count'];
 
-      setCustomersPagesAvailable(Math.ceil(customersTotalCount / 7));
+      setCustomersPagesAvailable(Math.ceil(customersTotalCount / 10));
       setCustomerOptions(
         response.data.map((customer) => ({
           label: `${customer.name} [ ${customer.email} ]`,
@@ -66,7 +66,6 @@ const OrderForm: React.FC<OrderFormProps> = ({ onSubmit, formRef }) => {
       );
       setOptionsIsLoading(false);
     }
-    // console.log('loaded UseEffect');
 
     loadCustomerOptions();
   }, []);

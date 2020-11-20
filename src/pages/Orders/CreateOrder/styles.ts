@@ -4,6 +4,7 @@ import { Form as UnForm } from '@unform/web';
 export const Container = styled.div`
   width: 100%;
   padding: 0 16px;
+  box-shadow: 0px 0px 18px #000;
 `;
 
 export const Content = styled.div`

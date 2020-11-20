@@ -6,12 +6,11 @@ import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import Header from '../../../components/Header';
 import api from '../../../services/api';
 
-import ChangePageButton from '../../../components/ChangePageButton';
+import ChangePageButton from '../../../components/Form/ChangePageButton';
 import { useToast } from '../../../hooks/toast';
 
 import * as S from './styles';
-import Button from '../../../components/Button';
-import { formatPrice } from '../../../utils/format';
+import { currencyFormat } from '../../../utils/currencyFormat';
 
 interface Product {
   id: string;
@@ -77,7 +76,7 @@ const ListProducts: React.FC = () => {
 
           const totalCount = response.headers['x-total-count'];
 
-          setPagesAvailable(Math.ceil(totalCount / 7));
+          setPagesAvailable(Math.ceil(totalCount / 10));
           setProducts(response.data);
         } catch (err) {
           addToast({
@@ -104,7 +103,7 @@ const ListProducts: React.FC = () => {
   const formattedProducts = useMemo(() => {
     return products.map((product) => ({
       ...product,
-      unitPriceFormatted: formatPrice(product.unitPrice),
+      unitPriceFormatted: currencyFormat(product.unitPrice),
     }));
   }, [products]);
 
@@ -121,9 +120,8 @@ const ListProducts: React.FC = () => {
 
         const totalCount = response.headers['x-total-count'];
 
-        setPagesAvailable(Math.ceil(totalCount / 7));
+        setPagesAvailable(Math.ceil(totalCount / 10));
         setProducts(response.data);
-        console.log('PRODUCTS:', response.data);
       } catch (err) {
         addToast({
           type: 'error',

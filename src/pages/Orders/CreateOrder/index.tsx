@@ -19,8 +19,6 @@ interface Product {
   quantity: string;
   unitPrice: number;
   unitPriceFormatted: string;
-  // qtyDiscount: number;
-  // discount: number;
   notes: string;
 }
 
@@ -86,8 +84,6 @@ const CreateOrder: React.FC = () => {
           checkboxOptions,
         } = data;
 
-        console.log('DELIVERY DATE:', deliveryDate);
-
         setSubmitIsLoading(true);
         await api.post('/orders', {
           customerId,
@@ -137,6 +133,7 @@ const CreateOrder: React.FC = () => {
             <RegisterButton
               isLoading={submitIsLoading}
               onClick={handleButtonSubmit}
+              label="Create"
             />
           </section>
         </header>

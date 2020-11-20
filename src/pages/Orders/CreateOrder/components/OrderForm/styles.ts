@@ -15,7 +15,7 @@ export const InputFormRow = styled.div`
 `;
 
 export const DeliveryFeeInput = styled(InputCurrency)`
-  color: ${({ theme }) => theme.colors.grayHard};
+  color: ${({ theme }) => theme.colors.gray};
   margin: 0;
   padding: 0;
   max-width: 220px;
@@ -30,14 +30,9 @@ export const DeliveryFeeInput = styled(InputCurrency)`
 export const DeliveryDateInput = styled(InputCurrency)`
   max-width: 250px;
   width: 100%;
-  //margin-left: 16px;
 `;
 
 export const PaymentMethodInputSelect = styled.select`
-  /* max-width: 100px;
-  width: 100%;
-  margin-left: 16px; */
-
   width: 100%;
   height: 35px;
   background: white;

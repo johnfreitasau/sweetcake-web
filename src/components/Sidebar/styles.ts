@@ -59,17 +59,17 @@ export const Container = styled.div<ContainerProps>`
           : css`
               justify-content: space-around;
             `}
-      font-size: 20px;
+      font-size: 17px;
       font-weight: 500;
       text-decoration: none;
       color: ${({ theme }) => theme.colors.white};
       height: 100%;
       &.active {
-        background: ${({ theme }) => theme.colors.background};
+        background: ${({ theme }) => theme.colors.orange};
       }
       transition: background 0.3s;
       &:hover {
-        background: ${({ theme }) => theme.colors.background};
+        background: ${({ theme }) => theme.colors.orange};
       }
 
 
@@ -101,24 +101,3 @@ export const SignOutButton = styled.button`
     color: ${({ theme }) => lighten(0.06, theme.colors.error)};
   }
 `;
-
-// export const SignOutButton = styled.button`
-//   margin-bottom: 24px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   background: none;
-//   border: none;
-//   color: ${({ theme }) => theme.colors.error};
-//   strong {
-//     font-size: 20px;
-//     margin-right: 16px;
-//   }
-//   svg {
-//     margin-right: 10px;
-//   }
-//   transition: color 0.3s;
-//   &:hover {
-//     color: ${({ theme }) => lighten(0.06, theme.colors.error)};
-//   }
-// `;

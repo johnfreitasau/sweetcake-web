@@ -2,7 +2,7 @@ import React, { memo, useRef, useCallback } from 'react';
 import { FormHelpers, FormHandles } from '@unform/core';
 
 import { InputSearch } from '../Form';
-import SearchButton from '../SearchButton';
+import SearchButton from '../Form/SearchButton';
 import LinkToCreatePage from '../LinkToCreatePage';
 
 import * as S from './styles';
@@ -13,7 +13,6 @@ interface SearchFormData {
 
 interface HeaderProps {
   onSubmit(data: SearchFormData, options?: FormHelpers): void;
-  // disabled?: boolean;
   initialName?: string | null;
   createPage: string;
   title: string;
@@ -23,7 +22,6 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({
   initialName,
   onSubmit,
-  // disabled = false,
   createPage,
   title,
   placeholder,
@@ -37,6 +35,7 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <S.Header>
+      <h1>{title}</h1>
       <S.Form
         ref={formRef}
         initialData={{ name: initialName }}
@@ -45,15 +44,12 @@ const Header: React.FC<HeaderProps> = ({
         <InputSearch
           placeholder={placeholder}
           name="name"
-          // disabled={disabled}
           clearValue={clearValue}
         />
         <SearchButton type="submit" style={{ marginLeft: 16 }} />
       </S.Form>
 
       <LinkToCreatePage to={createPage} />
-
-      <h1>{title}</h1>
     </S.Header>
   );
 };

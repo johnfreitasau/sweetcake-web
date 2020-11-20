@@ -19,8 +19,6 @@ interface ICategoryFormData {
 const EditCategory: React.FC = () => {
   const categoryFormData = useLocation<ICategoryFormData>();
 
-  console.log('INITIAL DATA!!!:', categoryFormData.state);
-
   const { addToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 

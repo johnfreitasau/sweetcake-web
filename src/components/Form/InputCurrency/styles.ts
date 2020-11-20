@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import ReactNumberFormat from 'react-number-format';
+import Tooltip from '../../Tooltip';
 
 export const LabelContainer = styled.label`
   display: flex;
@@ -45,6 +46,24 @@ export const LabelContainer = styled.label`
     color: ${({ theme }) => theme.colors.error};
     display: block;
     margin: 8px 0 0 8px;
+  }
+`;
+
+export const Error = styled(Tooltip)`
+  height: 20px;
+  margin-left: 16px;
+
+  srv {
+    margin: 0;
+  }
+
+  span {
+    background: #c53030;
+    color: #fff;
+
+    &::before {
+      border-color: #c53030 transparent;
+    }
   }
 `;
 

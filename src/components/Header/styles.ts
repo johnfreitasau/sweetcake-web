@@ -6,10 +6,8 @@ export const Header = styled.div`
   align-items: center;
   margin-bottom: 32px;
   h1 {
-    font-weight: normal;
     font-size: 32px;
-    margin-left: auto;
-    color: ${({ theme }) => theme.colors.orange};
+    color: ${({ theme }) => theme.colors.white};
   }
 `;
 
@@ -17,4 +15,5 @@ export const Form = styled(UForm)`
   display: flex;
   max-width: 415px;
   width: 100%;
+  margin-left: auto;
 `;

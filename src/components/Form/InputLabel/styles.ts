@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import Tooltip from '../../Tooltip';
 
 interface LabelContainerProp {
   showErro: 'bottom' | 'border';
@@ -14,7 +15,6 @@ export const LabelContainer = styled.label<LabelContainerProp>`
   input {
     margin-top: 8px;
     background: ${({ theme }) => theme.colors.dark};
-    //color: ${({ theme }) => theme.colors.gray};
     color: #f4ede8 !important;
     font-size: 18px;
     border: ${({ theme }) => `1px solid ${theme.colors.dark}`};
@@ -48,5 +48,23 @@ export const LabelContainer = styled.label<LabelContainerProp>`
     color: ${({ theme }) => theme.colors.error};
     display: block;
     margin: 8px 0 0 8px;
+  }
+`;
+
+export const Error = styled(Tooltip)`
+  height: 20px;
+  margin-left: 16px;
+
+  srv {
+    margin: 0;
+  }
+
+  span {
+    background: #c53030;
+    color: #fff;
+
+    &::before {
+      border-color: #c53030 transparent;
+    }
   }
 `;

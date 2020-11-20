@@ -1,13 +1,11 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
 
-import { FiDownload } from 'react-icons/fi';
 import Route from './Route';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
-import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
 
 import ListCustomers from '../pages/Customers/ListCustomers';
@@ -24,19 +22,17 @@ import EditProduct from '../pages/Products/EditProduct';
 
 import ListOrders from '../pages/Orders/ListOrders';
 import CreateOrder from '../pages/Orders/CreateOrder';
-// import EditOrder from '../pages/Orders/EditOrder';
 import CloseOrder from '../pages/Orders/CloseOrder';
+
+import Settings from '../pages/Settings';
 
 const Routes: React.FC = () => {
   return (
     <Switch>
       <Route path="/" exact component={SignIn} />
-      <Route path="/signup" component={SignUp} />
+
       <Route path="/forgot-password" component={ForgotPassword} />
       <Route path="/reset-password" component={ResetPassword} />
-
-      <Route path="/dashboard" component={Dashboard} isPrivate />
-      <Route path="/profile" component={Profile} isPrivate />
 
       <Route path="/customers" exact component={ListCustomers} isPrivate />
       <Route path="/customers/register" component={CreateCustomer} isPrivate />
@@ -53,6 +49,11 @@ const Routes: React.FC = () => {
       <Route path="/orders" exact component={ListOrders} isPrivate />
       <Route path="/orders/register" component={CreateOrder} isPrivate />
       <Route path="/orders/details/:id" component={CloseOrder} isPrivate />
+
+      <Route path="/settings" exact component={Settings} isPrivate />
+      <Route path="/settings/signup" component={SignUp} isPrivate />
+
+      <Route path="/profile" component={Profile} isPrivate />
     </Switch>
   );
 };

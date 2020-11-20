@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { Ellipsis } from 'react-awesome-spinners';
 import { NumberParam, useQueryParam, StringParam } from 'use-query-params';
 import { useHistory } from 'react-router-dom';
@@ -6,11 +6,11 @@ import { AiOutlineDollarCircle, AiFillDollarCircle } from 'react-icons/ai';
 import { FiHome, FiTruck } from 'react-icons/fi';
 
 import { format, parseISO } from 'date-fns';
-import { formatPrice } from '../../../utils/format';
+import { currencyFormat } from '../../../utils/currencyFormat';
 import Header from '../../../components/Header';
 import api from '../../../services/api';
 
-import ChangePageButton from '../../../components/ChangePageButton';
+import ChangePageButton from '../../../components/Form/ChangePageButton';
 import { useToast } from '../../../hooks/toast';
 
 import * as S from './styles';
@@ -76,11 +76,11 @@ const ListOrders: React.FC = () => {
               parseISO(order.deliveryDate),
               'dd/MM/yyyy hh:mm bb',
             ),
-            finalPriceFormatted: formatPrice(order.finalPrice),
+            finalPriceFormatted: currencyFormat(order.finalPrice),
           };
         });
 
-        setPagesAvailable(Math.ceil(totalCount / 7));
+        setPagesAvailable(Math.ceil(totalCount / 10));
         setOrders(formattedOrders);
       } catch (err) {
         addToast({
@@ -110,6 +110,16 @@ const ListOrders: React.FC = () => {
   const decrementPage = useCallback(() => {
     setQueryPage((state) => (state || 2) - 1);
   }, [setQueryPage]);
+
+  const formatted = useMemo(() => {
+    return orders.map((order) => order.created_at);
+  }, [orders]);
+
+  const formattedDate = useMemo(() => {
+    return orders.map((order) =>
+      format(parseISO(order.created_at), 'dd/MM/yyyy hh:mm bb'),
+    );
+  }, [orders]);
 
   if (loading) {
     return (
@@ -155,7 +165,7 @@ const ListOrders: React.FC = () => {
         <S.Table>
           <thead>
             <tr>
-              <th>Order ID</th>
+              <th>ID</th>
               <th>Customer</th>
               <th>Order Date</th>
               <th>Due Date</th>

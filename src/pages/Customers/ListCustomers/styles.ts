@@ -5,14 +5,13 @@ export const Container = styled.div`
   width: 100%;
   display: flex;
   padding: 0 16px;
-  /* padding: 60px 48px 0; */
-  /* padding: 60px 135px 0 55px; */
+  box-shadow: 0px 0px 18px #000;
 `;
 
 export const Content = styled.div`
   max-width: 1200px;
   width: 100%;
-  padding-top: 60px;
+  padding-top: 40px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -38,7 +37,7 @@ export const Table = styled.table`
   tr {
     th {
       font-size: 18px;
-      font-weight: 500;
+      font-weight: bold;
     }
     th:nth-child(1) {
       text-align: left;
@@ -65,7 +64,6 @@ export const CustomerRow = styled.tr`
   }
   td:nth-child(1) {
     padding-left: 16px;
-    //border-radius: 10px 0 0 10px;
   }
   td:nth-child(2) {
     text-align: center;
@@ -81,7 +79,6 @@ export const CustomerRow = styled.tr`
   td:nth-child(5) {
     text-align: right;
     padding-right: 16px;
-    //border-radius: 0 10px 10px 0;
 
     div :nth-child(1):hover {
       color: ${({ theme }) => theme.colors.gray};

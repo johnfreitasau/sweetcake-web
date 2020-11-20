@@ -2,7 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import { useField } from '@unform/core';
 import { NumberFormatProps } from 'react-number-format';
 
-import { NumberFormat, LabelContainer } from './styles';
+import { FiAlertCircle } from 'react-icons/fi';
+import { NumberFormat, LabelContainer, Error } from './styles';
 
 interface Props extends NumberFormatProps {
   name: string;
@@ -28,16 +29,16 @@ const InputCurrency: React.FC<Props> = ({
       getValue: (ref) => {
         return ref.state.numAsString ? Number(ref.state.numAsString) : '';
       },
-      setValue: (ref, value) => {
-        ref.state.value = `$ ${value}`;
-        ref.state.numAsString = `${value}`;
-        if (inputRef.current) inputRef.current.value = `$ ${value}`;
-      },
-      clearValue: (ref) => {
-        ref.state.value = '';
-        ref.state.numAsString = '';
-        if (inputRef.current) inputRef.current.value = '';
-      },
+      // setValue: (ref, value) => {
+      //   ref.state.value = `$ ${value}`;
+      //   ref.state.numAsString = `${value}`;
+      //   if (inputRef.current) inputRef.current.value = `$ ${value}`;
+      // },
+      // clearValue: (ref) => {
+      //   ref.state.value = '';
+      //   ref.state.numAsString = '';
+      //   if (inputRef.current) inputRef.current.value = '';
+      // },
     });
   }, [fieldName, inputRef, registerField]);
 
@@ -59,7 +60,11 @@ const InputCurrency: React.FC<Props> = ({
         id={label_name || name}
         {...rest}
       />
-      {error && <span>{error}</span>}
+      {error && (
+        <Error title={error}>
+          <FiAlertCircle color="#c53030" size={20} />
+        </Error>
+      )}
     </LabelContainer>
   );
 };

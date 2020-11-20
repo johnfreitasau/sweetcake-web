@@ -8,14 +8,10 @@ export const Container = styled.button`
   border: none;
   padding: 0 16px;
   height: 56px;
-  border-radius: 10px;
+  border-radius: 5px;
   background: ${({ theme }) => theme.colors.orange};
   transition: background 0.3s;
   &:hover {
     background: ${({ theme }) => shade(0.2, theme.colors.orange)};
   }
-  /* &:disabled {
-    cursor: not-allowed;
-    background: ${({ theme }) => theme.colors.orange};
-  } */
 `;

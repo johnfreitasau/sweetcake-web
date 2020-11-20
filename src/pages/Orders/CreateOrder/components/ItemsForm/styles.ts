@@ -14,6 +14,7 @@ export const QuantityInput = styled(InputLabel)`
   max-width: 270px;
   width: 100%;
   margin-left: 16px;
+  color: ${({ theme }) => theme.colors.gray};
 `;
 
 export const AddButton = styled.button`

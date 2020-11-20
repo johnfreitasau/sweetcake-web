@@ -1,5 +1,6 @@
 import React, { ButtonHTMLAttributes } from 'react';
-import { FiArrowRight, FiArrowLeft } from 'react-icons/fi';
+import { FiArrowRightCircle, FiArrowLeft } from 'react-icons/fi';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 
 import { ButtonContainer } from './styles';
 
@@ -16,9 +17,9 @@ const ChangePageButton: React.FC<ButtonProps> = ({
   return (
     <ButtonContainer type="button" disabled={disabled} {...rest}>
       {changePageTo === 'increment' ? (
-        <FiArrowRight size={24} />
+        <MdKeyboardArrowRight size={24} />
       ) : (
-        <FiArrowLeft size={24} />
+        <MdKeyboardArrowLeft size={24} />
       )}
     </ButtonContainer>
   );

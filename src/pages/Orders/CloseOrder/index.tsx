@@ -13,14 +13,9 @@ import { FormHandles } from '@unform/core';
 import { format, parseISO } from 'date-fns';
 import api from '../../../services/api';
 
-import {
-  BackButton,
-  DeleteButton,
-  InputCurrency,
-} from '../../../components/Form';
-import { formatPrice } from '../../../utils/format';
-import CloseOrderButton from '../../../components/CompleteOrderButton';
-import orderFinalPrice from '../../../utils/orderFinalPrice';
+import { BackButton, DeleteButton } from '../../../components/Form';
+import { currencyFormat } from '../../../utils/currencyFormat';
+import CloseOrderButton from '../../../components/Form/CompleteOrderButton';
 import { useToast } from '../../../hooks/toast';
 
 import {
@@ -32,8 +27,6 @@ import {
   ProductTable,
   ProductRow,
   FinalInformation,
-  Form,
-  CloseButton,
 } from './styles';
 
 interface OrderData {
@@ -62,12 +55,8 @@ interface OrderData {
   unitPrice: number;
   unitPriceFomatted: number;
 
-  // final_price: number;
-  // final_price_formatted: string;
-
   created_at: string;
   createAtFormatted: string;
-  // orderDateFormatted: string;
 
   deliveryDate: string;
   deliveryDateFormatted: string;
@@ -97,8 +86,6 @@ interface OrderData {
       unitPrice: number;
       unitPriceFormatted: string;
 
-      // qtyDiscount: number;
-      // discount: number;
       notes: string;
     };
   }>;
@@ -120,145 +107,43 @@ const CloseOrder: React.FC = () => {
   const { id } = useParams();
   const { addToast } = useToast();
 
-  // deliveryDateFormatted: format(
-  //   parseISO(order.deliveryDate),
-  //   'dd/MM/yyyy hh:mm bb',
-  // ),
-  //-------------
-  // const handleCollectPriceChange = useCallback(() => {
-  //   const finalPrice = orderFinalPrice({
-  //     // deliveryF: formRef.current?.getFieldValue('collect_price'),
-  //     created_at: order?.created_at || '',
-  //     unitPrice: order?.unitPrice || 0,
-  //     deliveryFee: order?.deliveryFee || 0,
-  //   });
-
-  //   formRef.current?.setFieldValue('finalPrice', finalPrice);
-  // }, [order]);
-
-  const handleSubmit = useCallback(
-    async () => {
-      setIsLoading(true);
-      await api.put(`/orders/${id}/close`);
-      setIsLoading(true);
-      addToast({
-        type: 'success',
-        title: 'order closed successfully!',
-      });
-      history.goBack();
-    },
-    [addToast, history, id],
-    // async (data: FormData) => {
-    //   try {
-    //     setIsLoading(true);
-    //     await api.put(`/orders/${id}/close`, {
-    //       collect_price: Number(data.collect_price),
-    //     });
-    //     setIsLoading(false);
-
-    //     addToast({
-    //       type: 'success',
-    //       title: 'order completed successfully!',
-    //     });
-    //     history.goBack();
-    //   } catch (err) {
-    //     addToast({
-    //       type: 'error',
-    //       title: 'Error to complete order.',
-    //     });
-    //   }
-    // },
-    // [id, addToast, history],
-  );
-
-  // const handleDeleteButton = useCallback(async () => {
-  //   await api.delete(`/orders/${id}`);
-
-  //   history.goBack();
-
-  //   // async function loadOrders(): Promise<void> {
-  //   //   try {
-  //   //     setLoading(true);
-  //   //     const response = await api.get<Order[]>('/orders', {
-  //   //       params: {
-  //   //         page: queryPage || 1,
-  //   //         name: queryName || undefined,
-  //   //       },
-  //   //     });
-
-  //   //     const totalCount = response.headers['x-total-count'];
-
-  //   //     const formattedOrders = response.data.map((order) => {
-  //   //       return {
-  //   //         ...order,
-  //   //         orderDateFormatted: format(
-  //   //           parseISO(order.created_at),
-  //   //           'dd/MM/yyyy hh:mm bb',
-  //   //         ),
-  //   //         deliveryDateFormatted: format(
-  //   //           parseISO(order.deliveryDate),
-  //   //           'dd/MM/yyyy hh:mm bb',
-  //   //         ),
-  //   //         finalPriceFormatted: formatPrice(order.finalPrice),
-  //   //       };
-  //   //     });
-
-  //   //     setPagesAvailable(Math.ceil(totalCount / 7));
-  //   //     setOrders(formattedOrders);
-  //   //   } catch (err) {
-  //   //     addToast({
-  //   //       type: 'error',
-  //   //       title: 'Error',
-  //   //       description: 'Error has ocurred. Please try again.',
-  //   //     });
-  //   //   } finally {
-  //   //     setLoading(false);
-  //   //   }
-  //   // }
-
-  //   // loadOrders();
-  // }, [addToast]);
+  const handleSubmit = useCallback(async () => {
+    setIsLoading(true);
+    await api.put(`/orders/${id}/close`);
+    setIsLoading(true);
+    addToast({
+      type: 'success',
+      title: 'order closed successfully!',
+    });
+    history.goBack();
+  }, [addToast, history, id]);
 
   useEffect(() => {
     async function loadOrder(): Promise<void> {
       try {
-        // console.log('ORDERS DETAILS - useEffect');
         const response = await api.get<OrderData>(`/orders/${id}`);
-        // console.log(response);
         const { data } = response;
-        console.log('DATA:', data);
 
         const createdAtDate = new Date(data.created_at);
         const dateFormated = createdAtDate.toLocaleDateString('en-AU');
         const timeFormated = createdAtDate.toLocaleTimeString('en-AU');
         const createAtFormatted = `${dateFormated} at ${timeFormated}`;
 
-        // const deliveryDate = new Date(data.deliveryDate || 0);
-        // dateFormated = deliveryDate.toLocaleDateString('en-AU');
-        // timeFormated = deliveryDate.toLocaleTimeString('en-AU');
-        // const deliveryDateFormatted = `${dateFormated} at ${timeFormated}`;
-
         const orderItems = data.orderItems.map((item) => ({
           ...item,
-          qtyPriceFormatted: formatPrice(item.qtyPrice),
+          qtyPriceFormatted: currencyFormat(item.qtyPrice),
           product: {
             ...item.product,
-            unitPriceFormatted: formatPrice(item.product.unitPrice),
+            unitPriceFormatted: currencyFormat(item.product.unitPrice),
           },
         }));
 
         setOrder({
           ...data,
-          // deliveryFeeFormatted: formatPrice(data.deliveryFeeFormatted),
-          // daily_total_price_formatted: formatPrice(data.),
-          // collect_price_formatted: formatPrice(data.collect_price || 0),
-          finalPriceFormatted: formatPrice(data.finalPrice),
+          finalPriceFormatted: currencyFormat(data.finalPrice),
           createAtFormatted,
           orderItems,
-          // deliveryDateFormatted,
         });
-
-        // console.log('ORDER DETAILS - RESPONSE:', response);
       } catch (err) {
         addToast({
           type: 'error',
@@ -287,7 +172,7 @@ const CloseOrder: React.FC = () => {
   }, [order]);
 
   const deliveryFeeFormatted = useMemo(() => {
-    return order?.deliveryFee ? formatPrice(order?.deliveryFee) : undefined;
+    return order?.deliveryFee ? currencyFormat(order?.deliveryFee) : undefined;
   }, [order]);
 
   const isPaidFormatted = useMemo(() => {
@@ -360,22 +245,6 @@ const CloseOrder: React.FC = () => {
             )}
           </section>
         </header>
-
-        {/* {showForm && (
-          <Form ref={formRef} onSubmit={handleSubmit}>
-            <InputCurrency disabled name="final_price" label="VALOR FINAL" />
-            <InputCurrency
-              name="collect_price"
-              label="Total collect"
-              placeholder="$ 0.00"
-              onKeyUp={handleCollectPriceChange}
-              onFocus={handleCollectPriceChange}
-              autoFocus
-            />
-
-            <CloseButton>Confirm</CloseButton>
-          </Form>
-        )} */}
 
         <CustomerList>
           <h1>Customer Details</h1>

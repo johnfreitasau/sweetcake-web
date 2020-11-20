@@ -1,12 +1,12 @@
 import styled from 'styled-components';
+import Tooltip from '../../Tooltip';
 
 export const CheckboxContainer = styled.div`
   display: flex;
   font-size: 15px;
+  white-space: nowrap;
 
   div {
-    margin-left: 15px;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -47,5 +47,23 @@ export const CheckboxContainer = styled.div`
 
   div:last-child {
     margin-right: 20px;
+  }
+`;
+
+export const Error = styled(Tooltip)`
+  height: 20px;
+  margin-left: 16px;
+
+  srv {
+    margin: 0;
+  }
+
+  span {
+    background: #c53030;
+    color: #fff;
+
+    &::before {
+      border-color: #c53030 transparent;
+    }
   }
 `;

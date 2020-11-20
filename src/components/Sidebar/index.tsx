@@ -15,14 +15,13 @@ import {
   FiChevronsLeft,
   FiUsers,
   FiMenu,
-  // FiLogOut,
   FiPower,
   FiSettings,
 } from 'react-icons/fi';
-// import { BiFoodMenu } from 'react-icons/bi';
+import { FaRegUserCircle } from 'react-icons/fa';
+
 import { NavLink } from 'react-router-dom';
 import { shade } from 'polished';
-// import toolSvg from '../../assets/tool.svg';
 
 import { ThemeContext } from 'styled-components';
 import { useAuth } from '../../hooks/auth';
@@ -30,11 +29,7 @@ import { useAuth } from '../../hooks/auth';
 import { Container, SignOutButton } from './styles';
 import dark from '../../styles/themes/dark';
 
-interface Props {
-  toggleTheme(): void;
-}
-
-const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
+const Sidebar: React.FC = () => {
   const [theme, setTheme] = useState(dark);
 
   const { colors, title } = useContext(ThemeContext);
@@ -87,11 +82,15 @@ const Sidebar: React.FC<Props> = ({ toggleTheme }) => {
           <FiBook size={24} />
           {isOpened && 'Products'}
         </NavLink>
+        <NavLink to="/settings">
+          <FiSettings size={24} />
+          {isOpened && 'Settings'}
+        </NavLink>
+        <NavLink to="/profile">
+          <FaRegUserCircle size={24} />
+          {isOpened && 'Profile'}
+        </NavLink>
       </nav>
-      {/* <SettingsButton>
-        <FiSettings size={24} />
-        {isOpened && <strong>Settings</strong>}
-      </SettingsButton> */}
       <SignOutButton onClick={signOut}>
         <FiPower size={24} />
         {isOpened && <strong>SignOut</strong>}

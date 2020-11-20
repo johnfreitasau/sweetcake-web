@@ -2,13 +2,14 @@ import styled from 'styled-components';
 import { shade } from 'polished';
 
 export const ButtonContainer = styled.button`
-  height: 46px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
   padding: 0 16px;
-  border-radius: 10px;
+  border-radius: 5px;
+  color: ${({ theme }) => theme.colors.dark};
   background: ${({ theme }) => theme.colors.orange};
   transition: background 0.3s;
   &:hover {

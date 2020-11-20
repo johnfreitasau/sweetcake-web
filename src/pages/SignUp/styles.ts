@@ -49,7 +49,6 @@ export const AnimationContainer = styled.div`
   animation: ${appearFromRight} 1s;
 
   h1 {
-    font-family: 'Sacramento', sans-serif;
     color: #e67e22;
     font-size: 64px;
   }

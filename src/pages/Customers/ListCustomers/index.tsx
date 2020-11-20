@@ -6,11 +6,10 @@ import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import Header from '../../../components/Header';
 import api from '../../../services/api';
 
-import ChangePageButton from '../../../components/ChangePageButton';
+import ChangePageButton from '../../../components/Form/ChangePageButton';
 import { useToast } from '../../../hooks/toast';
 
 import * as S from './styles';
-import Button from '../../../components/Button';
 
 interface Customer {
   id: string;
@@ -68,7 +67,7 @@ const ListCustomers: React.FC = () => {
 
           const totalCount = response.headers['x-total-count'];
 
-          setPagesAvailable(Math.ceil(totalCount / 7));
+          setPagesAvailable(Math.ceil(totalCount / 10));
           setCustomers(response.data);
         } catch (err) {
           addToast({
@@ -80,7 +79,6 @@ const ListCustomers: React.FC = () => {
         }
       }
       loadCustomers();
-      // setCustomers(customers.filter((customer) => customer.id !== id));
     },
     [addToast, queryName, queryPage],
   );
@@ -106,7 +104,7 @@ const ListCustomers: React.FC = () => {
 
         const totalCount = response.headers['x-total-count'];
 
-        setPagesAvailable(Math.ceil(totalCount / 7));
+        setPagesAvailable(Math.ceil(totalCount / 10));
         setCustomers(response.data);
       } catch (err) {
         addToast({

@@ -1,7 +1,8 @@
 import React, { InputHTMLAttributes, useRef, useEffect } from 'react';
 import { useField } from '@unform/core';
 
-import { LabelContainer } from './styles';
+import { FiAlertCircle } from 'react-icons/fi';
+import { LabelContainer, Error } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -44,7 +45,11 @@ const InputLabel: React.FC<InputProps> = ({
         defaultValue={defaultValue}
         {...rest}
       />
-      {error && showErro === 'bottom' && <span>{error}</span>}
+      {error && (
+        <Error title={error}>
+          <FiAlertCircle color="#c53030" size={20} />
+        </Error>
+      )}
     </LabelContainer>
   );
 };

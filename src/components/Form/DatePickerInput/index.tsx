@@ -23,7 +23,7 @@ const InputLabel: React.FC<DatePickerProps> = ({
   const { fieldName, defaultValue, error, registerField } = useField(name);
   const datePickerRef = useRef(null);
 
-  const [date, setDate] = useState(defaultValue || new Date());
+  const [date, setDate] = useState(defaultValue || null);
 
   useEffect(() => {
     registerField({
@@ -56,6 +56,7 @@ const InputLabel: React.FC<DatePickerProps> = ({
         timeIntervals={60}
         dateFormat="dd/MM/yyyy - hh:00 aa"
         minDate={new Date()}
+        placeholderText="Choose the date / time"
         {...rest}
       />
       {error && showError === 'bottom' && <span>{error}</span>}

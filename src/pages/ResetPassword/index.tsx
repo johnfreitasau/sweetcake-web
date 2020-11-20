@@ -11,7 +11,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import logoImg from '../../assets/logo.svg';
 
 import Input from '../../components/Form/Input';
-import Button from '../../components/Button';
+import Button from '../../components/Form/Button';
 
 import { Container, Content, Background, AnimationContainer } from './styles';
 import api from '../../services/api';

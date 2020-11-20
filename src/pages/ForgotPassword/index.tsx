@@ -11,7 +11,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import logoImg from '../../assets/logo.svg';
 
 import Input from '../../components/Form/Input';
-import Button from '../../components/Button';
+import Button from '../../components/Form/Button';
 
 import { Container, Content, Background, AnimationContainer } from './styles';
 import api from '../../services/api';
@@ -43,7 +43,6 @@ const ForgotPassword: React.FC = () => {
 
         await schema.validate(data, { abortEarly: false });
 
-        // recuperacao de senha
         await api.post('/password/forgot', { email: data.email });
 
         addToast({

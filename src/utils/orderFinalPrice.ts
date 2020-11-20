@@ -2,7 +2,6 @@ interface Data {
   created_at: Date;
   unitPrice: number;
   deliveryFee: number;
-  // collect_price: number;
 }
 
 export default function orderFinalPrice(order: Data): number {

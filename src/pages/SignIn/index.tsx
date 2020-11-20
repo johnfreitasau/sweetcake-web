@@ -12,14 +12,9 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import logoImg from '../../assets/cupcake-img.svg';
 
 import Input from '../../components/Form/Input';
-import Button from '../../components/Button';
+import Button from '../../components/Form/Button';
 
-import {
-  Container,
-  FormContainer,
-  ImageContainer,
-  AnimationContainer,
-} from './styles';
+import { Container, FormContainer, AnimationContainer } from './styles';
 
 interface SignInFormData {
   email: string;
@@ -42,7 +37,6 @@ const SignIn: React.FC = () => {
           email: Yup.string()
             .required('Name is required.')
             .email('Digit a valid e-mail.'),
-          // password: Yup.string().min(6, 'Password must be 6 characters long.'),
           password: Yup.string().required('Password required.'),
         });
 
@@ -53,7 +47,7 @@ const SignIn: React.FC = () => {
           password: data.password,
         });
 
-        history.push('/dashboard');
+        history.push('/orders');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);

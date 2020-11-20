@@ -1,5 +1,5 @@
-import React, { useCallback, useRef, ChangeEvent } from 'react';
-import { FiUser, FiMail, FiLock, FiCamera, FiArrowLeft } from 'react-icons/fi';
+import React, { useCallback, useRef, ChangeEvent, useState } from 'react';
+import { FiUser, FiMail, FiLock, FiUserCheck } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
@@ -11,10 +11,11 @@ import { useToast } from '../../hooks/toast';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import Input from '../../components/Form/Input';
-import Button from '../../components/Button';
+import Button from '../../components/Form/Button';
 
-import { Container, Content, AvatarInput } from './styles';
+import { NewContent, Container } from './styles';
 import { useAuth } from '../../hooks/auth';
+import { RegisterButton } from '../../components/Form';
 
 interface ProfileFormData {
   name: string;
@@ -25,11 +26,17 @@ interface ProfileFormData {
 }
 
 const Profile: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
   const history = useHistory();
 
   const { user, updateUser } = useAuth();
+
+  const handleSubmitButton = useCallback(() => {
+    formRef.current?.submitForm();
+  }, []);
 
   const handleSubmit = useCallback(
     async (data: ProfileFormData) => {
@@ -86,7 +93,7 @@ const Profile: React.FC = () => {
 
         updateUser(response.data);
 
-        history.push('/dashboard');
+        history.push('/orders');
 
         addToast({
           type: 'success',
@@ -112,36 +119,26 @@ const Profile: React.FC = () => {
     [addToast, history, updateUser],
   );
 
-  const handleAvatarChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files) {
-        const data = new FormData();
-
-        data.append('avatar', e.target.files[0]);
-
-        api.patch('/users/avatar', data).then((response) => {
-          updateUser(response.data);
-          addToast({
-            type: 'success',
-            title: 'Avatar updated!',
-          });
-        });
-      }
-    },
-    [addToast, updateUser],
-  );
-
   return (
     <>
       <Container>
-        <header>
-          <div>
-            <Link to="/dashboard">
-              <FiArrowLeft />
-            </Link>
-          </div>
-        </header>
-        <Content>
+        <NewContent>
+          <header>
+            <h1>My Profile</h1>
+
+            <section>
+              <RegisterButton
+                isLoading={isLoading}
+                onClick={handleSubmitButton}
+                label="Update"
+              />
+              {/* <Button type="button" onClick={handleSubmitButton}>
+                <FiUserCheck size={20} />
+                Update Profile
+              </Button> */}
+            </section>
+          </header>
+
           <Form
             ref={formRef}
             initialData={{
@@ -150,16 +147,6 @@ const Profile: React.FC = () => {
             }}
             onSubmit={handleSubmit}
           >
-            <AvatarInput>
-              <img src={user.avatar_url} alt={user.name} />
-              <label htmlFor="avatar">
-                <FiCamera />
-                <input type="file" id="avatar" onChange={handleAvatarChange} />
-              </label>
-            </AvatarInput>
-
-            <h1>My Profile</h1>
-
             <Input name="name" icon={FiUser} placeholder="Name" />
             <Input name="email" icon={FiMail} placeholder="E-mail" />
             <Input
@@ -182,9 +169,9 @@ const Profile: React.FC = () => {
               placeholder="Password Confirmation"
             />
 
-            <Button type="submit">Update Profile</Button>
+            {/* <Button type="submit">Update Profile</Button> */}
           </Form>
-        </Content>
+        </NewContent>
       </Container>
     </>
   );

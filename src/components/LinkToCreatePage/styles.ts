@@ -10,8 +10,8 @@ export const ContainerLink = styled(Link)`
   margin-left: 16px;
   font-weight: 500;
   font-size: 18px;
-  border: none;
-  border-radius: 10px;
+  border: 1;
+  border-radius: 5px;
   padding: 0 16px;
   color: ${({ theme }) => theme.colors.white};
   background: ${({ theme }) => theme.colors.grayHard};

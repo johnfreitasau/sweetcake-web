@@ -10,7 +10,7 @@ export const LabelContainer = styled.label<LabelContainerProp>`
   width: 250px;
   flex-direction: column;
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.grayHard};
+  color: ${({ theme }) => theme.colors.gray};
   input {
     margin-top: 8px;
     background: ${({ theme }) => theme.colors.dark};

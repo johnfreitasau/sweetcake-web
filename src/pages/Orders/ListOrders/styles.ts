@@ -5,20 +5,17 @@ type TStyledOrderStatus = {
   orderStatus: string;
 };
 
-interface CompletedFilterButtonProps {
-  isSelected: boolean;
-}
-
 export const Container = styled.div`
   width: 100%;
   display: flex;
   padding: 0 16px;
+  box-shadow: 0px 0px 18px #000;
 `;
 
 export const Content = styled.div`
   max-width: 1200px;
   width: 100%;
-  padding-top: 60px;
+  padding-top: 40px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -45,7 +42,7 @@ export const Table = styled.table`
   tr {
     th {
       font-size: 18px;
-      font-weight: 500;
+      font-weight: bold;
     }
     th:nth-child(1) {
       text-align: left;
@@ -89,7 +86,6 @@ export const OrderRow = styled.tr<TStyledOrderStatus>`
   td:nth-child(1) {
     text-align: center;
     padding-left: 16px;
-    //border-radius: 10px 0 0 10px;
   }
   td:nth-child(2) {
     text-align: center;
@@ -121,7 +117,6 @@ export const OrderRow = styled.tr<TStyledOrderStatus>`
   td:nth-child(9) {
     text-align: center;
     padding-right: 16px;
-    //border-radius: 0 10px 10px 0;
 
     div {
       border-radius: 7px;
@@ -169,57 +164,4 @@ export const Pagination = styled.div`
   justify-content: space-between;
   margin-top: auto;
   margin-bottom: 60px;
-`;
-
-export const CompletedFilterButton = styled.button<CompletedFilterButtonProps>`
-  height: 46px;
-  border: none;
-  padding: 0 8px 0 16px;
-  border-radius: 10px 0 0 10px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s, color 0.3s;
-  background: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.orange : theme.colors.dark};
-  color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.dark : theme.colors.white};
-  &:hover {
-    background: ${({ theme, isSelected }) =>
-      !isSelected && shade(0.5, theme.colors.orange)};
-  }
-  cursor: ${({ isSelected }) => (isSelected ? 'not-allowed' : 'pointer')};
-  & + button {
-    border-radius: 0 10px 10px 0;
-    padding: 0 16px 0 8px;
-  }
-`;
-
-export const ClientRow = styled.tr`
-  td {
-    height: 56px;
-  }
-  td:nth-child(1) {
-    padding-left: 16px;
-    border-radius: 10px 0 0 10px;
-  }
-  td:nth-child(2) {
-    text-align: center;
-  }
-  td:nth-child(3) {
-    text-align: center;
-  }
-  td:nth-child(4) {
-    text-align: right;
-    padding-right: 16px;
-    border-radius: 0 10px 10px 0;
-  }
-  background: ${({ theme }) => theme.colors.shape};
-  font-size: 16px;
-  transition: background 0.3s;
-  &:hover {
-    cursor: pointer;
-    background: ${({ theme }) => shade(0.4, theme.colors.shape)};
-  }
 `;

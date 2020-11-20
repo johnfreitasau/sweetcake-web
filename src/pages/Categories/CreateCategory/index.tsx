@@ -81,6 +81,7 @@ const CreateCategory: React.FC = () => {
             <RegisterButton
               isLoading={isLoading}
               onClick={handleSubmitButton}
+              label="Create"
             />
           </section>
         </header>

@@ -14,8 +14,10 @@ export const ButtonContainer = styled.button`
   align-items: center;
   display: flex;
   align-items: center;
+
   svg {
     margin-right: 8px;
+    width: 20px;
   }
   transition: background 0.3s;
   &:hover {

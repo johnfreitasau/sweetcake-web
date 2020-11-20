@@ -35,8 +35,6 @@ const CreateCustomer: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: ProfileFormData) => {
-      // formRef.current?.setErrors({});
-
       try {
         const schema = Yup.object().shape({
           name: Yup.string().required(),
@@ -79,7 +77,6 @@ const CreateCustomer: React.FC = () => {
               postalCode,
             };
         const response = await api.post('/customers', formData);
-        // updateCustomer(response.data);
 
         history.push('/customers');
 
@@ -116,6 +113,7 @@ const CreateCustomer: React.FC = () => {
             <RegisterButton
               isLoading={isLoading}
               onClick={handleSubmitButton}
+              label="Create"
             />
           </section>
         </header>

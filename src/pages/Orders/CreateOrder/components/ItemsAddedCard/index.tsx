@@ -5,29 +5,12 @@ import { Container, Content, Table, MaterialRow, RemoveButton } from './styles';
 
 interface Props {
   products: {
-    // id: string;
-    // quantity: string;
-    // name: string;
-    // daily_price: number;
-    // quantity_daily_price_formatted: string;
-
-    // 2
-    // id: string;
-    // productName: string;
-    // unitPrice: number;
-    // quantity: string;
-    // UnitPriceQuantityFormatted: string;
-    // discontinued: boolean;
-
-    // 3
     id: string;
     name: string;
     category: number;
     quantity: string;
     unitPrice: number;
     unitPriceFormatted: string;
-    // qtyDiscount: number;
-    // discount: number;
     notes: string;
   }[];
   onClickRemoveButton(id: string): void;

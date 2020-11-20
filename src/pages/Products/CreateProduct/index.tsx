@@ -54,7 +54,6 @@ const CreateProduct: React.FC = () => {
   const handleSubmit = useCallback(
     async (data: IProductFormData) => {
       formRef.current?.setErrors({});
-      console.log('Chegou AQUI1!');
       try {
         const schema = Yup.object().shape({
           name: Yup.string().required(),
@@ -62,12 +61,9 @@ const CreateProduct: React.FC = () => {
           unitPrice: Yup.number().required(),
           notes: Yup.string().optional(),
         });
-        console.log('Chegou AQUI2!');
         await schema.validate(data, { abortEarly: false });
 
         const { id, name, categoryId, unitPrice, notes } = data;
-
-        console.log('DATA:', id, name, categoryId, unitPrice, notes);
 
         const formData = {
           id,
@@ -154,19 +150,12 @@ const CreateProduct: React.FC = () => {
   }, [categoriesPage, categoriesPagesAvailable]);
 
   useEffect(() => {
-    // async function loadCategories(): Promise<void> {
-    //   const response = await api.get('/categories');
-    //   // categories.setCategories(categoriesResult.data);
-    //   console.log('CATEGORY:', id, name);
-    // }
-    // loadCategories();
-
     async function loadCategoryOptions(): Promise<void> {
       const response = await api.get<Category[]>('/categories');
 
       const customersTotalCount = response.headers['x-total-count'];
 
-      setCategoriesPagesAvailable(Math.ceil(customersTotalCount / 7));
+      setCategoriesPagesAvailable(Math.ceil(customersTotalCount / 10));
 
       setCategoryOptions(
         response.data.map((category) => ({
@@ -177,7 +166,6 @@ const CreateProduct: React.FC = () => {
 
       setOptionsIsLoading(false);
     }
-    // console.log('loaded UseEffect');
 
     loadCategoryOptions();
   }, []);
@@ -193,13 +181,13 @@ const CreateProduct: React.FC = () => {
             <RegisterButton
               isLoading={isLoading}
               onClick={handleSubmitButton}
+              label="Create"
             />
           </section>
         </header>
 
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input name="name" placeholder="Product Name" />
-          {/* <Input name="category" placeholder="Category" /> */}
           <SelectAsyncInput
             placeholder="Category"
             label=""
@@ -211,7 +199,6 @@ const CreateProduct: React.FC = () => {
             isLoading={optionsIsLoading}
             select
           />
-          {/* <Input name="unitPrice" placeholder="Unit price" /> */}
           <InputCurrency
             name="unitPrice"
             label=""

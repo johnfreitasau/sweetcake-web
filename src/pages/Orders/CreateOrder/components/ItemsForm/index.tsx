@@ -13,18 +13,10 @@ import api from '../../../../../services/api';
 
 import { SelectAsyncInput } from '../../../../../components/Form';
 import getValidationErrors from '../../../../../utils/getValidationErrors';
-import { formatPrice } from '../../../../../utils/format';
+import { currencyFormat } from '../../../../../utils/currencyFormat';
 
 import { ProductsForm, QuantityInput, AddButton } from './styles';
 import { useToast } from '../../../../../hooks/toast';
-
-// interface MProduct {
-//   id: string;
-//   quantity: string;
-//   name: string;
-//   daily_price: number;
-//   quantity_daily_price_formatted: string;
-// }
 
 interface Product {
   id: string;
@@ -33,8 +25,6 @@ interface Product {
   quantity: string;
   unitPrice: number;
   unitPriceFormatted: string;
-  // qtyDiscount: number;
-  // discount: number;
   notes: string;
 }
 
@@ -67,7 +57,7 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
 
       const productsTotalCount = response.headers['x-total-count'];
 
-      setProductsPagesAvailable(Math.ceil(productsTotalCount / 7));
+      setProductsPagesAvailable(Math.ceil(productsTotalCount / 10));
       setProducts(response.data);
       setOptionsIsLoading(false);
     }
@@ -77,7 +67,7 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
   const productOptions = useMemo<Option[]>(() => {
     return products.map((product) => ({
       value: product.id,
-      label: `${product.name} - ${formatPrice(product.unitPrice)}`,
+      label: `${product.name} - ${currencyFormat(product.unitPrice)}`,
     }));
   }, [products]);
 
@@ -147,13 +137,11 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
 
         const addedProduct = {
           ...productFind,
-          unitPriceFormatted: formatPrice(
+          unitPriceFormatted: currencyFormat(
             Number(data.quantity) * productFind.unitPrice,
           ),
           quantity,
         } as Product;
-
-        console.log('Added Product:', addedProduct);
 
         addProduct((state) => [...state, addedProduct]);
         formRef.current?.reset();
@@ -163,15 +151,14 @@ const ItemsForm: React.FC<ItemsFormProps> = ({ addProduct }) => {
 
           formRef.current?.setErrors(errors);
 
-          // addToast({
-          //   title: 'You need to add items to this order.',
-          //   type: 'error',
-
-          // });
+          addToast({
+            title: 'You need to add items to this order.',
+            type: 'error',
+          });
         }
       }
     },
-    [addProduct, products],
+    [addProduct, products, addToast],
   );
 
   return (

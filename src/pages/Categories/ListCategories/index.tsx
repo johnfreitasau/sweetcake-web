@@ -6,12 +6,10 @@ import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import Header from '../../../components/Header';
 import api from '../../../services/api';
 
-import ChangePageButton from '../../../components/ChangePageButton';
+import ChangePageButton from '../../../components/Form/ChangePageButton';
 import { useToast } from '../../../hooks/toast';
 
 import * as S from './styles';
-import Button from '../../../components/Button';
-import { formatPrice } from '../../../utils/format';
 
 interface Category {
   id: string;
@@ -66,7 +64,7 @@ const ListCategories: React.FC = () => {
 
           const totalCount = response.headers['x-total-count'];
 
-          setPagesAvailable(Math.ceil(totalCount / 7));
+          setPagesAvailable(Math.ceil(totalCount / 10));
           setCategories(response.data);
         } catch (err) {
           addToast({
@@ -103,7 +101,7 @@ const ListCategories: React.FC = () => {
 
         const totalCount = response.headers['x-total-count'];
 
-        setPagesAvailable(Math.ceil(totalCount / 7));
+        setPagesAvailable(Math.ceil(totalCount / 10));
         setCategories(response.data);
       } catch (err) {
         addToast({

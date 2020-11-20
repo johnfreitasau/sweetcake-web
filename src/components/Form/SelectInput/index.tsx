@@ -57,7 +57,7 @@ const SelectInput: React.FC<Props> = ({
         neutral20: '#cccccc',
         neutral30: '#E67E22',
         neutral40: '#999999',
-        neutral50: '#808080',
+        neutral50: '#666360',
         neutral60: '#666666',
         neutral70: '#4d4d4d',
         neutral80: '#F4EDE8',

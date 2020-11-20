@@ -8,8 +8,6 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  //background-color: #4a4e69;
-  //background-color: #666360;
   background-color: #312e38;
 
   h1 {
@@ -20,13 +18,6 @@ export const Container = styled.div`
 `;
 
 export const FormContainer = styled.div`
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 700px; */
-
   display: flex;
   flex-direction: column;
   width: 400px;

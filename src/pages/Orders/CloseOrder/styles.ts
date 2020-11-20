@@ -8,6 +8,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  box-shadow: 0px 0px 18px #000;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -29,7 +30,6 @@ export const Content = styled.div`
       color: ${({ theme }) => theme.colors.white};
       font-size: 24px;
       font-weight: bold;
-      //font-weight: 500;
     }
     section {
       display: flex;
@@ -87,7 +87,6 @@ export const OrderList = styled.div`
     color: ${({ theme }) => theme.colors.orange};
   }
   tbody {
-    //border-spacing: 15px;
     font-size: 20px;
     list-style-type: none;
     line-height: 1.6;

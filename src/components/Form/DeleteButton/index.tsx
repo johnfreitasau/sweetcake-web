@@ -5,8 +5,6 @@ import { ButtonContainer } from './styles';
 
 import api from '../../../services/api';
 
-// type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>;
-
 interface ButtonProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
   path: string;
