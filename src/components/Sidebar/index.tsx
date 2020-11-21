@@ -1,18 +1,9 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useContext,
-  memo,
-} from 'react';
-import Switch from 'react-switch';
+import React, { useState, useCallback, useEffect, memo } from 'react';
 import {
   FiPackage,
   FiBook,
-  FiTruck,
-  FiBox,
   FiGrid,
-  FiChevronsLeft,
+  FiChevronLeft,
   FiUsers,
   FiMenu,
   FiPower,
@@ -21,19 +12,12 @@ import {
 import { FaRegUserCircle } from 'react-icons/fa';
 
 import { NavLink } from 'react-router-dom';
-import { shade } from 'polished';
 
-import { ThemeContext } from 'styled-components';
 import { useAuth } from '../../hooks/auth';
 
 import { Container, SignOutButton } from './styles';
-import dark from '../../styles/themes/dark';
 
 const Sidebar: React.FC = () => {
-  const [theme, setTheme] = useState(dark);
-
-  const { colors, title } = useContext(ThemeContext);
-
   const [isOpened, setIsOpened] = useState(() => {
     const sidebarState = localStorage.getItem('@cupcakes.co:sidebarState');
 
@@ -62,7 +46,7 @@ const Sidebar: React.FC = () => {
     <Container isOpened={!!isOpened}>
       <div>
         <button type="button" onClick={handleToggleSidebar}>
-          {isOpened ? <FiChevronsLeft size={32} /> : <FiMenu size={32} />}
+          {isOpened ? <FiChevronLeft size={32} /> : <FiMenu size={32} />}
         </button>
       </div>
       <nav>
@@ -82,13 +66,13 @@ const Sidebar: React.FC = () => {
           <FiBook size={24} />
           {isOpened && 'Products'}
         </NavLink>
-        <NavLink to="/settings">
-          <FiSettings size={24} />
-          {isOpened && 'Settings'}
-        </NavLink>
         <NavLink to="/profile">
           <FaRegUserCircle size={24} />
           {isOpened && 'Profile'}
+        </NavLink>
+        <NavLink to="/settings">
+          <FiSettings size={24} />
+          {isOpened && 'Settings'}
         </NavLink>
       </nav>
       <SignOutButton onClick={signOut}>

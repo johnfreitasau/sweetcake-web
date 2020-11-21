@@ -9,7 +9,7 @@ export const Content = styled.div`
   width: 100%;
   border-radius: 10px;
   border: ${({ theme }) => `1px solid ${theme.colors.grayHard}`};
-
+  box-shadow: 0px 0px 18px ${({ theme }) => theme.colors.dark};
   padding: 16px;
 `;
 

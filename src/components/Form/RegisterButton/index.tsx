@@ -16,7 +16,7 @@ const RegisterButton: React.FC<ButtonProps> = ({
 }) => {
   return (
     <ButtonContainer type="button" onClick={onClick} disabled={isLoading}>
-      {label === 'Create' ? <FiPlus size={24} /> : <GrUpdate size={24} />}
+      {label === 'Create' ? <FiPlus size={24} /> : <GrUpdate size={15} />}
       {isLoading ? 'Loading...' : label}
     </ButtonContainer>
   );

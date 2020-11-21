@@ -16,6 +16,7 @@ export const Content = styled.div`
   border-radius: 10px;
   padding: 32px;
   border: 1px black;
+  box-shadow: 0px 0px 18px ${({ theme }) => theme.colors.dark};
 
   header {
     width: 100%;

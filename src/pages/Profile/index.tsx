@@ -13,7 +13,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Form/Input';
 import Button from '../../components/Form/Button';
 
-import { NewContent, Container } from './styles';
+import { Content, Container } from './styles';
 import { useAuth } from '../../hooks/auth';
 import { RegisterButton } from '../../components/Form';
 
@@ -77,6 +77,16 @@ const Profile: React.FC = () => {
           password_confirmation,
         } = data;
 
+        console.log('DATA:', data);
+        console.log(
+          'DATA DETAILED:',
+          name,
+          email,
+          oldPassword,
+          password,
+          password_confirmation,
+        );
+
         const formData = {
           name,
           email,
@@ -90,6 +100,8 @@ const Profile: React.FC = () => {
         };
 
         const response = await api.put('/profile', formData);
+
+        console.log('RESPONSE', response);
 
         updateUser(response.data);
 
@@ -122,7 +134,7 @@ const Profile: React.FC = () => {
   return (
     <>
       <Container>
-        <NewContent>
+        <Content>
           <header>
             <h1>My Profile</h1>
 
@@ -171,7 +183,7 @@ const Profile: React.FC = () => {
 
             {/* <Button type="submit">Update Profile</Button> */}
           </Form>
-        </NewContent>
+        </Content>
       </Container>
     </>
   );

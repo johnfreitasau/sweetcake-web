@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Form as UnForm } from '@unform/web';
 
-export const NewContent = styled.div`
+export const Content = styled.div`
   max-width: 550px;
   width: 100%;
   height: 460px;

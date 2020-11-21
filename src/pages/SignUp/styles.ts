@@ -1,96 +1,53 @@
-import styled, { keyframes } from 'styled-components';
-import { shade } from 'polished';
-
-export const Container = styled.div`
-  height: 100vh;
-
-  display: flex;
-  align-items: stretch;
-`;
+import styled from 'styled-components';
+import { Form as UnForm } from '@unform/web';
 
 export const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  max-width: 550px;
   width: 100%;
-  max-width: 700px;
-`;
-
-const appearFromRight = keyframes`
-from {
-  opacity: 0;
-  transform: translateX(50px);
-} 
-to {
-  opacity: 1;
-  transform: translateX(0);
-}
-`;
-
-export const ImageContainer = styled.div`
-  flex: 1;
-  display: grid;
-  place-items: center;
-
-  img {
-    padding-left: 15px;
-    width: 550px;
-    height: 550px;
-  }
-`;
-
-export const AnimationContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  animation: ${appearFromRight} 1s;
-
-  h1 {
-    color: #e67e22;
-    font-size: 64px;
-  }
-
-  form {
-    margin: 80px 0;
-    width: 340px;
-    text-align: center;
-  }
-
-  h2 {
-    margin-bottom: 24px;
-    font-size: 16px;
-  }
-
-  a {
-    color: #666360;
-    display: block;
-    margin-top: 24px;
-    text-decoration: none;
-    transition: color 0.2s;
-
-    &:hover {
-      color: ${shade(0.2, '#666360')};
-    }
-  }
-
-  > a {
-    color: ${({ theme }) => theme.colors.orange};
-    display: block;
-    margin-top: 24px;
-    text-decoration: none;
-    transition: color 0.2s;
-
+  height: 330px;
+  background: ${({ theme }) => theme.colors.shape};
+  margin: 0 auto;
+  margin-top: 64px;
+  border-radius: 10px;
+  padding: 32px;
+  box-shadow: 0px 0px 18px ${({ theme }) => theme.colors.dark};
+  header {
+    width: 100%;
     display: flex;
     align-items: center;
-    transition: color 0.2s;
-    svg {
-      margin-right: 16px;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    h1 {
+      font-size: 24px;
+      font-weight: 500;
     }
-    &:hover {
-      color: ${shade(0.2, '#E67E22')};
+    section {
+      display: flex;
     }
   }
+`;
+
+export const Form = styled(UnForm)`
+  div {
+    display: flex;
+    justify-content: space-between;
+    & + div {
+      margin-top: 16px;
+    }
+
+    label {
+      width: 100%;
+      & + label {
+        width: 340px;
+        margin-left: 16px;
+      }
+    }
+  }
+`;
+
+export const Container = styled.div`
+  width: 100%;
+  display: flex;
+  padding: 0 16px;
+  box-shadow: 0px 0px 18px #000;
 `;

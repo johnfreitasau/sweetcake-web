@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Form as UnForm } from '@unform/web';
 import { shade } from 'polished';
 
 export const Container = styled.div`
@@ -9,49 +10,41 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  max-width: 1200px;
+  max-width: 550px;
   width: 100%;
-  padding-top: 40px;
+  height: 460px;
+  background: ${({ theme }) => theme.colors.shape};
   margin: 0 auto;
-  display: flex;
-  //flex-direction: column;
-
-  h1 {
-    font-size: 32px;
-    color: ${({ theme }) => theme.colors.white};
-  }
-
-  > div {
+  margin-top: 64px;
+  border-radius: 10px;
+  padding: 32px;
+  box-shadow: 0px 0px 18px ${({ theme }) => theme.colors.dark};
+  header {
+    width: 100%;
     display: flex;
-    //flex-direction: column;
-    width: 800px;
-    max-width: 80%;
-    min-width: 100px;
-    min-height: 400px;
-    padding: 20px 40px;
-    border-radius: 6px;
-    box-shadow: 0px 8px 36px #000;
-    background-color: #f4ede8;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    h1 {
+      font-size: 24px;
+      font-weight: 500;
+    }
   }
 `;
 
-export const SettingsButton = styled.div`
-  width: 300px;
-  height: 200px;
-  border-radius: 16px;
-  margin: 20px;
-  background: ${({ theme }) => theme.colors.gray};
-`;
+export const ButtonContainer = styled.button`
+  background: #e67e22;
+  height: 56px;
+  border-radius: 10px;
+  border: 0;
+  padding: 0 16px;
+  color: #312e38;
+  width: 100%;
+  font-weight: 500;
+  margin-top: 16px;
+  transition: background-color 0.2s;
 
-// export const MessageContainer = styled.div`
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   height: 100%;
-//   width: 100%;
-//   span {
-//     font-size: 24px;
-//     font-weight: 500;
-//     color: ${({ theme }) => theme.colors.white};
-//   }
-// `;
+  &:hover {
+    background: ${shade(0.2, '#E67E22')};
+  }
+`;

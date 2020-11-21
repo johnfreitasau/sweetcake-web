@@ -1,21 +1,36 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import { FiUserPlus } from 'react-icons/fi';
-import * as S from './styles';
+
+import { Container, Content, ButtonContainer } from './styles';
 
 const Settings: React.FC = () => {
+  const history = useHistory();
+
+  const handleSubmitButton = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      e.preventDefault();
+
+      history.push('/settings/signup');
+    },
+    [history],
+  );
+
   return (
-    <S.Container>
-      <S.Content>
-        <h1>Settings</h1>
+    <Container>
+      <Content>
+        <header>
+          <h1>Settings</h1>
+        </header>
+
         <div>
-          <S.SettingsButton>
-            <FiUserPlus size={34} color="#fff" />
-            <Link to="/settings/signup">Create new User</Link>
-          </S.SettingsButton>
+          <ButtonContainer type="button" onClick={handleSubmitButton}>
+            <FiUserPlus size={20} />
+            Register new user
+          </ButtonContainer>
         </div>
-      </S.Content>
-    </S.Container>
+      </Content>
+    </Container>
   );
 };
 

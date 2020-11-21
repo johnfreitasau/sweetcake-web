@@ -17,7 +17,6 @@ export const ButtonContainer = styled.button`
 
   svg {
     margin-right: 8px;
-    width: 20px;
   }
   transition: background 0.3s;
   &:hover {

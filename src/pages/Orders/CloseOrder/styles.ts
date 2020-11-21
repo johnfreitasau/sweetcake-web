@@ -21,6 +21,7 @@ export const Content = styled.div`
   margin: 64px auto 64px auto;
   border-radius: 5px;
   padding: 32px;
+  box-shadow: 0px 0px 18px ${({ theme }) => theme.colors.dark};
   header {
     width: 100%;
     display: flex;
