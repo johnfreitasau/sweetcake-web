@@ -104,8 +104,13 @@ const ListProducts: React.FC = () => {
     return products.map((product) => ({
       ...product,
       unitPriceFormatted: currencyFormat(product.unitPrice),
+      categoryFormatted: categories
+        .filter((category) => {
+          return category.id === product.categoryId;
+        })
+        .map((category) => category.name),
     }));
-  }, [products]);
+  }, [products, categories]);
 
   useEffect(() => {
     async function loadProducts(): Promise<void> {
@@ -198,7 +203,7 @@ const ListProducts: React.FC = () => {
             {formattedProducts.map((product) => (
               <S.CustomerRow key={product.id}>
                 <td>{product.name}</td>
-                <td>{product.categoryId}</td>
+                <td>{product.categoryFormatted}</td>
                 <td>{product.unitPriceFormatted}</td>
                 <td>{product.notes}</td>
                 <td>

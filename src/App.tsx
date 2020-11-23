@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { QueryParamProvider } from 'use-query-params';
 import GlobalStyle from './styles/global';
 import AppProvider from './hooks/index';
 import Routes from './routes/index';
-import dark from './styles/themes/dark';
 
 const App: React.FC = () => {
-  const [theme, setTheme] = useState(dark);
-
   return (
     <BrowserRouter>
       <AppProvider>

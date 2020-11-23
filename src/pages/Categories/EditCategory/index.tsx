@@ -23,6 +23,7 @@ const EditCategory: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const formRef = useRef<FormHandles>(null);
+
   const history = useHistory();
 
   const handleSubmitButton = useCallback(() => {

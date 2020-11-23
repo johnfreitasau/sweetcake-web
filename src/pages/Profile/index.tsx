@@ -1,9 +1,9 @@
-import React, { useCallback, useRef, ChangeEvent, useState } from 'react';
-import { FiUser, FiMail, FiLock, FiUserCheck } from 'react-icons/fi';
+import React, { useCallback, useRef, useState } from 'react';
+import { FiUser, FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import api from '../../services/api';
 import { useToast } from '../../hooks/toast';
@@ -11,7 +11,6 @@ import { useToast } from '../../hooks/toast';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import Input from '../../components/Form/Input';
-import Button from '../../components/Form/Button';
 
 import { Content, Container } from './styles';
 import { useAuth } from '../../hooks/auth';
