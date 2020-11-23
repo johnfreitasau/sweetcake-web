@@ -8,7 +8,7 @@ export const Container = styled.button`
   border: none;
   padding: 0 16px;
   height: 56px;
-  border-radius: 5px;
+  border-radius: 50%;
   background: ${({ theme }) => theme.colors.orange};
   transition: background 0.3s;
   &:hover {

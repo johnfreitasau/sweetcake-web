@@ -26,6 +26,15 @@ export const Container = styled.div<ContainerProps>`
       border: none;
       display: flex;
       align-items: center;
+
+      h3 {
+        font-family: 'Sacramento', sans-serif;
+        color: #e67e22;
+        font-size: 45px;
+        margin: 40px 20px 50px;
+        text-shadow: 1px 1px 0 #38312A;
+      }
+
       ${(props) =>
         props.isOpened
           ? css`

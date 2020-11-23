@@ -14,6 +14,7 @@ export const Container = styled.div`
     font-family: 'Sacramento', sans-serif;
     color: #e67e22;
     font-size: 64px;
+    text-shadow: 1px 1px 0 #38312a;
   }
 `;
 

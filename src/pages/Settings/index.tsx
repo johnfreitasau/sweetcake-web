@@ -25,8 +25,8 @@ const Settings: React.FC = () => {
 
         <div>
           <ButtonContainer type="button" onClick={handleSubmitButton}>
-            <FiUserPlus size={20} />
-            Register new user
+            <FiUserPlus size={40} />
+            <div>Register new user</div>
           </ButtonContainer>
         </div>
       </Content>

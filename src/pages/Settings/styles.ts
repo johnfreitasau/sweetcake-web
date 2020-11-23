@@ -12,7 +12,7 @@ export const Container = styled.div`
 export const Content = styled.div`
   max-width: 550px;
   width: 100%;
-  height: 460px;
+  height: 300px;
   background: ${({ theme }) => theme.colors.shape};
   margin: 0 auto;
   margin-top: 64px;
@@ -34,7 +34,7 @@ export const Content = styled.div`
 
 export const ButtonContainer = styled.button`
   background: #e67e22;
-  height: 56px;
+  height: 140px;
   border-radius: 10px;
   border: 0;
   padding: 0 16px;

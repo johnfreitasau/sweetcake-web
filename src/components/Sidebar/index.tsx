@@ -46,7 +46,8 @@ const Sidebar: React.FC = () => {
     <Container isOpened={!!isOpened}>
       <div>
         <button type="button" onClick={handleToggleSidebar}>
-          {isOpened ? <FiChevronLeft size={32} /> : <FiMenu size={32} />}
+          {/* {isOpened ? <FiChevronLeft size={32} /> : <FiMenu size={32} />} */}
+          {isOpened ? <h3>cupcakes.co</h3> : <FiMenu size={32} />}
         </button>
       </div>
       <nav>

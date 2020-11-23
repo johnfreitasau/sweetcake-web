@@ -16,7 +16,7 @@ export const Content = styled.div`
 export const Table = styled.table`
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 16px;
+  border-spacing: 0 2px;
 
   tr {
     th {
@@ -44,8 +44,6 @@ export const MaterialRow = styled.tr`
 
   td:nth-child(1) {
     padding-left: 16px;
-
-    border-radius: 10px 0 0 10px;
   }
 
   td:nth-child(2) {
@@ -59,7 +57,6 @@ export const MaterialRow = styled.tr`
   td:nth-child(4) {
     text-align: right;
     padding-right: 32px;
-    border-radius: 0 10px 10px 0;
   }
 
   background: ${({ theme }) => theme.colors.dark};

@@ -119,8 +119,8 @@ export const OrderRow = styled.tr<TStyledOrderStatus>`
     padding-right: 16px;
 
     div {
-      border-radius: 7px;
-      width: 60px;
+      border-radius: 50px;
+      width: 75px;
       height: 20px;
       color: 'orange' !important;
       text-shadow: 1px 1px 0 #444;
