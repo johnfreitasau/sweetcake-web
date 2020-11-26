@@ -1,15 +1,14 @@
 import React, { useRef, useCallback } from 'react';
-import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
+import { FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 import getValidationErrors from '../../utils/getValidationErrors';
-
-import logoImg from '../../assets/cupcake-img.svg';
+import logo from '../../assets/logo-md.png';
 
 import Input from '../../components/Form/Input';
 import Button from '../../components/Form/Button';
@@ -68,7 +67,7 @@ const SignIn: React.FC = () => {
 
   return (
     <Container>
-      <h1>cupcakes.co</h1>
+      <img src={logo} alt="SweetCake" />
       <FormContainer>
         <AnimationContainer>
           <Form ref={formRef} onSubmit={handleSubmit}>
@@ -83,7 +82,6 @@ const SignIn: React.FC = () => {
             />
 
             <Button type="submit">Sign In</Button>
-            <Link to="/forgot-password">Forgot my password</Link>
           </Form>
         </AnimationContainer>
       </FormContainer>

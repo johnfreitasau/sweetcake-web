@@ -44,7 +44,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ onSubmit, formRef }) => {
   const [customerOptions, setCustomerOptions] = useState<Option[]>([]);
   const [paymentMethodOptions, setPaymentMethodOptions] = useState<Option[]>([
     { value: 'Credit Card', label: 'Credit Card' },
-    { value: 'Bank Statement', label: 'Bank Transfer' },
+    { value: 'Bank Transfer', label: 'Bank Transfer' },
     { value: 'Cash', label: 'Cash' },
   ]);
   const [optionsIsLoading, setOptionsIsLoading] = useState(true);

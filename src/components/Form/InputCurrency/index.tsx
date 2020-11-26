@@ -29,16 +29,6 @@ const InputCurrency: React.FC<Props> = ({
       getValue: (ref) => {
         return ref.state.numAsString ? Number(ref.state.numAsString) : '';
       },
-      // setValue: (ref, value) => {
-      //   ref.state.value = `$ ${value}`;
-      //   ref.state.numAsString = `${value}`;
-      //   if (inputRef.current) inputRef.current.value = `$ ${value}`;
-      // },
-      // clearValue: (ref) => {
-      //   ref.state.value = '';
-      //   ref.state.numAsString = '';
-      //   if (inputRef.current) inputRef.current.value = '';
-      // },
     });
   }, [fieldName, inputRef, registerField]);
 

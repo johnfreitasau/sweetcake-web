@@ -24,18 +24,6 @@ const CheckboxInput: React.FC<Props> = ({ name, options, ...rest }) => {
       getValue: (refs: HTMLInputElement[]) => {
         return refs.filter((ref) => ref.checked).map((ref) => ref.value);
       },
-      // clearValue: (refs: HTMLInputElement[]) => {
-      //   refs.forEach((ref) => {
-      //     ref.checked = false;
-      //   });
-      // },
-      // setValue: (refs: HTMLInputElement[], values: string[]) => {
-      //   refs.forEach((ref) => {
-      //     if (values.includes(ref.id)) {
-      //       ref.checked = true;
-      //     }
-      //   });
-      // },
     });
   }, [defaultValue, fieldName, registerField]);
 

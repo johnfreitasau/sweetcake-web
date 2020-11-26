@@ -171,7 +171,7 @@ const ListOrders: React.FC = () => {
               <th>Due Date</th>
               <th>Payment Method</th>
               <th>Paid</th>
-              <th>Pick-up</th>
+              <th>Pick up</th>
               <th>Total</th>
               <th>Status</th>
             </tr>

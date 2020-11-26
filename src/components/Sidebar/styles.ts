@@ -27,6 +27,9 @@ export const Container = styled.div<ContainerProps>`
       display: flex;
       align-items: center;
 
+      img {
+        margin: 30px 10px 30px;
+      }
       h3 {
         font-family: 'Sacramento', sans-serif;
         color: #e67e22;

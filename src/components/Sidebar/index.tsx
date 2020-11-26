@@ -3,7 +3,6 @@ import {
   FiPackage,
   FiBook,
   FiGrid,
-  FiChevronLeft,
   FiUsers,
   FiMenu,
   FiPower,
@@ -14,12 +13,12 @@ import { FaRegUserCircle } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/auth';
-
+import logo from '../../assets/logo-sm.png';
 import { Container, SignOutButton } from './styles';
 
 const Sidebar: React.FC = () => {
   const [isOpened, setIsOpened] = useState(() => {
-    const sidebarState = localStorage.getItem('@cupcakes.co:sidebarState');
+    const sidebarState = localStorage.getItem('@sweetcake:sidebarState');
 
     if (sidebarState) {
       return true;
@@ -34,9 +33,9 @@ const Sidebar: React.FC = () => {
 
   useEffect(() => {
     if (isOpened) {
-      localStorage.setItem('@cupcakes.co:sidebarState', String(isOpened));
+      localStorage.setItem('@sweetcake:sidebarState', String(isOpened));
     } else {
-      localStorage.removeItem('@cupcakes.co:sidebarState');
+      localStorage.removeItem('@sweetcake:sidebarState');
     }
   }, [isOpened]);
 
@@ -46,8 +45,7 @@ const Sidebar: React.FC = () => {
     <Container isOpened={!!isOpened}>
       <div>
         <button type="button" onClick={handleToggleSidebar}>
-          {/* {isOpened ? <FiChevronLeft size={32} /> : <FiMenu size={32} />} */}
-          {isOpened ? <h3>cupcakes.co</h3> : <FiMenu size={32} />}
+          {isOpened ? <img src={logo} alt="SweetCake" /> : <FiMenu size={32} />}
         </button>
       </div>
       <nav>

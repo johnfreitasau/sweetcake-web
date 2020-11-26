@@ -4,8 +4,6 @@ import { Switch } from 'react-router-dom';
 import Route from './Route';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
-import ForgotPassword from '../pages/ForgotPassword';
-import ResetPassword from '../pages/ResetPassword';
 import Profile from '../pages/Profile';
 
 import ListCustomers from '../pages/Customers/ListCustomers';
@@ -30,9 +28,6 @@ const Routes: React.FC = () => {
   return (
     <Switch>
       <Route path="/" exact component={SignIn} />
-
-      <Route path="/forgot-password" component={ForgotPassword} />
-      <Route path="/reset-password" component={ResetPassword} />
 
       <Route path="/customers" exact component={ListCustomers} isPrivate />
       <Route path="/customers/register" component={CreateCustomer} isPrivate />

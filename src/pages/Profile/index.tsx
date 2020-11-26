@@ -143,10 +143,6 @@ const Profile: React.FC = () => {
                 onClick={handleSubmitButton}
                 label="Update"
               />
-              {/* <Button type="button" onClick={handleSubmitButton}>
-                <FiUserCheck size={20} />
-                Update Profile
-              </Button> */}
             </section>
           </header>
 
@@ -179,8 +175,6 @@ const Profile: React.FC = () => {
               type="password"
               placeholder="Password Confirmation"
             />
-
-            {/* <Button type="submit">Update Profile</Button> */}
           </Form>
         </Content>
       </Container>

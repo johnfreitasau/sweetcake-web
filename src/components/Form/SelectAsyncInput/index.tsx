@@ -61,14 +61,13 @@ const SelectAsyncInput: React.FC<Props> = ({
       },
     };
   };
-  //  CURRENT
+
   useEffect(() => {
     registerField({
       name: fieldName,
       ref: selectRef.current,
-      path: undefined, //
+      path: undefined,
       getValue: (ref: any) => {
-        console.log('REF:', ref);
         if (rest.isMulti) {
           if (!ref.select.state.value) {
             return [];
@@ -80,7 +79,6 @@ const SelectAsyncInput: React.FC<Props> = ({
         if (!ref.select.state.value) {
           return '';
         }
-        console.log('get REF:', ref.select.state.value.value);
         return ref.select.state.value.value;
       },
       setValue: (ref, value) => {
@@ -91,36 +89,6 @@ const SelectAsyncInput: React.FC<Props> = ({
       },
     });
   }, [fieldName, registerField, rest.isMulti]);
-
-  // useEffect(() => {
-  //   registerField({
-  //     name: fieldName,
-  //     ref: selectRef.current,
-  //     getValue: (ref: any) => {
-  //       console.log('REF:', ref);
-  //       if (rest.isMulti) {
-  //         if (!ref.state.value) {
-  //           return [];
-  //         }
-  //         return ref.state.value.map((option: OptionTypeBase) => option.value);
-  //       }
-  //       if (!ref.state.value) {
-  //         return '';
-  //       }
-  //       console.log('get REF:', ref.select.state.value.value);
-  //       return ref.state.value.value;
-  //     },
-  //     // setValue: (ref, value) => {
-  //     //   ref.select.setValue(value || null);
-  //     // },
-  //     setValue: (ref: any, value: any) => {
-  //       ref.select.select.setValue(value || null);
-  //     },
-  //     clearValue: (ref) => {
-  //       ref.select.clearValue();
-  //     },
-  //   });
-  // }, [fieldName, registerField, rest.isMulti]);
 
   return (
     <LabelContainer htmlFor={label_name || name}>

@@ -8,7 +8,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #312e38;
+  background-color: #3e3b47;
 
   h1 {
     font-family: 'Sacramento', sans-serif;
@@ -19,12 +19,13 @@ export const Container = styled.div`
 `;
 
 export const FormContainer = styled.div`
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   width: 400px;
   max-width: 80%;
   min-width: 100px;
-  min-height: 400px;
+  min-height: 280px;
   padding: 20px 40px;
   border-radius: 6px;
   box-shadow: 0px 8px 36px #000;

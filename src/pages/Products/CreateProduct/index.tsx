@@ -36,7 +36,6 @@ interface IProductFormData {
 const CreateProduct: React.FC = () => {
   const { addToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  // const [categories, setCategories] = useState<Category[]>([]);
   const [categoriesPage, setCategoriesPage] = useState(1);
   const [categoriesPagesAvailable, setCategoriesPagesAvailable] = useState(0);
   const [categoryOptions, setCategoryOptions] = useState<ICategoryOptions[]>([
