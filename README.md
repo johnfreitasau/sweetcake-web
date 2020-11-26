@@ -50,12 +50,13 @@
 
 # :rocket: Features
 
-* SignIn;
+* User SignIn / SignOut;
 * Create / update / soft delete Customers;
-* Create / update / delete product categories;
 * Create / update / delete products;
+* Create / update / delete product categories;
 * Create delivery / pickup orders;
-* Close / delete delivery / pickup orders;
+* Close delivery / pickup orders;
+* Delete open orders;
 * Edit profile;
 * Create new user;
 
