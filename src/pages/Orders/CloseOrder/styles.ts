@@ -105,10 +105,10 @@ export const OrderList = styled.div`
 `;
 
 export const ProductTable = styled.table`
+  margin-top: 20px;
   width: 100%;
-  margin: 32px 0 0 0;
   border-collapse: separate;
-  border-spacing: 0 16px;
+  border-spacing: 0 2px;
   thead {
     tr {
       th {
@@ -136,7 +136,6 @@ export const ProductRow = styled.tr`
   td:nth-child(1) {
     text-align: left;
     padding-left: 16px;
-    border-radius: 10px 0 0 10px;
   }
   td:nth-child(2) {
     text-align: center;
@@ -147,11 +146,11 @@ export const ProductRow = styled.tr`
   td:nth-child(4) {
     text-align: right;
     padding-right: 16px;
-    border-radius: 0 10px 10px 0;
   }
 `;
 
 export const FinalInformation = styled.div`
+  margin-top: 10px;
   font-size: 18px;
   font-weight: 500;
   display: flex;
@@ -160,7 +159,7 @@ export const FinalInformation = styled.div`
     background: ${({ theme }) => theme.colors.orange};
     color: ${({ theme }) => theme.colors.dark};
     padding: 16px;
-    border-radius: 10px;
+    border-radius: 5px;
   }
 `;
 
