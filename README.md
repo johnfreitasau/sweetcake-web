@@ -36,7 +36,6 @@
 - [React Icons](https://react-icons.netlify.com/#/)
 - [UnForm](https://unform.dev/)
 - [Styled Components](https://styled-components.com/)
-- [Polished](https://github.com/styled-components/polished)
 - [Axios](https://github.com/axios/axios)
 - [date-fns](https://date-fns.org/)
 - [polished](https://polished.js.org/)
