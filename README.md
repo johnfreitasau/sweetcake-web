@@ -16,22 +16,22 @@
 </p>
 
 <p align="center">
-  <a href="#%EF%B8%8F-about-the-project">About the project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-getting-started">Getting started</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-getting-started">Getting started</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-how-to-contribute">How to contribute</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-license">License</a>
+  
+  * [Features](#rocket-features)
+* [Installation](#construction_worker-installation)
+* [Getting Started](#runner-getting-started)
+* [FAQ](#postbox-faq)
+* [Found a bug? Missing a specific feature?](#bug-issues)
+* [Contributing](#tada-contributing)
+* [License](#closed_book-license)
 </p>
 
 <img alt="Layout" src=".github/sweetcake-web.png">
-
-## 🦸‍♀️ About the project
-
-Using the web client, the NGOs can create incidents informing about their needs and the amount to solve the incident.
-
-With this informations and using the mobile client, people can help one or more incidents and be the hero for that NGO.
-
-The goal of this project is increase the possibility of to help more cases and faster.
 
 ## 🚀 Technologies
 
@@ -55,117 +55,54 @@ Technologies that I used to develop this web client:
 - [EditorConfig](https://editorconfig.org/)
 
 
-## 💻 Getting started
+# :construction_worker: Installation
 
-### Requirements
+**You need to install [Node.js](https://nodejs.org/en/download/) and [Yarn](https://yarnpkg.com/) first, then in order to clone the project via HTTPS, run this command:**
 
-- [Node.js](https://nodejs.org/en/)
-- [Yarn](https://classic.yarnpkg.com/)
+```git clone https://github.com/johnfreitasau/sweetcake-web.git```
 
+SSH URLs provide access to a Git repository via SSH, a secure protocol. If you have a SSH key registered in your Github account, clone the project using this command:
 
-**Clone the project and access the folder**
-
-```bash
-$ git clone https://github.com/johnfreitasau/sweetcake-web.git && cd sweetcake-web
-```
+```git clone git@github.com:johnfreitasau/sweetcake-web.git```
 
 **Install dependencies**
 
-```bash
-$ yarn
-```
+```yarn install```
 
-**Follow the steps below**
+Create your enviroment variables based on the examples of ```.env.example```
 
-### Backend
+```cp .env.example .env```
 
-In the backend folder:
+After copying the examples, make sure to fill the variables with new values.
 
-```bash
-yarn
-```
+**Setup the API**
 
-To start the server:
+The interface needs to interact with the server to receive and register data.
 
-```bash
-yarn dev
-```
+Make sure to go to the [SweetCake API](https://github.com/johnfreitasau/sweetcake-api) repository and follow the instructions in order to get it running in your machine.
 
-#### Migrations
-Update the database:
-```bash
-knex migrate:latest
-```
+# :runner: Getting Started
 
-To rollback all the completed migrations:
-```bash
-knex migrate:rollback
-```
+Run the following command in order to start the application in a development environment:
 
-To run the next migration that has not yet been run:
-```bash
-knex migrate:up
-```
-
-To undo the last migration that was run:
-```
-knex migrate:down
-```
+```yarn start```
 
 
-### Web
+# :postbox: Faq
 
-_Obs.: Before to continue, be sure to have the API running_
+**Question:** What are the tecnologies used in this project?
 
-In the frontend folder:
-```bash
-yarn
-```
+**Answer:** The tecnologies used in this project are [React](https://pt-br.reactjs.org/) + [Styled Components](https://styled-components.com/) to handle scoped CSS.
 
-To start the project:
-```bash
-yarn start
-```
 
-### Mobile
+# :bug: Issues
 
-_Obs.: Before to continue, be sure to have the API running_
+Feel free to **file a new issue** with a respective title and description on the the [sweetcake](https://github.com/johnfreitasau/sweetcake-web/issues) repository. If you already found a solution to your problem, **I would love to review your pull request**! Have a look at our [contribution guidelines](https://github.com/johnfreitasau/sweetcake-web/CONTRIBUTING.md) to find out about the coding standards.
 
-```bash
-# Be sure the file 'packages/mobile/src/services/api.ts' have the IP to your API
+# :tada: Contributing
 
-# Start the expo service and scan the QR code with Expo Client
-$ yarn mobile expo
-```
+Check out the [contributing](https://github.com/johnfreitasau/sweetcake-web/CONTRIBUTING.md) page to see the best places to file issues, start discussions and begin contributing.
 
-## 🤔 How to contribute
-
-**Make a fork of this repository**
-
-```bash
-# Fork using GitHub official command line
-# If you don't have the GitHub CLI, use the web site to do that.
-
-$ gh repo fork johnfreitasau/sweetcake-web
-```
-
-**Follow the steps below**
-
-```bash
-# Clone your fork
-$ git clone your-fork-url && cd sweetcake-web
-
-# Create a branch with your feature
-$ git checkout -b my-feature
-
-# Make the commit with your changes
-$ git commit -m 'feat: My new feature'
-
-# Send the code to your remote branch
-$ git push origin my-feature
-```
-
-After your pull request is merged, you can delete your branch
 
 ## 📝 License
 
