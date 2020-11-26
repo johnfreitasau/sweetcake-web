@@ -59,6 +59,7 @@
 * Edit profile;
 * Create new user;
 
+
 # :construction_worker: Installation
 
 **You need to install [Node.js](https://nodejs.org/en/download/) and [Yarn](https://yarnpkg.com/) first, then in order to clone the project via HTTPS, run this command:**
@@ -68,6 +69,7 @@
 SSH URLs provide access to a Git repository via SSH, a secure protocol. If you have a SSH key registered in your Github account, clone the project using this command:
 
 ```git clone git@github.com:johnfreitasau/sweetcake-web.git```
+
 
 **Install dependencies**
 
@@ -79,11 +81,13 @@ Create your enviroment variables based on the examples of ```.env.example```
 
 After copying the examples, make sure to fill the variables with new values.
 
+
 **Setup the API**
 
 The interface needs to interact with the server to receive and register data.
 
 Make sure to go to the [SweetCake API](https://github.com/johnfreitasau/sweetcake-api) repository and follow the instructions in order to get it running in your machine.
+
 
 # :runner: Getting Started
 
@@ -108,6 +112,6 @@ Feel free to **file a new issue** with a respective title and description on the
 Check out the [contributing](https://github.com/johnfreitasau/sweetcake-web/CONTRIBUTING.md) page to see the best places to file issues, start discussions and begin contributing.
 
 
-## 📝 License
+# :closed_book: License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
