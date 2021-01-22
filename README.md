@@ -27,6 +27,9 @@
   <a href="#closed_book-license">License</a>
 </p>
 
+<p align="center">
+   <img src="./.github/images/sweetcake_demo01.gif" width="500"/>
+</p>
 
 # :rocket: Technologies
 
