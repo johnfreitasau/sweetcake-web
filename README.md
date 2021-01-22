@@ -28,7 +28,7 @@
 </p>
 
 <p align="center">
-   <img src="./.github/images/sweetcake_demo01.gif" width="500"/>
+   <img src="./.github/images/sweetcake_demo1.gif" width="500"/>
 </p>
 
 # :rocket: Technologies
@@ -108,7 +108,7 @@ Run the following command in order to start the application in a development env
 
 # :bug: Issues
 
-Feel free to **file a new issue** with a respective title and description on the the [sweetcake](https://github.com/johnfreitasau/sweetcake-web/issues) repository. If you already found a solution to your problem, **I would love to review your pull request**! Have a look at our [contribution guidelines](https://github.com/johnfreitasau/sweetcake-web/blob/master/CONTRIBUTING.md) to find out about the coding standards.
+Feel free to **file a new issue** with a respective title and description on the [sweetcake](https://github.com/johnfreitasau/sweetcake-web/issues) repository. If you already found a solution to your problem, **I would love to review your pull request**! Have a look at our [contribution guidelines](https://github.com/johnfreitasau/sweetcake-web/blob/master/CONTRIBUTING.md) to find out about the coding standards.
 
 # :tada: Contributing
 
