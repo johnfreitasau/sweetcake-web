@@ -31,6 +31,8 @@
    <img src="./.github/images/sweetcake_demo1.gif" width="500"/>
 </p>
 
+To see the API repository, [click here](https://github.com/johnfreitasau/sweetcake-api).
+
 # :rocket: Technologies
 
 - [ReactJS](https://reactjs.org/)
